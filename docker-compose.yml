@@ -11,6 +11,6 @@ services:
   fetcher:
     build: .
     network_mode: host
-    command: dotnet Fetcher.dll
+    command: sh -c "sleep 1 && dotnet Fetcher.dll"
     depends_on:
       - web
