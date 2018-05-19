@@ -42,10 +42,7 @@ RUN dotnet publish --output /app --configuration Release
 # Build the frontend.
 WORKDIR /source/Web
 RUN /node_modules/.bin/webpack -p
-
-# Build/publish the application.
 RUN dotnet publish --output /app --configuration Release
-
 
 # Run the published application.
 WORKDIR /app

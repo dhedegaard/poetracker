@@ -1,6 +1,7 @@
 ﻿using Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Web.Hubs;
@@ -24,7 +25,9 @@ namespace Web {
                 app.UseDatabaseErrorPage();
             }
 
-            app.UseForwardedHeaders();
+            app.UseForwardedHeaders(new ForwardedHeadersOptions {
+                ForwardedHeaders = ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedHost,
+            });
             app.UseStaticFiles();
             app.UseMvc();
             app.UseSignalR(routes =>
