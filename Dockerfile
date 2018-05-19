@@ -34,6 +34,10 @@ RUN yarn install --non-interactive
 WORKDIR /source
 COPY . .
 
+# Build the fetcher.
+WORKDIR /source/Fetcher
+RUN dotnet publish --output /app --configuration Release
+
 # Build the frontend.
 WORKDIR /source/Web
 RUN /node_modules/.bin/webpack -p
