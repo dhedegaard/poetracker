@@ -65,7 +65,6 @@ yarn.lock
 node_modules
 Web/wwwroot/bundle.js
 .vscode
-/Web/webapp/**/*.js
 /Web/yarn-error.log
 /Web/.awcache
 */bin
@@ -75,3 +74,5 @@ docker-compose.yml
 Dockerfile
 *.log
 */dump.rdb
+Web/wwwroot/**/*.js
+Web/frontend/**/*.js

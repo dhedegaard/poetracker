@@ -62,5 +62,6 @@ htmlcov
 **/obj
 **/bin
 **/node_modules
-Web/**/*.js
+Web/wwwroot/**/*.js
+Web/frontend/**/*.js
 **/*.csproj.user
