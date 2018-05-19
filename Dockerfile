@@ -2,6 +2,7 @@ FROM microsoft/dotnet:2.1-sdk
 ARG DEBIAN_FRONTEND=noninteractive
 EXPOSE 5123
 ENV ASPNETCORE_URLS=http://127.0.0.1:5123
+ENV FETCHER_HUB_CONNECTION_URL=http://127.0.0.1:5123/data
 
 WORKDIR /source
 
@@ -44,6 +45,7 @@ RUN /node_modules/.bin/webpack -p
 
 # Build/publish the application.
 RUN dotnet publish --output /app --configuration Release
+
 
 # Run the published application.
 WORKDIR /app
