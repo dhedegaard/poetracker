@@ -24,11 +24,7 @@ namespace Web {
                 app.UseDatabaseErrorPage();
             }
 
-            app.Use(async (context, next) => {
-
-
-                await next.Invoke();
-            });
+            app.UseForwardedHeaders();
             app.UseStaticFiles();
             app.UseMvc();
             app.UseSignalR(routes =>
