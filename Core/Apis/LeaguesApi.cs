@@ -12,6 +12,8 @@ namespace Core.Apis {
         public class LeagueType {
             [Column("id")]
             public string Id { get; set; }
+            [Column("url")]
+            public string Url { get; set; }
             [Column("startAt")]
             public DateTimeOffset StartAt { get; set; }
             [Column("endAt")]

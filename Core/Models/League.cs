@@ -20,6 +20,10 @@ namespace Core.Models {
         /// When the given league is going to end, if it does.
         /// </summary>
         public DateTimeOffset? EndAt { get; set; }
+        /// <summary>
+        /// A link to the given forum thread, that lists the ladder.
+        /// </summary>
+        public string Url { get; set; }
 
         public override string ToString() =>
             $"<{nameof(League)} Id=\"{Id}\" StartAt=\"{StartAt}\" EndAt=\"{EndAt}\">";
