@@ -5,6 +5,7 @@ interface CharacterTableComponentProps {
   selectedLeague: string;
   datapoints: Datapoint[];
   leagues: LeagueType[];
+  clickedLeague: (leagueId: string) => void;
 }
 
 export default class CharacterTableComponent extends React.Component<CharacterTableComponentProps, {}> {
@@ -72,7 +73,11 @@ export default class CharacterTableComponent extends React.Component<CharacterTa
                   <td className="text-right">{datapoint.level}</td>
                   <td className="text-right">{datapoint.experience.toLocaleString()}</td>
                   {!this.props.selectedLeague && (
-                    <td className="d-none d-sm-block">{datapoint.leagueId}</td>
+                    <td className="d-none d-sm-block">
+                      <a href="javascript:void(0);" onClick={() => { this.props.clickedLeague(datapoint.leagueId); }} title="Go to the league">
+                        {datapoint.leagueId}
+                      </a>
+                    </td>
                   ) || undefined}
                 </tr>
               );

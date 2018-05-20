@@ -174,6 +174,7 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
           leagues={this.state.leagues}
           datapoints={this.state.datapoints}
           selectedLeague={this.state.selectedLeague}
+          clickedLeague={this.onLeagueSelect}
         />
       </React.Fragment>
     );
