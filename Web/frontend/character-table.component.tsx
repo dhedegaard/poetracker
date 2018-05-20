@@ -7,6 +7,21 @@ interface CharacterTableComponentProps {
 }
 
 export default class CharacterTableComponent extends React.Component<CharacterTableComponentProps, {}> {
+
+    constructor(props: CharacterTableComponentProps) {
+        super(props);
+        this.getPoeProfileURL = this.getPoeProfileURL.bind(this);
+        this.getPassiveSkillTreeURL = this.getPassiveSkillTreeURL.bind(this);
+    }
+
+    getPoeProfileURL(accountId: string, charname: string) {
+        return `http://poe-profile.info/profile/${accountId}/${charname}`;
+    }
+
+    getPassiveSkillTreeURL(accountId: string, charname: string) {
+        return `https://www.pathofexile.com/character-window/view-passive-skill-tree?accountName=${accountId}&character=${charname}`;
+    }
+
     render() {
         return (
             <table className="table table-bordered table-hover table-sm">
@@ -14,7 +29,6 @@ export default class CharacterTableComponent extends React.Component<CharacterTa
                     <tr>
                         <th>Rank</th>
                         <th>Character name</th>
-                        <th>Account name</th>
                         <th>Class</th>
                         <th>Level</th>
                         <th>Experience</th>
@@ -33,18 +47,21 @@ export default class CharacterTableComponent extends React.Component<CharacterTa
                         return (
                             <tr key={datapoint.charname + datapoint.experience}>
                                 <td>{datapoint.globalRank}</td>
-                                <td>
-                                    <a href={`http://poe-profile.info/profile/${datapoint.accountId}/${datapoint.charname}`} target="_blank" rel="nofollow">
+                                <td title={`Account name: ${datapoint.accountId}`}>
+                                    <a href={this.getPoeProfileURL(datapoint.accountId, datapoint.charname)} target="_blank" rel="nofollow">
                                         {datapoint.charname}
                                     </a>
                                     {datapoint.dead && (
                                         <small className="text-muted"> [DEAD]</small>
                                     )}
                                 </td>
-                                <td>{datapoint.accountId}</td>
-                                <td>{datapoint.class}</td>
-                                <td>{datapoint.level}</td>
-                                <td>{datapoint.experience}</td>
+                                <td>
+                                    <a href={this.getPassiveSkillTreeURL(datapoint.accountId, datapoint.charname)} rel="nofollow" target="_blank" title="Click to see the passive skill tree">
+                                        {datapoint.class}
+                                    </a>
+                                </td>
+                                <td className="text-right">{datapoint.level}</td>
+                                <td className="text-right">{datapoint.experience.toLocaleString()}</td>
                                 {!this.props.selectedLeague && (
                                     <td>{datapoint.leagueId}</td>
                                 ) || undefined}
