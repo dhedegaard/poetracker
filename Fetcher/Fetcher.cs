@@ -60,21 +60,24 @@ namespace Fetcher {
 
                     // Persist any changes to the backend and notify the hub.
                     if (characters.Any()) {
-                        
+
                         var datapoints = new List<Datapoint>();
                         foreach (var character in characters) {
                             // Find the latest datapoint for the same character, in the same league. If
                             // there's no existing data, the XP has changed or the dead state has changed.
                             // Added a new datapoint.
                             var latestDatapoint = context.Datapoints
-                                .Where(e => e.Account == account && e.League == league && e.Charname == character.Name)
+                                .Where(e => e.Account == account &&
+                                            e.League == league &&
+                                            e.Charname == character.Name &&
+                                            e.Dead == character.Dead &&
+                                            e.Experience == character.Experience)
                                 .OrderByDescending(e => e.Timestamp)
                                 .FirstOrDefault();
 
                             if (latestDatapoint == null ||
                                     latestDatapoint.Experience != character.Experience ||
-                                    latestDatapoint.Dead != character.Dead ||
-                                    latestDatapoint.Online != character.Online) {
+                                    latestDatapoint.Dead != character.Dead) {
                                 var datapoint = new Datapoint {
                                     Account = account,
                                     Charname = character.Name,
