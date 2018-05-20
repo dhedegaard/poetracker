@@ -26,7 +26,7 @@ namespace Core.Apis {
             public int Level { get; set; }
             public string Name { get; set; }
             public string Class { get; set; }
-            public int Experience { get; set; }
+            public long Experience { get; set; }
 
             public override string ToString() =>
                 $"<{nameof(InternalCharacter)} name=\"{Name}\" level={Level} class=\"{Class}\">";
@@ -37,7 +37,7 @@ namespace Core.Apis {
             public string Class { get; set; }
             public int Rank { get; set; }
             public int Level { get; set; }
-            public int Experience { get; set; }
+            public long Experience { get; set; }
             public bool Dead { get; set; }
             public bool Online { get; set; }
 

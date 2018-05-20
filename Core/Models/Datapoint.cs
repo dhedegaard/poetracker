@@ -16,7 +16,7 @@ namespace Core.Models {
         [Required]
         public int GlobalRank { get; set; }
         [Required]
-        public int Experience { get; set; }
+        public long Experience { get; set; }
         [Required]
         public int Level { get; set; }
         [Required]
