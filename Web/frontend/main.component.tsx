@@ -1,8 +1,8 @@
 ﻿import React from 'react';
-import * as SignalR from '@aspnet/signalr';
 
 import CharacterTableComponent from './character-table.component';
 import LeagueSelectComponent from './league-select.component';
+import SignalRComponent, { InitialPayload } from './signalr.component';
 
 export interface Datapoint {
   accountId: string;
@@ -23,10 +23,6 @@ export interface LeagueType {
   endAt?: string;
 }
 
-interface InitialPayload {
-  leagues: LeagueType[];
-  latestDatapoints: Datapoint[];
-}
 
 interface MainComponentState {
   error: string;
@@ -36,11 +32,9 @@ interface MainComponentState {
 }
 
 export default class MainComponent extends React.Component<{}, MainComponentState> {
-  connection!: SignalR.HubConnection;
 
   constructor(props: {}) {
     super(props);
-    this.connectSignalR = this.connectSignalR.bind(this);
     this.state = {
       error: '',
       leagues: [],
@@ -53,34 +47,6 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
     this.onClickReloadPage = this.onClickReloadPage.bind(this);
   }
 
-  /**
-   * Connects to the SignalR hub and sets up various handlers.
-   */
-  connectSignalR() {
-    // Build the connection.
-    this.connection = new SignalR.HubConnectionBuilder()
-      .withUrl("/data")
-      .build();
-
-    // Add handlers.
-    this.connection.on('NotifyNewData', this.onSignalRNotifyNewData);
-    this.connection.on('InitialPayload', this.onSignalRInitialPayload);
-
-    // Handle connection errors to the hub.
-    this.connection.onclose = (error) => {
-      this.setState({
-        error: error.toString(),
-      });
-    };
-
-    // Connect and retry on failure, notifying the user.
-    this.connection.start()
-      .catch((reason) => {
-        this.setState({
-          error: reason,
-        });
-      });
-  }
 
   /**
    * Triggers on the initial payload, just after the connection was established.
@@ -114,18 +80,7 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
     console.log('TODO data:', data);
   }
 
-  componentDidMount() {
-    // Setup the SignalR connection.
-    this.connectSignalR();
-  }
 
-
-  componentWillUnmount() {
-    // Tear down the SignalR connection.
-    if (this.connection) {
-      this.connection.stop();
-    }
-  }
 
   /**
    * Reloads the page, use this as a click event handler when something goes haywire.
@@ -151,6 +106,10 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
   render() {
     return (
       <React.Fragment>
+        <SignalRComponent
+          onSignalRInitialPayload={this.onSignalRInitialPayload}
+          onSignalRNotifyNewData={this.onSignalRNotifyNewData}
+        />
         <h2>Poetracker</h2>
         {this.state.error && (
           <div className="alert alert-danger">
