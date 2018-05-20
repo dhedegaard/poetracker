@@ -4,6 +4,6 @@ import React from 'react';
 import MainComponent from './main.component';
 
 ReactDOM.render(
-    <MainComponent />,
-    document.getElementById('app'),
+  <MainComponent />,
+  document.getElementById('app'),
 )
