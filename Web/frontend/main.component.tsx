@@ -1,6 +1,9 @@
 ﻿import React from 'react';
 import * as SignalR from '@aspnet/signalr';
 
+import CharacterTableComponent from './character-table.component';
+import LeagueSelectComponent from './league-select.component';
+
 export interface Datapoint {
     accountId: string;
     charname: string;
@@ -134,8 +137,7 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
     /**
      * Triggers when the league select element triggers a change event.
      */
-    onLeagueSelect(evt: React.ChangeEvent<HTMLSelectElement>) {
-        const value = evt.currentTarget.value;
+    onLeagueSelect(value: string) {
         // Set the value in the state.
         this.setState({
             selectedLeague: value,
@@ -157,69 +159,14 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
                     </div>
                 )}
                 <hr />
-                {!this.state.leagues && (
-                    <div className="alert alert-warning">
-                        Waiting for initial data, if this takes too long, try <a href="javascript:void(0);" onClick={this.onClickReloadPage} > reloading the page</a>
+                <div className="row form-rom">
+                    <label className="col-2 text-right" htmlFor="id_league_select">League:</label>
+                    <div className="col-4">
+                        <LeagueSelectComponent leagues={this.state.leagues} selectedLeague={this.state.selectedLeague} onLeagueSelect={this.onLeagueSelect} />
                     </div>
-                )}
-                {this.state.leagues && (
-                    <React.Fragment>
-                        <div className="row form-rom">
-                            <label className="col-2 text-right" htmlFor="id_league_select">League:</label>
-                            <div className="col-4">
-                                <select className="form-control form-control-sm" id="id_league_select" value={this.state.selectedLeague} onChange={this.onLeagueSelect}>
-                                    <option value="">-- Show all</option>
-                                    {this.state.leagues.map((league) => (
-                                        <option key={league.id} value={league.id}>{league.id}</option>
-                                    ))}
-                                </select>
-                            </div>
-                        </div>
-                        <hr />
-                        <table className="table table-bordered table-striped table-sm">
-                            <thead>
-                                <tr>
-                                    <th>Rank</th>
-                                    <th>Character name</th>
-                                    <th>Account name</th>
-                                    <th>Class</th>
-                                    <th>Level</th>
-                                    <th>Experience</th>
-                                    {!this.state.selectedLeague && (
-                                        <th>League</th>
-                                    ) || undefined}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {this.state.datapoints.map((datapoint) => {
-                                    /* If the user selected a league, and it's not the currently selected one, skip it. */
-                                    if (this.state.selectedLeague && this.state.selectedLeague !== datapoint.leagueId) {
-                                        return undefined;
-                                    }
-
-                                    return (
-                                        <tr key={datapoint.charname + datapoint.experience}>
-                                            <td>{datapoint.globalRank}</td>
-                                            <td>
-                                                {datapoint.charname}
-                                                {datapoint.dead && (
-                                                    <small className="text-muted"> [DEAD]</small>
-                                                )}
-                                            </td>
-                                            <td>{datapoint.accountId}</td>
-                                            <td>{datapoint.class}</td>
-                                            <td>{datapoint.level}</td>
-                                            <td>{datapoint.experience}</td>
-                                            {!this.state.selectedLeague && (
-                                                <td>{datapoint.leagueId}</td>
-                                            ) || undefined}
-                                        </tr>
-                                    );
-                                })}
-                            </tbody>
-                        </table>
-                    </React.Fragment>
-                )}
+                </div>
+                <hr />
+                <CharacterTableComponent datapoints={this.state.datapoints} selectedLeague={this.state.selectedLeague} />
             </React.Fragment>
         );
     }
