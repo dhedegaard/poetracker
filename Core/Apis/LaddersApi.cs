@@ -26,6 +26,7 @@ namespace Core.Apis {
             public int Level { get; set; }
             public string Name { get; set; }
             public string Class { get; set; }
+            public string Id { get; set; }
             public long Experience { get; set; }
 
             public override string ToString() =>
@@ -33,6 +34,7 @@ namespace Core.Apis {
         }
 
         public class Character {
+            public string CharId { get; set; }
             public string Name { get; set; }
             public string Class { get; set; }
             public int Rank { get; set; }
@@ -52,6 +54,7 @@ namespace Core.Apis {
                 ));
                 return JsonConvert.DeserializeObject<Result>(data).Entries
                     .Select(res => new Character {
+                        CharId = res.Character.Id,
                         Name = res.Character.Name,
                         Class = res.Character.Class,
                         Rank = res.Rank,

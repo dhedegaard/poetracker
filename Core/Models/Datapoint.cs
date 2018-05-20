@@ -10,6 +10,8 @@ namespace Core.Models {
         [Key]
         public int? Id { get; set; }
         [Required]
+        public string CharId { get; set; }
+        [Required]
         public DateTimeOffset Timestamp { get; set; }
         [Required]
         public string Charname { get; set; }
@@ -41,7 +43,8 @@ namespace Core.Models {
             var entity = modelBuilder.Entity<Datapoint>();
 
             entity.HasKey(e => e.Id);
-            entity.HasIndex(e => new { e.Charname, e.Timestamp });
+            entity.HasIndex(e => e.CharId);
+            entity.HasIndex(e => new { e.CharId, e.Timestamp });
         }
     }
 }

@@ -67,18 +67,18 @@ namespace Fetcher {
                             // there's no existing data, the XP has changed or the dead state has changed.
                             // Added a new datapoint.
                             var latestDatapoint = context.Datapoints
-                                .Where(e => e.Account == account &&
-                                            e.League == league &&
-                                            e.Charname == character.Name &&
-                                            e.Dead == character.Dead &&
-                                            e.Experience == character.Experience)
+                                .Where(e => e.CharId == character.CharId &&
+                                            e.LeagueId == league.Id &&
+                                            e.AccountId == account.AccountName)
                                 .OrderByDescending(e => e.Timestamp)
                                 .FirstOrDefault();
 
                             if (latestDatapoint == null ||
                                     latestDatapoint.Experience != character.Experience ||
-                                    latestDatapoint.Dead != character.Dead) {
+                                    latestDatapoint.Dead != character.Dead ||
+                                    latestDatapoint.Online != character.Online) {
                                 var datapoint = new Datapoint {
+                                    CharId = character.CharId,
                                     Account = account,
                                     Charname = character.Name,
                                     Experience = character.Experience,
