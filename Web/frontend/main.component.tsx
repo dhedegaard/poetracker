@@ -21,6 +21,7 @@ export interface LeagueType {
   id: string;
   startAt: string;
   endAt?: string;
+  url: string;
 }
 
 
@@ -45,6 +46,7 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
     this.onSignalRInitialPayload = this.onSignalRInitialPayload.bind(this);
     this.onLeagueSelect = this.onLeagueSelect.bind(this);
     this.onClickReloadPage = this.onClickReloadPage.bind(this);
+    this.getCurrentLeague = this.getCurrentLeague.bind(this);
   }
 
 
@@ -80,8 +82,6 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
     console.log('TODO data:', data);
   }
 
-
-
   /**
    * Reloads the page, use this as a click event handler when something goes haywire.
    */
@@ -103,7 +103,18 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
     }
   }
 
+  /**
+   * Calculates and returns the current LeagueType object, based on what is current selected.
+   */
+  getCurrentLeague(): LeagueType | undefined {
+    if (!this.state.selectedLeague) {
+      return undefined;
+    }
+    return this.state.leagues.filter(e => e.id === this.state.selectedLeague)[0];
+  }
+
   render() {
+    const currentLeague = this.getCurrentLeague();
     return (
       <React.Fragment>
         <SignalRComponent
@@ -121,11 +132,26 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
         <div className="row form-rom">
           <label className="col-3 col-md-2 text-right" htmlFor="id_league_select">League:</label>
           <div className="col-9 col-md-4">
-            <LeagueSelectComponent leagues={this.state.leagues} selectedLeague={this.state.selectedLeague} onLeagueSelect={this.onLeagueSelect} />
+            <LeagueSelectComponent
+              leagues={this.state.leagues}
+              selectedLeague={this.state.selectedLeague}
+              onLeagueSelect={this.onLeagueSelect}
+            />
           </div>
+          {this.state.selectedLeague && currentLeague && currentLeague.url && (
+            <div className="d-none d-sm-block col-md-3">
+              <a href={currentLeague.url} target="_blank" rel="nofollow">
+                View league thread
+              </a>
+            </div>
+          )}
         </div>
         <hr />
-        <CharacterTableComponent datapoints={this.state.datapoints} selectedLeague={this.state.selectedLeague} />
+        <CharacterTableComponent
+          leagues={this.state.leagues}
+          datapoints={this.state.datapoints}
+          selectedLeague={this.state.selectedLeague}
+        />
       </React.Fragment>
     );
   }

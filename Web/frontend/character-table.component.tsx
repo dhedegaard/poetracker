@@ -1,9 +1,10 @@
 ﻿import React from "react";
-import { Datapoint } from "./main.component";
+import { Datapoint, LeagueType } from "./main.component";
 
 interface CharacterTableComponentProps {
   selectedLeague: string;
   datapoints: Datapoint[];
+  leagues: LeagueType[];
 }
 
 export default class CharacterTableComponent extends React.Component<CharacterTableComponentProps, {}> {
@@ -31,8 +32,8 @@ export default class CharacterTableComponent extends React.Component<CharacterTa
               <th>Rank</th>
               <th>Character name</th>
               <th>Class</th>
-              <th>Level</th>
-              <th>Experience</th>
+              <th className="text-right">Level</th>
+              <th className="text-right">Experience</th>
               {!this.props.selectedLeague && (
                 <th className="d-none d-sm-block">League</th>
               ) || undefined}
@@ -45,6 +46,7 @@ export default class CharacterTableComponent extends React.Component<CharacterTa
                 return undefined;
               }
 
+              /* All done, render the given table row. */
               return (
                 <tr key={datapoint.charname + datapoint.experience}>
                   <td>{datapoint.globalRank}</td>
