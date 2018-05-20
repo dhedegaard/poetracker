@@ -160,8 +160,8 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
                 )}
                 <hr />
                 <div className="row form-rom">
-                    <label className="col-2 text-right" htmlFor="id_league_select">League:</label>
-                    <div className="col-4">
+                    <label className="col-3 col-md-2 text-right" htmlFor="id_league_select">League:</label>
+                    <div className="col-9 col-md-4">
                         <LeagueSelectComponent leagues={this.state.leagues} selectedLeague={this.state.selectedLeague} onLeagueSelect={this.onLeagueSelect} />
                     </div>
                 </div>
