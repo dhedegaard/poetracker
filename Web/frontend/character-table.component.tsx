@@ -48,8 +48,14 @@ export default class CharacterTableComponent extends React.Component<CharacterTa
 
               /* All done, render the given table row. */
               return (
-                <tr key={datapoint.charname + datapoint.experience}>
-                  <td>{datapoint.globalRank}</td>
+                <tr key={datapoint.charname + datapoint.experience + datapoint.online + datapoint.dead}>
+                  <td>
+                    <img
+                      src={`https://www.pathofexile.com/image/ladder/${datapoint.online ? 'online' : 'offline'}.png`}
+                      title={datapoint.online ? 'Online' : 'Offline'} width={15} height={15}
+                    />{' '}
+                    <span>{datapoint.globalRank}</span>
+                  </td>
                   <td className="text-nowrap" title={`Account name: ${datapoint.accountId}`}>
                     <a href={this.getPoeProfileURL(datapoint.accountId, datapoint.charname)} target="_blank" rel="nofollow">
                       {datapoint.charname}
