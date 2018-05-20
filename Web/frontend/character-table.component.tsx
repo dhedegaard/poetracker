@@ -50,7 +50,7 @@ export default class CharacterTableComponent extends React.Component<CharacterTa
               return (
                 <tr key={datapoint.charname + datapoint.experience}>
                   <td>{datapoint.globalRank}</td>
-                  <td title={`Account name: ${datapoint.accountId}`}>
+                  <td className="text-nowrap" title={`Account name: ${datapoint.accountId}`}>
                     <a href={this.getPoeProfileURL(datapoint.accountId, datapoint.charname)} target="_blank" rel="nofollow">
                       {datapoint.charname}
                     </a>
