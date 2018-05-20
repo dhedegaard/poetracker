@@ -28,7 +28,10 @@ namespace Web {
             app.UseForwardedHeaders(new ForwardedHeadersOptions {
                 ForwardedHeaders = ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedHost,
             });
-            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions {
+                // Allow serving the .webmanifest file from wwwroot.
+                ServeUnknownFileTypes = true,
+            });
             app.UseMvc();
             app.UseSignalR(routes =>
                 routes.MapHub<PoeHub>("/data"));
