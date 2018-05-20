@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Core.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Web.Hubs {
     public class PoeHub : Hub {
@@ -21,8 +22,10 @@ namespace Web.Hubs {
         internal void SendInitialPayload() {
             Clients.Caller.SendAsync("InitialPayload", new InitialPayload {
                 LatestDatapoints = poeContext.Datapoints
+                    .Include(e => e.Account)
+                    .Include(e => e.League)
                     .OrderByDescending(e => e.Id)
-                    .GroupBy(e => e.Charname)
+                    .GroupBy(e => e.CharId)
                     .Select(e => e.First())
                     .ToList(),
                 Leagues = poeContext.Leagues

@@ -5,16 +5,23 @@ import LeagueSelectComponent from './league-select.component';
 import SignalRComponent, { InitialPayload } from './signalr.component';
 
 export interface Datapoint {
+  account: AccountType;
   accountId: string;
+  charId: string;
   charname: string;
   experience: number;
   globalRank: number;
+  league: LeagueType;
   leagueId: string;
   level: number;
   timestamp: string;
   class: string;
   dead: boolean;
   online: boolean;
+}
+
+interface AccountType {
+  accountName: string;
 }
 
 export interface LeagueType {
@@ -79,7 +86,23 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
    * Triggers when there's new delta data to work on.
    */
   onSignalRNotifyNewData(data: Datapoint[]) {
-    console.log('TODO data:', data);
+    console.log('NotifyNewData:', data);
+    // Copy the datapoints state.
+    let datapoints = this.state.datapoints.slice();
+
+    // Iterate on the delta update, handling changes as we go along.
+    for (const datapoint of data) {
+      // Remove any existing entries for the given char.
+      datapoints = datapoints.filter(e => e.charId !== datapoint.charId);
+
+      // Push the new datapoint.
+      datapoints.push(datapoint);
+    }
+
+    // Set the new state.
+    this.setState({
+      datapoints: datapoints.sort((a, b) => b.experience - a.experience),
+    });
   }
 
   /**
