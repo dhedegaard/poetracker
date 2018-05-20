@@ -38,6 +38,7 @@ namespace Fetcher {
                 leagueObj.Id = league.Id;
                 leagueObj.StartAt = league.StartAt;
                 leagueObj.EndAt = league.EndAt;
+                leagueObj.Url = league.Url;
                 if (created) {
                     context.Add(leagueObj);
                 } else {
