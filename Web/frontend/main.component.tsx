@@ -77,7 +77,7 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
       leagues: data.leagues,
       selectedLeague: selectedLeague,
       datapoints: data.latestDatapoints
-        .sort((a, b) => b.experience - a.experience),
+        .sort((a, b) => a.experience === b.experience ? a.globalRank - b.globalRank : b.experience - a.experience),
     });
     console.log('initial payload:', data);
   }
@@ -92,7 +92,9 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
 
     // Iterate on the delta update, handling changes as we go along.
     for (const datapoint of data) {
-      // Remove any existing entries for the given char.
+
+      // Remove any existing entries for the given char, probably not the
+      // most efficient if there's a lot of datapoints.
       datapoints = datapoints.filter(e => e.charId !== datapoint.charId);
 
       // Push the new datapoint.
@@ -101,7 +103,7 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
 
     // Set the new state.
     this.setState({
-      datapoints: datapoints.sort((a, b) => b.experience - a.experience),
+      datapoints: datapoints.sort((a, b) => a.experience === b.experience ? b.globalRank - a.globalRank : b.experience - a.experience),
     });
   }
 
