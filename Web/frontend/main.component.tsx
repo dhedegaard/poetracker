@@ -146,7 +146,6 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
           onSignalRInitialPayload={this.onSignalRInitialPayload}
           onSignalRNotifyNewData={this.onSignalRNotifyNewData}
         />
-        <h2>Poetracker</h2>
         {this.state.error && (
           <div className="alert alert-danger">
             <b>Error</b>: {this.state.error}

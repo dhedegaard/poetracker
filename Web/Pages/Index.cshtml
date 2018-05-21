@@ -14,7 +14,15 @@
     <meta property="og:image" content="@Request.Scheme://@Request.Host/favicon.png" />
     <link rel="manifest" href="~/manifest.webmanifest" />
 </head>
-<body>
+<body class="bg-light">
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+            <span class="navbar-brand">
+                <img src="~/favicon.png" width="30" height="30" alt="Poetracker" />
+                Poetracker
+            </span>
+        </div>
+    </nav>
     <div class="container">
         <div id="app"></div>
         <script async type="text/javascript" src="./bundle.js" asp-append-version="true"></script>

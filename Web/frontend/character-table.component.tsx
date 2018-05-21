@@ -27,7 +27,7 @@ export default class CharacterTableComponent extends React.Component<CharacterTa
   render() {
     return (
       <div className="table-responsive">
-        <table className="table table-bordered table-hover table-sm">
+        <table className="table table-bordered table-hover table-dark">
           <thead>
             <tr>
               <th>Rank</th>
