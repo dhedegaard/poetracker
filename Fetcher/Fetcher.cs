@@ -6,7 +6,6 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -50,7 +49,7 @@ namespace Fetcher {
             logger.LogInformation("Processed {0} leagues", count);
         }
 
-        static async Task FetchUpdateDatapoints(PoeContext context, HttpClient httpClient, HubConnection hubConnection) {
+        static async Task FetchUpdateDatapoints(PoeContext context, HubConnection hubConnection) {
             var leagues = context.Leagues
                 .ToList();
             foreach (var account in context.Accounts) {
@@ -108,26 +107,21 @@ namespace Fetcher {
             }
         }
 
-        static async Task FetchNewDataAsync(PoeContext context, HttpClient httpClient, HubConnection connection) {
+        static async Task FetchNewDataAsync(PoeContext context, HubConnection connection) {
             // Fetch/update all the leagues.
             await FetchAndUpdateLeagues(context);
 
             // Fetch/update the datapoints for each account/league combo.
-            await FetchUpdateDatapoints(context, httpClient, connection);
+            await FetchUpdateDatapoints(context, connection);
         }
 
         static void Main(string[] args) {
             // Connect to the hub and create the DB context.
             var hubConnection = ConnectToTheHub();
-            using (var context = new PoeContext())
-            using (var httpClient = new HttpClient()) {
-                // For testing :)
-                context.Datapoints.Select(e => context.Remove(e));
-                context.SaveChangesAsync().Wait();
-
+            using (var context = new PoeContext()) {
                 // Do the looping dance.
                 for (; ; ) {
-                    FetchNewDataAsync(context, httpClient, hubConnection).Wait();
+                    FetchNewDataAsync(context, hubConnection).Wait();
                 }
             }
         }
