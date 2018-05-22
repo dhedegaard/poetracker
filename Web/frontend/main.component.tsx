@@ -78,6 +78,12 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
       selectedLeague = '';
     }
 
+    // If there's no league selected, and there's no league data in the localStorage,
+    // select the last league that's not either HC or SSF.
+    if (selectedLeague === '' && window.localStorage && window.localStorage.getItem('selectedLeague') === null) {
+      selectedLeague = data.leagues.filter(e => e.id.indexOf('HC') === -1 && e.id.indexOf('SSF') === -1)[0].id;
+    }
+
     this.setState({
       leagues: data.leagues,
       selectedLeague: selectedLeague,

@@ -25,6 +25,7 @@ export default class CharacterTableComponent extends React.Component<CharacterTa
   }
 
   render() {
+    const datapoints = this.props.datapoints.filter(e => !this.props.selectedLeague || this.props.selectedLeague === e.datapoint.leagueId);
     return (
       <div className="table-responsive">
         <table className="table table-bordered table-hover table-dark">
@@ -40,12 +41,7 @@ export default class CharacterTableComponent extends React.Component<CharacterTa
             </tr>
           </thead>
           <tbody>
-            {this.props.datapoints.map((datapoint) => {
-              /* If the user selected a league, and it's not the currently selected one, skip it. */
-              if (this.props.selectedLeague && this.props.selectedLeague !== datapoint.datapoint.leagueId) {
-                return undefined;
-              }
-
+            {datapoints.map((datapoint) => {
               /* All done, render the given table row. */
               return (
                 <tr key={datapoint.datapoint.charname + datapoint.datapoint.experience + datapoint.datapoint.online + datapoint.datapoint.dead}>
@@ -107,6 +103,11 @@ export default class CharacterTableComponent extends React.Component<CharacterTa
                 </tr>
               );
             })}
+            {!datapoints.length && (
+              <tr>
+                <td colSpan={4} className="text-center"><b>Sorry!</b> I've got no datapoints for the given league, try filtering on another league.</td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
