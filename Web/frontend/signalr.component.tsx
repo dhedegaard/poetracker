@@ -1,15 +1,15 @@
 ﻿import React from "react";
 import * as SignalR from '@aspnet/signalr';
 
-import { Datapoint, LeagueType } from "./main.component";
+import { Datapoint, LeagueType, DatapointResult } from "./main.component";
 
 export interface InitialPayload {
   leagues: LeagueType[];
-  latestDatapoints: Datapoint[];
+  latestDatapoints: DatapointResult[];
 }
 
 interface SignalRComponentProps {
-  onSignalRNotifyNewData: (data: Datapoint[]) => void;
+  onSignalRNotifyNewData: (data: DatapointResult[]) => void;
   onSignalRInitialPayload: (data: InitialPayload) => void;
 }
 

@@ -4,6 +4,11 @@ import CharacterTableComponent from './character-table.component';
 import LeagueSelectComponent from './league-select.component';
 import SignalRComponent, { InitialPayload } from './signalr.component';
 
+export interface DatapointResult {
+  datapoint: Datapoint;
+  previousDatapoint?: Datapoint;
+}
+
 export interface Datapoint {
   account: AccountType;
   accountId: string;
@@ -36,7 +41,7 @@ interface MainComponentState {
   error: string;
   leagues: LeagueType[];
   selectedLeague: string;
-  datapoints: Datapoint[];
+  datapoints: DatapointResult[];
 }
 
 export default class MainComponent extends React.Component<{}, MainComponentState> {
@@ -77,7 +82,9 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
       leagues: data.leagues,
       selectedLeague: selectedLeague,
       datapoints: data.latestDatapoints
-        .sort((a, b) => a.experience === b.experience ? a.globalRank - b.globalRank : b.experience - a.experience),
+        .sort((a, b) => a.datapoint.experience === b.datapoint.experience ?
+          a.datapoint.globalRank - b.datapoint.globalRank :
+          b.datapoint.experience - a.datapoint.experience),
     });
     console.log('initial payload:', data);
   }
@@ -85,7 +92,7 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
   /**
    * Triggers when there's new delta data to work on.
    */
-  onSignalRNotifyNewData(data: Datapoint[]) {
+  onSignalRNotifyNewData(data: DatapointResult[]) {
     console.log('NotifyNewData:', data);
     // Copy the datapoints state.
     let datapoints = this.state.datapoints.slice();
@@ -95,7 +102,7 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
 
       // Remove any existing entries for the given char, probably not the
       // most efficient if there's a lot of datapoints.
-      datapoints = datapoints.filter(e => e.charId !== datapoint.charId);
+      datapoints = datapoints.filter(e => e.datapoint.charId !== datapoint.datapoint.charId);
 
       // Push the new datapoint.
       datapoints.push(datapoint);
@@ -103,7 +110,9 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
 
     // Set the new state.
     this.setState({
-      datapoints: datapoints.sort((a, b) => a.experience === b.experience ? b.globalRank - a.globalRank : b.experience - a.experience),
+      datapoints: datapoints.sort((a, b) => a.datapoint.experience === b.datapoint.experience ?
+        b.datapoint.globalRank - a.datapoint.globalRank :
+        b.datapoint.experience - a.datapoint.experience),
     });
   }
 
