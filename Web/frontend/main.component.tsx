@@ -101,10 +101,7 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
     this.setState({
       leagues: data.leagues,
       selectedLeague: selectedLeague,
-      datapoints: data.latestDatapoints
-        .sort((a, b) => a.datapoint.experience === b.datapoint.experience ?
-          a.datapoint.globalRank - b.datapoint.globalRank :
-          b.datapoint.experience - a.datapoint.experience),
+      datapoints: this.sortDatapoints(data.latestDatapoints),
     });
     console.log('initial payload:', data);
   }
@@ -130,10 +127,14 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
 
     // Set the new state.
     this.setState({
-      datapoints: datapoints.sort((a, b) => a.datapoint.experience === b.datapoint.experience ?
-        b.datapoint.globalRank - a.datapoint.globalRank :
-        b.datapoint.experience - a.datapoint.experience),
+      datapoints: this.sortDatapoints(datapoints),
     });
+  }
+
+  sortDatapoints(datapoints: DatapointResult[]): DatapointResult[] {
+    return datapoints.sort((a, b) => a.datapoint.experience === b.datapoint.experience ?
+      a.datapoint.globalRank - b.datapoint.globalRank :
+      b.datapoint.experience - a.datapoint.experience);
   }
 
   /**
