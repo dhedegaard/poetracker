@@ -88,7 +88,9 @@ export default class CharacterTableComponent extends React.Component<CharacterTa
                         {' '}
                       </React.Fragment>
                     )}
-                    {datapoint.datapoint.level}
+                    <span title={`XP: ${datapoint.datapoint.experience.toLocaleString()}`}>
+                      {datapoint.datapoint.level}
+                    </span>
                   </td>
                   {!this.props.selectedLeague && (
                     <td className="d-none d-sm-block">
