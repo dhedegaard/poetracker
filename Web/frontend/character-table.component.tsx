@@ -73,7 +73,7 @@ export default class CharacterTableComponent extends React.Component<CharacterTa
                         Tree
                     </a>
                       {datapoint.datapoint.dead && (
-                        <small className="badge badge-dark"></small>
+                        <small className="badge badge-dark">Dead</small>
                       )}
                     </div>
                     {datapoint.datapoint.charname}
