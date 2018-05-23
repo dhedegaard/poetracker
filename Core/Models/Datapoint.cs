@@ -36,6 +36,10 @@ namespace Core.Models {
         public Account Account { get; set; }
         public string AccountId { get; set; }
 
+        public string PoeProfileURL {
+            get => $"http://poe-profile.info/profile/{AccountId}/{Charname}";
+        }
+
         public override string ToString() =>
                 $"<{nameof(Datapoint)} id={Id}, timestamp={Timestamp}, charname={Charname}>";
 

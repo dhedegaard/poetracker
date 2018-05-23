@@ -23,6 +23,7 @@ export interface Datapoint {
   class: string;
   dead: boolean;
   online: boolean;
+  poeProfileURL: string;
 }
 
 interface AccountType {

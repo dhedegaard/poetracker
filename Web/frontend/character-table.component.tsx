@@ -12,16 +12,6 @@ export default class CharacterTableComponent extends React.Component<CharacterTa
 
   constructor(props: CharacterTableComponentProps) {
     super(props);
-    this.getPoeProfileURL = this.getPoeProfileURL.bind(this);
-    this.getPassiveSkillTreeURL = this.getPassiveSkillTreeURL.bind(this);
-  }
-
-  getPoeProfileURL(accountId: string, charname: string) {
-    return `http://poe-profile.info/profile/${accountId}/${charname}`;
-  }
-
-  getPassiveSkillTreeURL(accountId: string, charname: string) {
-    return `https://www.pathofexile.com/character-window/view-passive-skill-tree?accountName=${accountId}&character=${charname}`;
   }
 
   render() {
@@ -65,13 +55,9 @@ export default class CharacterTableComponent extends React.Component<CharacterTa
                   </td>
                   <td className="text-nowrap" title={`Account name: ${datapoint.datapoint.accountId}`}>
                     <div className="float-right d-none d-sm-block">
-                      <a href={this.getPoeProfileURL(datapoint.datapoint.accountId, datapoint.datapoint.charname)} target="_blank" rel="nofollow" className="badge badge-info">
+                      <a href={datapoint.datapoint.poeProfileURL} target="_blank" rel="nofollow" className="badge badge-info">
                         Profile
-                    </a>
-                      {' '}
-                      <a href={this.getPassiveSkillTreeURL(datapoint.datapoint.accountId, datapoint.datapoint.charname)} rel="nofollow" target="_blank" title="Click to see the passive skill tree" className="badge badge-success">
-                        Tree
-                    </a>
+                      </a>
                     </div>
                     {datapoint.datapoint.charname}
                     {datapoint.datapoint.dead && (
