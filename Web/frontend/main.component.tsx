@@ -62,6 +62,16 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
     this.getCurrentLeague = this.getCurrentLeague.bind(this);
   }
 
+  componentDidMount() {
+    // Patch in a font and use it everywhere (after it's done loading).
+    const link = document.createElement('link');
+    link.href = 'https://fonts.googleapis.com/css?family=Open+Sans:400,700';
+    link.rel = 'stylesheet';
+    link.onload = () => {
+      document.body.style.fontFamily = '"Open Sans", sans-serif';
+    };
+    document.head.appendChild(link);
+  }
 
   /**
    * Triggers on the initial payload, just after the connection was established.
