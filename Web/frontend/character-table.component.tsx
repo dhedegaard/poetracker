@@ -55,6 +55,14 @@ export default class CharacterTableComponent extends React.Component<CharacterTa
                   </td>
                   <td className="text-nowrap" title={`Account name: ${datapoint.datapoint.accountId}`}>
                     <div className="float-right d-none d-sm-block">
+                      {datapoint.datapoint.account.twitchURL && (
+                        <React.Fragment>
+                          <a href={datapoint.datapoint.account.twitchURL} target="_blank" rel="nofollow" className="badge badge-dark badge-twitch" title={`Twitch username: ${datapoint.datapoint.account.twitchUsername}`} >
+                            Twitch
+                          </a>
+                          {' '}
+                        </React.Fragment>
+                      )}
                       <a href={datapoint.datapoint.poeProfileURL} target="_blank" rel="nofollow" className="badge badge-info">
                         Profile
                       </a>
