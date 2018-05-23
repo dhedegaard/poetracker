@@ -69,14 +69,17 @@ export default class CharacterTableComponent extends React.Component<CharacterTa
                         Profile
                     </a>
                       {' '}
-                      <a href={this.getPassiveSkillTreeURL(datapoint.datapoint.accountId, datapoint.datapoint.charname)} rel="nofollow" target="_blank" title="Click to see the passive skill tree" className="badge badge-danger">
+                      <a href={this.getPassiveSkillTreeURL(datapoint.datapoint.accountId, datapoint.datapoint.charname)} rel="nofollow" target="_blank" title="Click to see the passive skill tree" className="badge badge-success">
                         Tree
                     </a>
-                      {datapoint.datapoint.dead && (
-                        <small className="badge badge-dark">Dead</small>
-                      )}
                     </div>
                     {datapoint.datapoint.charname}
+                    {datapoint.datapoint.dead && (
+                      <React.Fragment>
+                        {' '}
+                        <small className="badge badge-danger">Dead</small>
+                      </React.Fragment>
+                    )}
                   </td>
                   <td>
                     {datapoint.datapoint.class}
