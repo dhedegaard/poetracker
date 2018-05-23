@@ -28,6 +28,8 @@ export interface Datapoint {
 
 interface AccountType {
   accountName: string;
+  twitchUsername?: string;
+  twitchURL: string;
 }
 
 export interface LeagueType {
