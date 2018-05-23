@@ -64,7 +64,7 @@ export default class CharacterTableComponent extends React.Component<CharacterTa
                     )}
                   </td>
                   <td className="text-nowrap" title={`Account name: ${datapoint.datapoint.accountId}`}>
-                    <div className="float-right">
+                    <div className="float-right d-none d-sm-block">
                       <a href={this.getPoeProfileURL(datapoint.datapoint.accountId, datapoint.datapoint.charname)} target="_blank" rel="nofollow" className="badge badge-info">
                         Profile
                     </a>

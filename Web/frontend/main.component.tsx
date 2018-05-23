@@ -161,37 +161,49 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
           onSignalRInitialPayload={this.onSignalRInitialPayload}
           onSignalRNotifyNewData={this.onSignalRNotifyNewData}
         />
-        {this.state.error && (
-          <div className="alert alert-danger">
-            <b>Error</b>: {this.state.error}
-            <a onClick={this.onClickReloadPage} className="text-muted" href="javascript:void(0);"><b>Please try reloading the page</b></a>
-          </div>
-        )}
-        <hr />
-        <div className="row form-rom">
-          <label className="col-3 col-md-2 text-right" htmlFor="id_league_select">League:</label>
-          <div className="col-9 col-md-4">
-            <LeagueSelectComponent
-              leagues={this.state.leagues}
-              selectedLeague={this.state.selectedLeague}
-              onLeagueSelect={this.onLeagueSelect}
-            />
-          </div>
-          {this.state.selectedLeague && currentLeague && currentLeague.url && (
-            <div className="d-none d-sm-block col-md-3">
-              <a href={currentLeague.url} target="_blank" rel="nofollow">
-                View league thread
+        {this.state.leagues && this.state.leagues.length && (
+          <React.Fragment>
+            {
+              this.state.error && (
+                <div className="alert alert-danger">
+                  <b>Error</b>: {this.state.error}
+                  <a onClick={this.onClickReloadPage} className="text-muted" href="javascript:void(0);"><b>Please try reloading the page</b></a>
+                </div>
+              )
+            }
+            < hr />
+            <div className="row form-rom">
+              <label className="col-3 col-md-2 text-right" htmlFor="id_league_select">League:</label>
+              <div className="col-9 col-md-4">
+                <LeagueSelectComponent
+                  leagues={this.state.leagues}
+                  selectedLeague={this.state.selectedLeague}
+                  onLeagueSelect={this.onLeagueSelect}
+                />
+              </div>
+              {this.state.selectedLeague && currentLeague && currentLeague.url && (
+                <div className="d-none d-sm-block col-md-3">
+                  <a href={currentLeague.url} target="_blank" rel="nofollow">
+                    View league thread
               </a>
+                </div>
+              )}
             </div>
+            <hr />
+            <CharacterTableComponent
+              leagues={this.state.leagues}
+              datapoints={this.state.datapoints}
+              selectedLeague={this.state.selectedLeague}
+              clickedLeague={this.onLeagueSelect}
+            />
+          </React.Fragment>
+        ) || (
+            // No data yet.
+            <React.Fragment>
+              <br />
+              <div className="alert alert-info text-center">Loading data...</div>
+            </React.Fragment>
           )}
-        </div>
-        <hr />
-        <CharacterTableComponent
-          leagues={this.state.leagues}
-          datapoints={this.state.datapoints}
-          selectedLeague={this.state.selectedLeague}
-          clickedLeague={this.onLeagueSelect}
-        />
       </React.Fragment>
     );
   }
