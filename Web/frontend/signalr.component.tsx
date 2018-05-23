@@ -11,6 +11,7 @@ export interface InitialPayload {
 interface SignalRComponentProps {
   onSignalRNotifyNewData: (data: DatapointResult[]) => void;
   onSignalRInitialPayload: (data: InitialPayload) => void;
+  onSignalRConnectionClosed: () => void;
 }
 
 /**
@@ -37,19 +38,17 @@ export default class SignalRComponent extends React.Component<SignalRComponentPr
     this.connection.on('NotifyNewData', this.props.onSignalRNotifyNewData);
     this.connection.on('InitialPayload', this.props.onSignalRInitialPayload);
 
-    // Handle connection errors to the hub.
-    this.connection.onclose = (error) => {
-      this.setState({
-        error: error.toString(),
-      });
-    };
+    // Handle connection errors to the hub (using private API, fix this later when proper error handling has been implemented).
+    (this.connection as any).closedCallbacks.push(() => {
+      console.log('The SignalR connection got closed.');
+      this.props.onSignalRConnectionClosed();
+    });
 
     // Connect and retry on failure, notifying the user.
     this.connection.start()
       .catch((reason) => {
-        this.setState({
-          error: reason,
-        });
+        console.log('Unable to connect because:', reason);
+        this.props.onSignalRConnectionClosed();
       });
   }
 

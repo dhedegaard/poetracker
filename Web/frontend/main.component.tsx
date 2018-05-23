@@ -56,6 +56,7 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
     };
     this.onSignalRNotifyNewData = this.onSignalRNotifyNewData.bind(this);
     this.onSignalRInitialPayload = this.onSignalRInitialPayload.bind(this);
+    this.onSignalRConnectionClosed = this.onSignalRConnectionClosed.bind(this);
     this.onLeagueSelect = this.onLeagueSelect.bind(this);
     this.onClickReloadPage = this.onClickReloadPage.bind(this);
     this.getCurrentLeague = this.getCurrentLeague.bind(this);
@@ -123,6 +124,15 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
   }
 
   /**
+   * Gets called wheneveer the SignalR connection gets closed for some reason. For now there's no reason for the disconnect.
+   */
+  onSignalRConnectionClosed() {
+    this.setState({
+      error: 'You have been disconnected',
+    });
+  }
+
+  /**
    * Reloads the page, use this as a click event handler when something goes haywire.
    */
   onClickReloadPage(evt: React.MouseEvent<HTMLAnchorElement>) {
@@ -160,6 +170,7 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
         <SignalRComponent
           onSignalRInitialPayload={this.onSignalRInitialPayload}
           onSignalRNotifyNewData={this.onSignalRNotifyNewData}
+          onSignalRConnectionClosed={this.onSignalRConnectionClosed}
         />
         {this.state.leagues && this.state.leagues.length && (
           <React.Fragment>
@@ -167,7 +178,8 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
               this.state.error && (
                 <div className="alert alert-danger">
                   <b>Error</b>: {this.state.error}
-                  <a onClick={this.onClickReloadPage} className="text-muted" href="javascript:void(0);"><b>Please try reloading the page</b></a>
+                  {' '}
+                  <a onClick={this.onClickReloadPage} className="text-primary" href="javascript:void(0);"><b>Reload page</b></a>
                 </div>
               )
             }
