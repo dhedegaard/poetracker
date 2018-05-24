@@ -45,12 +45,11 @@ export default class CharacterTableComponent extends React.Component<CharacterTa
                     {datapoint.previousDatapoint && datapoint.previousDatapoint.globalRank !== datapoint.datapoint.globalRank && (
                       <React.Fragment>
                         {' '}
-                        <span className={'badge ' + (datapoint.datapoint.globalRank < datapoint.previousDatapoint.globalRank ? 'badge-success' : 'badge-danger')}>
-                          {datapoint.datapoint.globalRank > datapoint.previousDatapoint.globalRank && (
-                            <React.Fragment>+</React.Fragment>
-                          )}
-                          {datapoint.datapoint.globalRank - datapoint.previousDatapoint.globalRank}
-                        </span>
+                        <small className={'badge ' + (datapoint.datapoint.globalRank < datapoint.previousDatapoint.globalRank ? 'badge-success' : 'badge-danger')}>
+                          <span>{String.fromCharCode(datapoint.datapoint.globalRank > datapoint.previousDatapoint.globalRank ? 8595 : 8593)}</span>
+                          {' '}
+                          {Math.abs(datapoint.datapoint.globalRank - datapoint.previousDatapoint.globalRank)}
+                        </small>
                       </React.Fragment>
                     )}
                   </td>
