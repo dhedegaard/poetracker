@@ -39,16 +39,17 @@ export default class CharacterTableComponent extends React.Component<CharacterTa
                     <img
                       src={`https://www.pathofexile.com/image/ladder/${datapoint.datapoint.online ? 'online' : 'offline'}.png`}
                       title={datapoint.datapoint.online ? 'Online' : 'Offline'} width={15} height={15}
-                    />{' '}
+                    />
+                    {' '}
                     <span>{datapoint.datapoint.globalRank}</span>
                     {datapoint.previousDatapoint && datapoint.previousDatapoint.globalRank !== datapoint.datapoint.globalRank && (
                       <React.Fragment>
                         {' '}
-                        <span className={'badge ' + (datapoint.datapoint.globalRank > datapoint.previousDatapoint.globalRank ? 'badge-success' : 'badge-danger')}>
+                        <span className={'badge ' + (datapoint.datapoint.globalRank < datapoint.previousDatapoint.globalRank ? 'badge-success' : 'badge-danger')}>
                           {datapoint.datapoint.globalRank > datapoint.previousDatapoint.globalRank && (
                             <React.Fragment>+</React.Fragment>
                           )}
-                          {datapoint.datapoint.globalRank - datapoint.previousDatapoint.globalRank}
+                          {datapoint.previousDatapoint.globalRank - datapoint.datapoint.globalRank}
                         </span>
                       </React.Fragment>
                     )}
