@@ -49,7 +49,7 @@ export default class CharacterTableComponent extends React.Component<CharacterTa
                           {datapoint.datapoint.globalRank > datapoint.previousDatapoint.globalRank && (
                             <React.Fragment>+</React.Fragment>
                           )}
-                          {datapoint.previousDatapoint.globalRank - datapoint.datapoint.globalRank}
+                          {datapoint.datapoint.globalRank - datapoint.previousDatapoint.globalRank}
                         </span>
                       </React.Fragment>
                     )}
