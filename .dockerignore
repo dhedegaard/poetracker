@@ -76,3 +76,4 @@ Dockerfile
 */dump.rdb
 Web/wwwroot/**/*.js
 Web/frontend/**/*.js
+.vscode
