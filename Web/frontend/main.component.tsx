@@ -3,6 +3,7 @@
 import CharacterTableComponent from './character-table.component';
 import LeagueSelectComponent from './league-select.component';
 import SignalRComponent, { InitialPayload } from './signalr.component';
+import FilterComponent from './filter.component';
 
 export interface DatapointResult {
   datapoint: Datapoint;
@@ -48,6 +49,7 @@ interface MainComponentState {
 }
 
 export default class MainComponent extends React.Component<{}, MainComponentState> {
+  filterComponent!: FilterComponent;
 
   constructor(props: {}) {
     super(props);
@@ -62,7 +64,6 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
     this.onSignalRConnectionClosed = this.onSignalRConnectionClosed.bind(this);
     this.onLeagueSelect = this.onLeagueSelect.bind(this);
     this.onClickReloadPage = this.onClickReloadPage.bind(this);
-    this.getCurrentLeague = this.getCurrentLeague.bind(this);
   }
 
   componentDidMount() {
@@ -101,7 +102,7 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
     this.setState({
       leagues: data.leagues,
       selectedLeague: selectedLeague,
-      datapoints: this.sortDatapoints(data.latestDatapoints),
+      datapoints: data.latestDatapoints,
     });
     console.log('initial payload:', data);
   }
@@ -127,14 +128,8 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
 
     // Set the new state.
     this.setState({
-      datapoints: this.sortDatapoints(datapoints),
+      datapoints: datapoints,
     });
-  }
-
-  sortDatapoints(datapoints: DatapointResult[]): DatapointResult[] {
-    return datapoints.sort((a, b) => a.datapoint.experience === b.datapoint.experience ?
-      a.datapoint.globalRank - b.datapoint.globalRank :
-      b.datapoint.experience - a.datapoint.experience);
   }
 
   /**
@@ -167,18 +162,10 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
     }
   }
 
-  /**
-   * Calculates and returns the current LeagueType object, based on what is current selected.
-   */
-  getCurrentLeague(): LeagueType | undefined {
-    if (!this.state.selectedLeague) {
-      return undefined;
-    }
-    return this.state.leagues.filter(e => e.id === this.state.selectedLeague)[0];
-  }
 
   render() {
-    const currentLeague = this.getCurrentLeague();
+    const datapoints = (this.filterComponent || new FilterComponent({} as any)).filterDatapoints(this.state.datapoints);
+
     return (
       <React.Fragment>
         <SignalRComponent
@@ -188,37 +175,23 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
         />
         {this.state.leagues && this.state.leagues.length && (
           <React.Fragment>
-            {
-              this.state.error && (
-                <div className="alert alert-danger">
-                  <b>Error</b>: {this.state.error}
-                  {' '}
-                  <a onClick={this.onClickReloadPage} className="text-primary" href="javascript:void(0);"><b>Reload page</b></a>
-                </div>
-              )
-            }
-            < hr />
-            <div className="row form-rom">
-              <label className="col-3 col-md-2 text-right" htmlFor="id_league_select">League:</label>
-              <div className="col-9 col-md-4">
-                <LeagueSelectComponent
-                  leagues={this.state.leagues}
-                  selectedLeague={this.state.selectedLeague}
-                  onLeagueSelect={this.onLeagueSelect}
-                />
+            {this.state.error && (
+              <div className="alert alert-danger">
+                <b>Error</b>: {this.state.error}
+                {' '}
+                <a onClick={this.onClickReloadPage} className="text-primary" href="javascript:void(0);"><b>Reload page</b></a>
               </div>
-              {this.state.selectedLeague && currentLeague && currentLeague.url && (
-                <div className="d-none d-sm-block col-md-3">
-                  <a href={currentLeague.url} target="_blank" rel="nofollow">
-                    View league thread
-              </a>
-                </div>
-              )}
-            </div>
+            )}
+            < hr />
+            <FilterComponent
+              onFilterChanged={() => { this.forceUpdate(); }}
+              leagues={this.state.leagues}
+              ref={(filterComponent) => { this.filterComponent = filterComponent!; }}
+            />
             <hr />
             <CharacterTableComponent
               leagues={this.state.leagues}
-              datapoints={this.state.datapoints}
+              datapoints={datapoints}
               selectedLeague={this.state.selectedLeague}
               clickedLeague={this.onLeagueSelect}
             />

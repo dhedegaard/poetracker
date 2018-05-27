@@ -1,14 +1,14 @@
-﻿import React from "react";
-import * as SignalR from '@aspnet/signalr';
+﻿import * as SignalR from '@aspnet/signalr';
+import React from "react";
 
-import { Datapoint, LeagueType, DatapointResult } from "./main.component";
+import { Datapoint, DatapointResult, LeagueType } from "./main.component";
 
 export interface InitialPayload {
   leagues: LeagueType[];
   latestDatapoints: DatapointResult[];
 }
 
-interface SignalRComponentProps {
+interface ISignalRComponentProps {
   onSignalRNotifyNewData: (data: DatapointResult[]) => void;
   onSignalRInitialPayload: (data: InitialPayload) => void;
   onSignalRConnectionClosed: () => void;
@@ -17,10 +17,10 @@ interface SignalRComponentProps {
 /**
  * Handles the wrapping of the SignalR stuff, emits events with data from the callbacks in props.
  */
-export default class SignalRComponent extends React.Component<SignalRComponentProps, {}> {
+export default class SignalRComponent extends React.Component<ISignalRComponentProps, {}> {
   connection!: SignalR.HubConnection;
 
-  constructor(props: SignalRComponentProps) {
+  constructor(props: ISignalRComponentProps) {
     super(props);
     this.connectSignalR = this.connectSignalR.bind(this);
   }
@@ -38,7 +38,8 @@ export default class SignalRComponent extends React.Component<SignalRComponentPr
     this.connection.on('NotifyNewData', this.props.onSignalRNotifyNewData);
     this.connection.on('InitialPayload', this.props.onSignalRInitialPayload);
 
-    // Handle connection errors to the hub (using private API, fix this later when proper error handling has been implemented).
+    // Handle connection errors to the hub (using private API, fix this later when proper error handling has been
+    // implemented).
     (this.connection as any).closedCallbacks.push(() => {
       console.log('The SignalR connection got closed.');
       this.props.onSignalRConnectionClosed();
@@ -52,12 +53,10 @@ export default class SignalRComponent extends React.Component<SignalRComponentPr
       });
   }
 
-
   componentDidMount() {
     // Setup the SignalR connection.
     this.connectSignalR();
   }
-
 
   componentWillUnmount() {
     // Tear down the SignalR connection.

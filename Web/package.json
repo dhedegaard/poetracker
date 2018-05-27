@@ -11,6 +11,7 @@
     "awesome-typescript-loader": "^5.0.0",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
+    "tslint": "^5.10.0",
     "typescript": "^2.8.3",
     "webpack": "^4.8.3",
     "webpack-cli": "^2.1.3"
