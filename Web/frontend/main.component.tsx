@@ -1,23 +1,23 @@
 ﻿import React from 'react';
 
 import CharacterTableComponent from './character-table.component';
-import LeagueSelectComponent from './league-select.component';
-import SignalRComponent, { InitialPayload } from './signalr.component';
 import FilterComponent from './filter.component';
+import LeagueSelectComponent from './league-select.component';
+import SignalRComponent, { IInitialPayload } from './signalr.component';
 
-export interface DatapointResult {
-  datapoint: Datapoint;
-  previousDatapoint?: Datapoint;
+export interface IDatapointResult {
+  datapoint: IDatapoint;
+  previousDatapoint?: IDatapoint;
 }
 
-export interface Datapoint {
-  account: AccountType;
+export interface IDatapoint {
+  account: IAccountType;
   accountId: string;
   charId: string;
   charname: string;
   experience: number;
   globalRank: number;
-  league: LeagueType;
+  league: ILeagueType;
   leagueId: string;
   level: number;
   timestamp: string;
@@ -27,37 +27,36 @@ export interface Datapoint {
   poeProfileURL: string;
 }
 
-interface AccountType {
+interface IAccountType {
   accountName: string;
   twitchUsername?: string;
   twitchURL: string;
 }
 
-export interface LeagueType {
+export interface ILeagueType {
   id: string;
   startAt: string;
   endAt?: string;
   url: string;
 }
 
-
-interface MainComponentState {
+interface IMainComponentState {
   error: string;
-  leagues: LeagueType[];
+  leagues: ILeagueType[];
   selectedLeague: string;
-  datapoints: DatapointResult[];
+  datapoints: IDatapointResult[];
 }
 
-export default class MainComponent extends React.Component<{}, MainComponentState> {
+export default class MainComponent extends React.Component<{}, IMainComponentState> {
   filterComponent!: FilterComponent;
 
   constructor(props: {}) {
     super(props);
     this.state = {
+      datapoints: [],
       error: '',
       leagues: [],
       selectedLeague: '',
-      datapoints: [],
     };
     this.onSignalRNotifyNewData = this.onSignalRNotifyNewData.bind(this);
     this.onSignalRInitialPayload = this.onSignalRInitialPayload.bind(this);
@@ -80,7 +79,7 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
   /**
    * Triggers on the initial payload, just after the connection was established.
    */
-  onSignalRInitialPayload(data: InitialPayload) {
+  onSignalRInitialPayload(data: IInitialPayload) {
     let selectedLeague = '';
 
     // Check for an existing selectedLeague value from the localStorage.
@@ -89,20 +88,20 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
     }
 
     // Check if what we have is valid, otherwise default to the first element (if any).
-    if (!selectedLeague || !data.leagues || !data.leagues.filter(e => e.id === selectedLeague)) {
+    if (!selectedLeague || !data.leagues || !data.leagues.filter((e) => e.id === selectedLeague)) {
       selectedLeague = '';
     }
 
     // If there's no league selected, and there's no league data in the localStorage,
     // select the last league that's not either HC or SSF.
     if (selectedLeague === '' && window.localStorage && window.localStorage.getItem('selectedLeague') === null) {
-      selectedLeague = data.leagues.filter(e => e.id.indexOf('HC') === -1 && e.id.indexOf('SSF') === -1)[0].id;
+      selectedLeague = data.leagues.filter((e) => e.id.indexOf('HC') === -1 && e.id.indexOf('SSF') === -1)[0].id;
     }
 
     this.setState({
-      leagues: data.leagues,
-      selectedLeague: selectedLeague,
       datapoints: data.latestDatapoints,
+      leagues: data.leagues,
+      selectedLeague,
     });
     console.log('initial payload:', data);
   }
@@ -110,7 +109,7 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
   /**
    * Triggers when there's new delta data to work on.
    */
-  onSignalRNotifyNewData(data: DatapointResult[]) {
+  onSignalRNotifyNewData(data: IDatapointResult[]) {
     console.log('NotifyNewData:', data);
     // Copy the datapoints state.
     let datapoints = this.state.datapoints.slice();
@@ -120,7 +119,7 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
 
       // Remove any existing entries for the given char, probably not the
       // most efficient if there's a lot of datapoints.
-      datapoints = datapoints.filter(e => e.datapoint.charId !== datapoint.datapoint.charId);
+      datapoints = datapoints.filter((e) => e.datapoint.charId !== datapoint.datapoint.charId);
 
       // Push the new datapoint.
       datapoints.push(datapoint);
@@ -128,12 +127,13 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
 
     // Set the new state.
     this.setState({
-      datapoints: datapoints,
+      datapoints,
     });
   }
 
   /**
-   * Gets called wheneveer the SignalR connection gets closed for some reason. For now there's no reason for the disconnect.
+   * Gets called wheneveer the SignalR connection gets closed for some reason. For now there's no reason for the
+   * disconnect.
    */
   onSignalRConnectionClosed() {
     this.setState({
@@ -162,7 +162,6 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
     }
   }
 
-
   render() {
     const datapoints = (this.filterComponent || new FilterComponent({} as any)).filterDatapoints(this.state.datapoints);
 
@@ -176,13 +175,17 @@ export default class MainComponent extends React.Component<{}, MainComponentStat
         {this.state.leagues && this.state.leagues.length && (
           <React.Fragment>
             {this.state.error && (
-              <div className="alert alert-danger">
-                <b>Error</b>: {this.state.error}
-                {' '}
-                <a onClick={this.onClickReloadPage} className="text-primary" href="javascript:void(0);"><b>Reload page</b></a>
-              </div>
+              <React.Fragment>
+                <div className="alert alert-danger">
+                  <b>Error</b>: {this.state.error}
+                  {' '}
+                  <a onClick={this.onClickReloadPage} className="text-primary" href="javascript:void(0);">
+                    <b>Reload page</b>
+                  </a>
+                </div>
+                <hr />
+              </React.Fragment>
             )}
-            < hr />
             <FilterComponent
               onFilterChanged={() => { this.forceUpdate(); }}
               leagues={this.state.leagues}

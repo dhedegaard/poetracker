@@ -1,14 +1,14 @@
 ﻿import React from "react";
 
-import { LeagueType } from "./main.component";
+import { ILeagueType } from "./main.component";
 
-interface LeagueSelectComponentProps {
+interface ILeagueSelectComponentProps {
   selectedLeague: string;
-  leagues: LeagueType[];
+  leagues: ILeagueType[];
   onLeagueSelect: (league: string) => void;
 }
 
-export default class LeagueSelectComponent extends React.Component<LeagueSelectComponentProps, {}> {
+export default class LeagueSelectComponent extends React.Component<ILeagueSelectComponentProps, {}> {
   render() {
     return (
       <select

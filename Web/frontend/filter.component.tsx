@@ -1,63 +1,63 @@
 import React from "react";
 import LeagueSelectComponent from "./league-select.component";
-import { LeagueType, Datapoint, DatapointResult } from "./main.component";
+import { IDatapoint, IDatapointResult, ILeagueType } from "./main.component";
 
-interface FilterComponentProps {
-  leagues: LeagueType[];
+interface IFilterComponentProps {
+  leagues: ILeagueType[];
   onFilterChanged: () => void;
 }
 
-interface FilterComponentState {
+interface IFilterComponentState {
   selectedLeague: string;
   hideDead: boolean;
   onlyShowOnline: boolean;
   hideStreamers: boolean;
 }
 
-export default class FilterComponent extends React.Component<FilterComponentProps, FilterComponentState> {
-  constructor(props: FilterComponentProps) {
+export default class FilterComponent extends React.Component<IFilterComponentProps, IFilterComponentState> {
+  constructor(props: IFilterComponentProps) {
     super(props);
     this.onLeagueSelect = this.onLeagueSelect.bind(this);
     this.getCurrentLeague = this.getCurrentLeague.bind(this);
 
     /* Determine the initial state. */
     this.state = {
-      selectedLeague: '',
       hideDead: false,
-      onlyShowOnline: false,
       hideStreamers: false,
+      onlyShowOnline: false,
+      selectedLeague: '',
     };
     const oldState = localStorage.getItem('filterState');
     if (oldState) {
       try {
-        this.state = JSON.parse(oldState) as FilterComponentState;
-      } catch { };
+        this.state = JSON.parse(oldState) as IFilterComponentState;
+      } catch { /* noop */ }
     }
   }
 
   /**
    * Filters the given datapoints based on the current state.
    */
-  public filterDatapoints(datapoints: DatapointResult[]): DatapointResult[] {
+  public filterDatapoints(datapoints: IDatapointResult[]): IDatapointResult[] {
     // Filter based on league.
     if (this.state.selectedLeague) {
       datapoints = datapoints
-        .filter(e => e.datapoint.leagueId === this.state.selectedLeague);
+        .filter((e) => e.datapoint.leagueId === this.state.selectedLeague);
     }
 
     // Filter away the dead.
     if (this.state.hideDead) {
-      datapoints = datapoints.filter(e => !e.datapoint.dead);
+      datapoints = datapoints.filter((e) => !e.datapoint.dead);
     }
 
     // Filter away the offline.
     if (this.state.onlyShowOnline) {
-      datapoints = datapoints.filter(e => e.datapoint.online);
+      datapoints = datapoints.filter((e) => e.datapoint.online);
     }
 
     // Filter away the streamers.
     if (this.state.hideStreamers) {
-      datapoints = datapoints.filter(e => !e.datapoint.account.twitchUsername)
+      datapoints = datapoints.filter((e) => !e.datapoint.account.twitchUsername);
     }
 
     // Finally, sort and return whatever remains.
@@ -76,15 +76,15 @@ export default class FilterComponent extends React.Component<FilterComponentProp
   /**
    * Calculates and returns the current LeagueType object, based on what is current selected.
    */
-  getCurrentLeague(): LeagueType | undefined {
+  getCurrentLeague(): ILeagueType | undefined {
     if (!this.state.selectedLeague) {
       return undefined;
     }
-    return this.props.leagues.filter(e => e.id === this.state.selectedLeague)[0];
+    return this.props.leagues.filter((e) => e.id === this.state.selectedLeague)[0];
   }
 
-  componentDidUpdate(prevProps: FilterComponentProps, prevState: FilterComponentState) {
-    if (prevState != this.state) {
+  componentDidUpdate(prevProps: IFilterComponentProps, prevState: IFilterComponentState) {
+    if (prevState !== this.state) {
       /* If the state changes, store the new state and propagate. */
       localStorage.setItem('filterState', JSON.stringify(this.state));
       this.props.onFilterChanged();
@@ -95,7 +95,7 @@ export default class FilterComponent extends React.Component<FilterComponentProp
     const currentLeague = this.getCurrentLeague();
 
     return (
-      <div className="row form-row">
+      <div className="row alert alert-secondary">
         <div className="col-md-6 col-12">
           <div className="row">
             <label
@@ -128,7 +128,7 @@ export default class FilterComponent extends React.Component<FilterComponentProp
                 type="checkbox"
                 checked={this.state.hideDead}
                 onChange={(evt) => {
-                  this.setState({ hideDead: evt.currentTarget.checked, });
+                  this.setState({ hideDead: evt.currentTarget.checked });
                 }}
               />
               < label htmlFor="id_hide_dead">Hide dead</label>
@@ -139,7 +139,7 @@ export default class FilterComponent extends React.Component<FilterComponentProp
                 type="checkbox"
                 checked={this.state.onlyShowOnline}
                 onChange={(evt) => {
-                  this.setState({ onlyShowOnline: evt.currentTarget.checked, });
+                  this.setState({ onlyShowOnline: evt.currentTarget.checked });
                 }}
               />
               <label htmlFor="id_only_show_online">Only show online</label>
@@ -150,7 +150,7 @@ export default class FilterComponent extends React.Component<FilterComponentProp
                 type="checkbox"
                 checked={this.state.hideStreamers}
                 onChange={(evt) => {
-                  this.setState({ hideStreamers: evt.currentTarget.checked, });
+                  this.setState({ hideStreamers: evt.currentTarget.checked });
                 }}
               />
               <label htmlFor="id_hide_streamers">Hide streamers</label>
@@ -158,6 +158,6 @@ export default class FilterComponent extends React.Component<FilterComponentProp
           </div>
         </div>
       </div>
-    )
+    );
   }
 }

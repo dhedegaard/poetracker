@@ -1,10 +1,11 @@
 ﻿import React from "react";
-import { DatapointResult, LeagueType } from "./main.component";
+
+import { IDatapointResult, ILeagueType } from "./main.component";
 
 interface ICharacterTableComponentProps {
   // Data
-  datapoints: DatapointResult[];
-  leagues: LeagueType[];
+  datapoints: IDatapointResult[];
+  leagues: ILeagueType[];
   // Filters
   selectedLeague: string;
   // Callbacks
@@ -67,7 +68,10 @@ export default class CharacterTableComponent extends React.Component<ICharacterT
                         </React.Fragment>
                       )}
                   </td>
-                  <td className="text-nowrap" title={`Account name: ${datapoint.datapoint.accountId}`}>
+                  <td className="text-nowrap" title={
+                    `Account name: ${datapoint.datapoint.accountId}\n` +
+                    `League: ${datapoint.datapoint.leagueId}`
+                  }>
                     <div className="float-right d-none d-sm-block">
                       {datapoint.datapoint.account.twitchURL && (
                         <React.Fragment>
