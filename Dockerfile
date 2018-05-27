@@ -12,8 +12,7 @@ RUN apt-get update -qq && \
 
 # Add NodeJs.
 RUN curl -sL -q https://deb.nodesource.com/setup_8.x | bash - && \
-    apt-get install -qqy nodejs && \
-    npm i -g yarn
+    apt-get install -qqy nodejs
 
 # Restore .dotnet core packages.
 WORKDIR /source/Core
@@ -27,9 +26,9 @@ RUN dotnet restore
 WORKDIR /source
 
 # Install all nodejs dependencies globally.
-WORKDIR /
+WORKDIR /source/Web
 COPY Web/package.json .
-RUN yarn install --non-interactive
+RUN npm install --silent
 
 # Copy everything in.
 WORKDIR /source
@@ -41,7 +40,7 @@ RUN dotnet publish --output /app --configuration Release
 
 # Build the frontend.
 WORKDIR /source/Web
-RUN /node_modules/.bin/webpack -p
+RUN npm start
 RUN dotnet publish --output /app --configuration Release
 
 # Run the published application.
