@@ -39,7 +39,7 @@ namespace Web.Hubs {
 
             // If the previous datapoint is the same as the current datapoint (ie the current datapoint if before the dataBreakpoint), set the previous datapoint to null.
             if (previousDatapoint != null && previousDatapoint.Id == datapoint.Id) {
-                // previousDatapoint = null;
+                previousDatapoint = null;
             }
 
             return new DatapointResult {
