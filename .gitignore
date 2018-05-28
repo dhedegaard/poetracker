@@ -65,4 +65,3 @@ htmlcov
 Web/wwwroot/**/*.js
 Web/frontend/**/*.js
 **/*.csproj.user
-.vscode
