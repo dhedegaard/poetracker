@@ -138,8 +138,7 @@ export default class CharacterTableComponent extends React.Component<ICharacterT
                   </td>
                 ) || undefined}
               </tr>
-            );
-            })}
+            ))}
             {!this.props.datapoints.length && (
               <tr>
                 <td colSpan={4} className="text-center">
