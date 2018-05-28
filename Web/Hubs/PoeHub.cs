@@ -67,5 +67,19 @@ namespace Web.Hubs {
             SendInitialPayload();
             return base.OnConnectedAsync();
         }
+
+        internal struct GetCharDataResult {
+            public string CharId { get; set; }
+            public IEnumerable<Datapoint> Datapoints { get; set; }
+        }
+
+        public Task GetCharData(string charId) {
+            return Clients.Caller.SendAsync("GetCharData", new GetCharDataResult {
+                CharId = charId,
+                Datapoints = poeContext.Datapoints
+                    .Where(e => e.CharId == charId)
+                    .OrderByDescending(e => e.Timestamp),
+            });
+        }
     }
 }

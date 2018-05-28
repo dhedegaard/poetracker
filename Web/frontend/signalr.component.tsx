@@ -14,6 +14,11 @@ interface ISignalRComponentProps {
   onSignalRConnectionClosed: () => void;
 }
 
+interface IGetCharDataResult {
+  charId: string;
+  datapoints: IDatapoint[];
+}
+
 /**
  * Handles the wrapping of the SignalR stuff, emits events with data from the callbacks in props.
  */
@@ -23,6 +28,7 @@ export default class SignalRComponent extends React.Component<ISignalRComponentP
   constructor(props: ISignalRComponentProps) {
     super(props);
     this.connectSignalR = this.connectSignalR.bind(this);
+    this.getCharData = this.getCharData.bind(this);
   }
 
   /**
@@ -63,6 +69,28 @@ export default class SignalRComponent extends React.Component<ISignalRComponentP
     if (this.connection) {
       this.connection.stop();
     }
+  }
+
+  /**
+   * Fetches data for a given character, returning a resolvable promise.
+   */
+  getCharData(charId: string): Promise<IDatapoint[]> {
+    return new Promise((resolve, reject) => {
+      /* Define a handler, that responds to character data. */
+      const handler = (data: IGetCharDataResult) => {
+        /* If this data is not for the charId we expect, skip it. */
+        if (data.charId !== charId) {
+          return;
+        }
+        /* Otherwise, remove the handler and return the datapoints. */
+        this.connection.off('GetCharData', handler);
+        return resolve(data.datapoints);
+      };
+
+      /* Add the handler and invoke the SignalR method on the Hub. */
+      this.connection.on("GetCharData", handler);
+      this.connection.invoke("GetCharData", charId);
+    });
   }
 
   render() {

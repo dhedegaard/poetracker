@@ -49,6 +49,7 @@ interface IMainComponentState {
 
 export default class MainComponent extends React.Component<{}, IMainComponentState> {
   filterComponent!: FilterComponent;
+  signalRComponent!: SignalRComponent;
 
   constructor(props: {}) {
     super(props);
@@ -168,6 +169,7 @@ export default class MainComponent extends React.Component<{}, IMainComponentSta
     return (
       <React.Fragment>
         <SignalRComponent
+          ref={(elem) => { this.signalRComponent = elem!; }}
           onSignalRInitialPayload={this.onSignalRInitialPayload}
           onSignalRNotifyNewData={this.onSignalRNotifyNewData}
           onSignalRConnectionClosed={this.onSignalRConnectionClosed}
@@ -197,6 +199,7 @@ export default class MainComponent extends React.Component<{}, IMainComponentSta
               datapoints={datapoints}
               selectedLeague={this.state.selectedLeague}
               clickedLeague={this.onLeagueSelect}
+              getCharData={this.signalRComponent.getCharData}
             />
           </React.Fragment>
         ) || (
