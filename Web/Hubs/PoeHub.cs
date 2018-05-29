@@ -78,7 +78,7 @@ namespace Web.Hubs {
                 CharId = charId,
                 Datapoints = poeContext.Datapoints
                     .Where(e => e.CharId == charId)
-                    .OrderByDescending(e => e.Timestamp),
+                    .OrderBy(e => e.Timestamp),
             });
         }
     }
