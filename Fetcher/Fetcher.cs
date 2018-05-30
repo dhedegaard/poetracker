@@ -51,6 +51,7 @@ namespace Fetcher {
 
         static async Task FetchUpdateDatapoints(PoeContext context, HubConnection hubConnection) {
             var leagues = context.Leagues
+                .Where(e => e.EndAt < DateTimeOffset.UtcNow)
                 .ToList();
             foreach (var account in context.Accounts) {
                 logger.LogInformation("Fetching new datapoints for account: {0}", account);
