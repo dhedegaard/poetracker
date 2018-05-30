@@ -1,5 +1,6 @@
 ﻿const { CheckerPlugin } = require('awesome-typescript-loader');
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
     context: path.resolve(__dirname, 'frontend'),
@@ -22,6 +23,7 @@ module.exports = {
         ]
     },
     plugins: [
-        new CheckerPlugin()
+        new CheckerPlugin(),
+        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
     ]
 };
