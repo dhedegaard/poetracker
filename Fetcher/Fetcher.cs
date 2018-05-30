@@ -55,15 +55,33 @@ namespace Fetcher {
                 .Where(e => e.EndAt == null || e.EndAt >= DateTimeOffset.UtcNow)
                 .ToList();
             foreach (var account in context.Accounts) {
+                var windowCharacters = await CharactersApi.GetCharacters(account.AccountName);
+
+                // Temporary cleanup: Delete any datapoints, for the given charname + accountid where the league is not the same as the one in windowCharacters.
+                foreach (var windowChar in windowCharacters) {
+                    context.RemoveRange(context.Datapoints
+                        .Where(e =>
+                            e.AccountId == account.AccountName &&
+                            e.Charname == windowChar.Name &&
+                            e.LeagueId != windowChar.League));
+                    await context.SaveChangesAsync();
+                }
+
                 logger.LogInformation("Fetching new datapoints for account: {0}", account);
                 foreach (var league in leagues) {
                     var characters = await LaddersApi.GetAccountCharacters(league.Id, account.AccountName);
-
-                    // Persist any changes to the backend and notify the hub.
                     if (characters.Any()) {
-
                         var datapoints = new List<Datapoint>();
                         foreach (var character in characters) {
+
+                            // If there are no characters with that name in
+                            // the current league, based on the character
+                            // window data, skip it.
+                            if (!windowCharacters.Any(c =>
+                                    c.Name == character.Name &&
+                                    c.League == league.Id)) {
+                                continue;
+                            }
                             // Find the latest datapoint for the same character, in the same league. If
                             // there's no existing data, the XP has changed or the dead state has changed.
                             // Added a new datapoint.
@@ -79,15 +97,6 @@ namespace Fetcher {
                                     latestDatapoint.Experience != character.Experience ||
                                     latestDatapoint.Dead != character.Dead ||
                                     latestDatapoint.Online != character.Online) {
-
-                                /* For dead characters, ignore datapoints for never-ending leagues until after the
-                                   temporary league for the last datapoint has ended. */
-                                if (character.Dead &&
-                                    league.EndAt == null &&
-                                    latestDatapoint.League.EndAt != null &&
-                                    latestDatapoint.League.EndAt < DateTimeOffset.UtcNow) {
-                                    continue;
-                                }
 
                                 var datapoint = new Datapoint {
                                     CharId = character.CharId,
