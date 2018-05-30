@@ -58,6 +58,7 @@ namespace Web.Hubs {
                   .ToList()
                   .Select(e => GenerateDatapointResult(e.First())),
                 Leagues = poeContext.Leagues
+                  .Where(e => e.EndAt == null || e.EndAt >= DateTimeOffset.UtcNow)
                   .OrderByDescending(e => e.StartAt)
                   .ToList(),
             });
