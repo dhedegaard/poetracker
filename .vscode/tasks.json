@@ -15,6 +15,7 @@
             }
         },
         {
+            "label": "webpack watch",
             "type": "npm",
             "script": "watch",
             "path": "Web/",
