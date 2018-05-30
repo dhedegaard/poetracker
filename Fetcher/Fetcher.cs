@@ -2,6 +2,7 @@
 using Core.Apis;
 using Core.Models;
 using Microsoft.AspNetCore.SignalR.Client;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -51,7 +52,7 @@ namespace Fetcher {
 
         static async Task FetchUpdateDatapoints(PoeContext context, HubConnection hubConnection) {
             var leagues = context.Leagues
-                .Where(e => e.EndAt < DateTimeOffset.UtcNow)
+                .Where(e => e.EndAt == null || e.EndAt < DateTimeOffset.UtcNow)
                 .ToList();
             foreach (var account in context.Accounts) {
                 logger.LogInformation("Fetching new datapoints for account: {0}", account);
@@ -67,6 +68,7 @@ namespace Fetcher {
                             // there's no existing data, the XP has changed or the dead state has changed.
                             // Added a new datapoint.
                             var latestDatapoint = context.Datapoints
+                                .Include(e => e.League)
                                 .Where(e => e.CharId == character.CharId &&
                                             e.LeagueId == league.Id &&
                                             e.AccountId == account.AccountName)
@@ -77,6 +79,16 @@ namespace Fetcher {
                                     latestDatapoint.Experience != character.Experience ||
                                     latestDatapoint.Dead != character.Dead ||
                                     latestDatapoint.Online != character.Online) {
+
+                                /* For dead characters, ignore datapoints for never-ending leagues until after the
+                                   temporary league for the last datapoint has ended. */
+                                if (character.Dead &&
+                                    league.EndAt == null &&
+                                    latestDatapoint.League.EndAt != null &&
+                                    latestDatapoint.League.EndAt < DateTimeOffset.UtcNow) {
+                                    continue;
+                                }
+
                                 var datapoint = new Datapoint {
                                     CharId = character.CharId,
                                     Account = account,
