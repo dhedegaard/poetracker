@@ -17,52 +17,94 @@ export default class GlobalrankGraphComponent extends React.Component<IComponent
     }
 
     return (
-      <Line data={{
-        datasets: [{
-          borderColor: '#4b367c',
-          data: this.props.graphData.map((e) => ({
-            x: e.timestampDate,
-            y: e.globalRank,
-          })),
-          fill: false,
-          label: 'Global rank',
-          pointBackgroundColor: '#ffffff',
-        }],
-        labels: this.props.graphData.map((e) => e.timestampDate.toLocaleString()),
-      }} options={{
-        elements: {
-          line: {
-            // tension: 0,
-          },
-        },
-        scales: {
-          xAxes: [{
-            distribution: 'linear',
-            ticks: {
-              autoSkip: true,
-              source: 'auto',
+      <div className="row">
+        <div className="col-6">
+          <Line data={{
+            datasets: [{
+              backgroundColor: '#4b367c',
+              borderColor: '#4b367c',
+              data: this.props.graphData.map((e) => ({
+                x: e.timestampDate,
+                y: e.globalRank,
+              })),
+              fill: false,
+              label: 'Global rank',
+            }],
+            labels: this.props.graphData.map((e) => e.timestampDate.toLocaleString()),
+          }} options={{
+            scales: {
+              xAxes: [{
+                distribution: 'linear',
+                ticks: {
+                  autoSkip: true,
+                  source: 'auto',
+                },
+                time: {
+                  displayFormats: {
+                    minute: 'YYYY-MM-DD HH:MM',
+                  },
+                  unit: 'minute',
+                },
+                type: 'time',
+              }],
+              yAxes: [{
+                ticks: {
+                  beginAtZero: true,
+                  callback: (value) => {
+                    if (Number.isInteger(value)) {
+                      return value;
+                    }
+                  },
+                },
+              }],
             },
-            time: {
-              displayFormats: {
-                minute: 'YYYY-MM-DD HH:MM',
-              },
-              unit: 'minute',
+          }}
+          />
+        </div>
+        <div className="col-6">
+          <Line data={{
+            datasets: [{
+              backgroundColor: '#17a2b8',
+              borderColor: '#17a2b8',
+              data: this.props.graphData.map((e) => ({
+                x: e.timestampDate,
+                y: e.experience,
+              })),
+              fill: false,
+              label: 'Experience',
+            }],
+            labels: this.props.graphData.map((e) => e.timestampDate.toLocaleString()),
+          }} options={{
+            scales: {
+              xAxes: [{
+                distribution: 'linear',
+                ticks: {
+                  autoSkip: true,
+                  source: 'auto',
+                },
+                time: {
+                  displayFormats: {
+                    minute: 'YYYY-MM-DD HH:MM',
+                  },
+                  unit: 'minute',
+                },
+                type: 'time',
+              }],
+              yAxes: [{
+                ticks: {
+                  beginAtZero: true,
+                  callback: (value) => {
+                    if (Number.isInteger(value)) {
+                      return value;
+                    }
+                  },
+                },
+              }],
             },
-            type: 'time',
-          }],
-          yAxes: [{
-            ticks: {
-              beginAtZero: true,
-              callback: (value) => {
-                if (Number.isInteger(value)) {
-                  return value;
-                }
-              },
-            },
-          }],
-        },
-      }}
-      />
+          }}
+          />
+        </div>
+      </div>
     );
   }
 }

@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "watch": "webpack -w --mode development",
+    "watch": "webpack -w --mode development --display-modules",
     "start": "webpack -p"
   },
   "dependencies": {
