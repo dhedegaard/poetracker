@@ -1,5 +1,6 @@
 import React from "react";
 
+import GlobalrankGraphComponent from "./globalrank-graph.component";
 import { IDatapoint, IDatapointResult } from "./main.component";
 
 interface IComponentProps {
@@ -9,7 +10,7 @@ interface IComponentProps {
   clickedLeague: (leagueId: string) => void;
 }
 
-interface IGraphData extends IDatapoint {
+export interface IGraphData extends IDatapoint {
   timestampDate: Date;
 }
 
@@ -37,6 +38,7 @@ export default class CharacterTableRowComponent extends React.Component<ICompone
 
     /* Fetch data for the given character. */
     const data = await this.props.getCharData(this.props.datapoint.datapoint.charId);
+    console.log('GetCharData:', data);
 
     /* Put the data in the state. */
     this.setState({
@@ -144,6 +146,15 @@ export default class CharacterTableRowComponent extends React.Component<ICompone
             </td>
           ) || undefined}
         </tr>
+        {this.state.graphData && this.state.graphData.length && (
+          <tr>
+            <td colSpan={4} className="bg-light">
+              <GlobalrankGraphComponent
+                graphData={this.state.graphData}
+              />
+            </td>
+          </tr>
+        ) || null}
       </React.Fragment>
     );
   }

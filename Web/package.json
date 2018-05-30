@@ -6,10 +6,13 @@
   },
   "dependencies": {
     "@aspnet/signalr": "^1.0.0-rc1-update1",
+    "@types/chart.js": "^2.7.19",
     "@types/react": "^16.3.14",
     "@types/react-dom": "^16.0.5",
     "awesome-typescript-loader": "^5.0.0",
+    "chart.js": "^2.7.2",
     "react": "^16.4.0",
+    "react-chartjs-2": "^2.7.2",
     "react-dom": "^16.4.0",
     "tslint": "^5.10.0",
     "typescript": "^2.8.3",
