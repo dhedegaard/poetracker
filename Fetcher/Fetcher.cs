@@ -56,17 +56,6 @@ namespace Fetcher {
                 .ToList();
             foreach (var account in context.Accounts) {
                 var windowCharacters = await CharactersApi.GetCharacters(account.AccountName);
-
-                // Temporary cleanup: Delete any datapoints, for the given charname + accountid where the league is not the same as the one in windowCharacters.
-                foreach (var windowChar in windowCharacters) {
-                    context.RemoveRange(context.Datapoints
-                        .Where(e =>
-                            e.AccountId == account.AccountName &&
-                            e.Charname == windowChar.Name &&
-                            e.LeagueId != windowChar.League));
-                    await context.SaveChangesAsync();
-                }
-
                 logger.LogInformation("Fetching new datapoints for account: {0}", account);
                 foreach (var league in leagues) {
                     var characters = await LaddersApi.GetAccountCharacters(league.Id, account.AccountName);
