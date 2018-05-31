@@ -14,3 +14,4 @@ services:
     command: sh -c "sleep 1 && dotnet Fetcher.dll"
     depends_on:
       - web
+    restart: unless-stopped
