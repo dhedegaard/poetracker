@@ -8,7 +8,7 @@ The basic idea is:
 - An ASP.NET core app, running a SignalR core hub.
 - A small fetcher application that stores any new data and submits it to the hub.
 
-The application uses SignalR core, and therefore require [ASP.NET core](https://github.com/aspnet/Home) 2.1+ (at the time of writing in RC).
+The application uses SignalR core, and therefore requires [ASP.NET core](https://github.com/aspnet/Home) 2.1+.
 
 ## How to run it
 
