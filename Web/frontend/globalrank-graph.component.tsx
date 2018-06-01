@@ -1,3 +1,4 @@
+import { ChartPoint } from "chart.js";
 import React from "react";
 import { Line } from "react-chartjs-2";
 
@@ -74,7 +75,7 @@ export default class GlobalrankGraphComponent extends React.Component<IComponent
                     beginAtZero: true,
                     callback: (value) => {
                       if (Number.isInteger(value)) {
-                        return value;
+                        return (value as number).toLocaleString();
                       }
                     },
                     fontColor: '#17a2b8',
@@ -99,6 +100,16 @@ export default class GlobalrankGraphComponent extends React.Component<IComponent
                   },
                 },
               ],
+            },
+            tooltips: {
+              callbacks: {
+                label: (item, data) => {
+                  const dataset = data.datasets![item.datasetIndex!];
+                  const datasetLabel = dataset.label || '';
+                  const point = dataset.data![item.index!] as ChartPoint;
+                  return `${datasetLabel}: ${point.y!.toLocaleString()}`;
+                },
+              },
             },
           }}
           />
