@@ -69,6 +69,7 @@ export default class GlobalrankGraphComponent extends React.Component<IComponent
                   scaleLabel: {
                     display: true,
                     fontColor: '#17a2b8',
+                    fontStyle: 'bold',
                     labelString: 'Experience',
                   },
                   ticks: {
@@ -87,6 +88,7 @@ export default class GlobalrankGraphComponent extends React.Component<IComponent
                   scaleLabel: {
                     display: true,
                     fontColor: '#4b367c',
+                    fontStyle: 'bold',
                     labelString: 'Global rank',
                   },
                   ticks: {
