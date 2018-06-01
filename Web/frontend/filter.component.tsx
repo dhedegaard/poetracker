@@ -12,6 +12,7 @@ interface IFilterComponentState {
   hideDead: boolean;
   onlyShowOnline: boolean;
   hideStreamers: boolean;
+  hideStandardLeagues: boolean;
 }
 
 export default class FilterComponent extends React.Component<IFilterComponentProps, IFilterComponentState> {
@@ -23,6 +24,7 @@ export default class FilterComponent extends React.Component<IFilterComponentPro
     /* Determine the initial state. */
     this.state = {
       hideDead: false,
+      hideStandardLeagues: false,
       hideStreamers: false,
       onlyShowOnline: false,
       selectedLeague: '',
@@ -58,6 +60,11 @@ export default class FilterComponent extends React.Component<IFilterComponentPro
     // Filter away the streamers.
     if (this.state.hideStreamers) {
       datapoints = datapoints.filter((e) => !e.datapoint.account.twitchUsername);
+    }
+
+    // Filter away standard leagues.
+    if (this.state.hideStandardLeagues) {
+      datapoints = datapoints.filter((e) => e.datapoint.league.endAt !== null);
     }
 
     // Finally, sort and return whatever remains.
@@ -96,7 +103,7 @@ export default class FilterComponent extends React.Component<IFilterComponentPro
 
     return (
       <div className="row alert alert-secondary">
-        <div className="col-md-6 col-12">
+        <div className="col-md-5 col-12">
           <div className="row">
             <label
               className="col-4 col-md-2 text-right"
@@ -114,15 +121,15 @@ export default class FilterComponent extends React.Component<IFilterComponentPro
             {this.state.selectedLeague && currentLeague && currentLeague.url && (
               <div className="d-none d-sm-block col-md-4">
                 <a href={currentLeague.url} target="_blank" rel="nofollow">
-                  View league thread
-              </a>
+                  <small>View league thread</small>
+                </a>
               </div>
             )}
           </div>
         </div>
-        <div className="col-md-6 col-12">
+        <div className="col-md-7 col-12">
           <div className="row">
-            <div className="col-md-4">
+            <div className="col-md-2">
               <input
                 id="id_hide_dead"
                 type="checkbox"
@@ -131,9 +138,11 @@ export default class FilterComponent extends React.Component<IFilterComponentPro
                   this.setState({ hideDead: evt.currentTarget.checked });
                 }}
               />
-              < label htmlFor="id_hide_dead">Hide dead</label>
+              <label htmlFor="id_hide_dead">
+                <small>Hide dead</small>
+              </label>
             </div>
-            <div className="col-md-4">
+            <div className="col-md-3">
               <input
                 id="id_only_show_online"
                 type="checkbox"
@@ -142,9 +151,11 @@ export default class FilterComponent extends React.Component<IFilterComponentPro
                   this.setState({ onlyShowOnline: evt.currentTarget.checked });
                 }}
               />
-              <label htmlFor="id_only_show_online">Only show online</label>
+              <label htmlFor="id_only_show_online">
+                <small>Only show online</small>
+              </label>
             </div>
-            <div className="col-md-4">
+            <div className="col-md-3">
               <input
                 id="id_hide_streamers"
                 type="checkbox"
@@ -153,7 +164,22 @@ export default class FilterComponent extends React.Component<IFilterComponentPro
                   this.setState({ hideStreamers: evt.currentTarget.checked });
                 }}
               />
-              <label htmlFor="id_hide_streamers">Hide streamers</label>
+              <label htmlFor="id_hide_streamers">
+                <small>Hide streamers</small>
+              </label>
+            </div>
+            <div className="col-md-4">
+              <input
+                id="id_hide_standard_leagues"
+                type="checkbox"
+                checked={this.state.hideStandardLeagues}
+                onChange={(evt) => {
+                  this.setState({ hideStandardLeagues: evt.currentTarget.checked });
+                }}
+              />
+              <label htmlFor="id_hide_standard_leagues">
+                <small>Hide standard leagues</small>
+              </label>
             </div>
           </div>
         </div>
