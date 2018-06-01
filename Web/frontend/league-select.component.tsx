@@ -22,22 +22,18 @@ export default class LeagueSelectComponent extends React.Component<ILeagueSelect
       >
         <option value="">-- Show all --</option>
         {temporaryLeagues && temporaryLeagues.length && (
-          <React.Fragment>
-            <optgroup label="Temporary leagues">
-              {temporaryLeagues.map((league) => (
-                <option key={league.id} value={league.id}>{league.id}</option>
-              ))}
-            </optgroup>
-          </React.Fragment>
+          <optgroup label="Temporary leagues">
+            {temporaryLeagues.map((league) => (
+              <option key={league.id} value={league.id}>{league.id}</option>
+            ))}
+          </optgroup>
         )}
         {standardLeagues && standardLeagues.length && (
-          <React.Fragment>
-            <optgroup label="Standard leagues">
-              {standardLeagues.map((league) => (
-                <option key={league.id} value={league.id}>{league.id}</option>
-              ))}
-            </optgroup>
-          </React.Fragment>
+          <optgroup label="Standard leagues">
+            {standardLeagues.map((league) => (
+              <option key={league.id} value={league.id}>{league.id}</option>
+            ))}
+          </optgroup>
         )}
       </select>
     );
