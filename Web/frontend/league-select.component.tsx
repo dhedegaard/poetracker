@@ -10,6 +10,9 @@ interface ILeagueSelectComponentProps {
 
 export default class LeagueSelectComponent extends React.Component<ILeagueSelectComponentProps, {}> {
   render() {
+    const standardLeagues = this.props.leagues.filter((e) => e.endAt === null);
+    const temporaryLeagues = this.props.leagues.filter((e) => e.endAt !== null);
+
     return (
       <select
         className="form-control form-control-sm"
@@ -18,9 +21,24 @@ export default class LeagueSelectComponent extends React.Component<ILeagueSelect
         onChange={(evt) => { this.props.onLeagueSelect(evt.currentTarget.value); }}
       >
         <option value="">-- Show all --</option>
-        {this.props.leagues.map((league) => (
-          <option key={league.id} value={league.id}>{league.id}</option>
-        ))}
+        {temporaryLeagues && temporaryLeagues.length && (
+          <React.Fragment>
+            <optgroup label="Temporary leagues">
+              {temporaryLeagues.map((league) => (
+                <option key={league.id} value={league.id}>{league.id}</option>
+              ))}
+            </optgroup>
+          </React.Fragment>
+        )}
+        {standardLeagues && standardLeagues.length && (
+          <React.Fragment>
+            <optgroup label="Standard leagues">
+              {standardLeagues.map((league) => (
+                <option key={league.id} value={league.id}>{league.id}</option>
+              ))}
+            </optgroup>
+          </React.Fragment>
+        )}
       </select>
     );
   }
