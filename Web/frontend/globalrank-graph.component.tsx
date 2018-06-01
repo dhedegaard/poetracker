@@ -18,18 +18,32 @@ export default class GlobalrankGraphComponent extends React.Component<IComponent
 
     return (
       <div className="row">
-        <div className="col-6">
+        <div className="col-12">
           <Line data={{
-            datasets: [{
-              backgroundColor: '#4b367c',
-              borderColor: '#4b367c',
-              data: this.props.graphData.map((e) => ({
-                x: e.timestampDate,
-                y: e.globalRank,
-              })),
-              fill: false,
-              label: 'Global rank',
-            }],
+            datasets: [
+              {
+                backgroundColor: '#17a2b8',
+                borderColor: '#17a2b8',
+                data: this.props.graphData.map((e) => ({
+                  x: e.timestampDate,
+                  y: e.experience,
+                })),
+                fill: false,
+                label: 'Experience',
+                yAxisID: 'xp-axis',
+              },
+              {
+                backgroundColor: '#4b367c',
+                borderColor: '#4b367c',
+                data: this.props.graphData.map((e) => ({
+                  x: e.timestampDate,
+                  y: e.globalRank,
+                })),
+                fill: false,
+                label: 'Global rank',
+                yAxisID: 'rank-axis',
+              },
+            ],
             labels: this.props.graphData.map((e) => e.timestampDate.toLocaleString()),
           }} options={{
             scales: {
@@ -47,59 +61,44 @@ export default class GlobalrankGraphComponent extends React.Component<IComponent
                 },
                 type: 'time',
               }],
-              yAxes: [{
-                ticks: {
-                  beginAtZero: true,
-                  callback: (value) => {
-                    if (Number.isInteger(value)) {
-                      return value;
-                    }
+              yAxes: [
+                {
+                  id: 'xp-axis',
+                  position: 'left',
+                  scaleLabel: {
+                    display: true,
+                    fontColor: '#17a2b8',
+                    labelString: 'Experience',
+                  },
+                  ticks: {
+                    beginAtZero: true,
+                    callback: (value) => {
+                      if (Number.isInteger(value)) {
+                        return value;
+                      }
+                    },
+                    fontColor: '#17a2b8',
                   },
                 },
-              }],
-            },
-          }}
-          />
-        </div>
-        <div className="col-6">
-          <Line data={{
-            datasets: [{
-              backgroundColor: '#17a2b8',
-              borderColor: '#17a2b8',
-              data: this.props.graphData.map((e) => ({
-                x: e.timestampDate,
-                y: e.experience,
-              })),
-              fill: false,
-              label: 'Experience',
-            }],
-            labels: this.props.graphData.map((e) => e.timestampDate.toLocaleString()),
-          }} options={{
-            scales: {
-              xAxes: [{
-                distribution: 'linear',
-                ticks: {
-                  autoSkip: true,
-                  source: 'auto',
-                },
-                time: {
-                  displayFormats: {
-                    minute: 'YYYY-MM-DD HH:MM',
+                {
+                  id: 'rank-axis',
+                  position: 'right',
+                  scaleLabel: {
+                    display: true,
+                    fontColor: '#4b367c',
+                    labelString: 'Global rank',
                   },
-                  unit: 'minute',
-                },
-                type: 'time',
-              }],
-              yAxes: [{
-                ticks: {
-                  beginAtZero: true,
-                  callback: (value) => {
-                    if (Number.isInteger(value)) {
-                      return value;
-                    }
+                  ticks: {
+                    beginAtZero: true,
+                    callback: (value) => {
+                      if (Number.isInteger(value)) {
+                        return value;
+                      }
+                    },
+                    fontColor: '#4b367c',
                   },
                 },
-              }],
+              ],
             },
           }}
           />
