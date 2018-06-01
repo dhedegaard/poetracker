@@ -53,6 +53,7 @@ namespace Web.Hubs {
                 LatestDatapoints = poeContext.Datapoints
                   .Include(e => e.Account)
                   .Include(e => e.League)
+                  .Where(e => e.League.EndAt == null || e.League.EndAt >= DateTimeOffset.UtcNow)
                   .OrderByDescending(e => e.Id)
                   .GroupBy(e => e.CharId)
                   .ToList()
