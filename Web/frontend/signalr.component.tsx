@@ -15,7 +15,8 @@ interface ISignalRComponentProps {
 }
 
 interface IGetCharDataResult {
-  charId: string;
+  leagueId: string;
+  charname: string;
   datapoints: IDatapoint[];
 }
 
@@ -74,12 +75,12 @@ export default class SignalRComponent extends React.Component<ISignalRComponentP
   /**
    * Fetches data for a given character, returning a resolvable promise.
    */
-  getCharData(charId: string): Promise<IDatapoint[]> {
+  getCharData(leagueId: string, charname: string): Promise<IDatapoint[]> {
     return new Promise((resolve, reject) => {
       /* Define a handler, that responds to character data. */
       const handler = (data: IGetCharDataResult) => {
-        /* If this data is not for the charId we expect, skip it. */
-        if (data.charId !== charId) {
+        /* If this data is not what we expect, skip it. */
+        if (data.leagueId !== leagueId || data.charname !== charname) {
           return;
         }
         /* Otherwise, remove the handler and return the datapoints. */
@@ -89,7 +90,7 @@ export default class SignalRComponent extends React.Component<ISignalRComponentP
 
       /* Add the handler and invoke the SignalR method on the Hub. */
       this.connection.on("GetCharData", handler);
-      this.connection.invoke("GetCharData", charId);
+      this.connection.invoke("GetCharData", leagueId, charname);
     });
   }
 

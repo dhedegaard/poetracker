@@ -5,7 +5,7 @@ import { IDatapoint, IDatapointResult } from "./main.component";
 
 interface IComponentProps {
   datapoint: IDatapointResult;
-  getCharData: (charId: string) => Promise<IDatapoint[]>;
+  getCharData: (leagueId: string, charname: string) => Promise<IDatapoint[]>;
   selectedLeague: string;
   clickedLeague: (leagueId: string) => void;
 }
@@ -37,7 +37,9 @@ export default class CharacterTableRowComponent extends React.Component<ICompone
     }
 
     /* Fetch data for the given character. */
-    const data = await this.props.getCharData(this.props.datapoint.datapoint.charId);
+    const data = await this.props.getCharData(
+      this.props.datapoint.datapoint.leagueId,
+      this.props.datapoint.datapoint.charname);
     console.log('GetCharData:', data);
 
     /* Put the data in the state. */
@@ -62,20 +64,24 @@ export default class CharacterTableRowComponent extends React.Component<ICompone
               title={datapoint.datapoint.online ? 'Online' : 'Offline'} width={15} height={15}
             />
             {' '}
-            <span>{datapoint.datapoint.globalRank}</span>
+            <span>{datapoint.datapoint.globalRank || '15000+'}</span>
             {datapoint.previousDatapoint &&
-              datapoint.previousDatapoint.globalRank !== datapoint.datapoint.globalRank && (
+              (datapoint.previousDatapoint.globalRank || 15001) !== (datapoint.datapoint.globalRank || 15001) && (
                 <React.Fragment>
                   {' '}
                   <small
                     className={
-                      'badge ' + (datapoint.datapoint.globalRank < datapoint.previousDatapoint.globalRank ?
-                        'badge-success' : 'badge-danger')}
+                      'badge ' + (
+                        (datapoint.datapoint.globalRank || 15001) < (datapoint.previousDatapoint.globalRank || 15001) ?
+                          'badge-success' : 'badge-danger')}
                   >
                     {String.fromCharCode(
-                      datapoint.datapoint.globalRank > datapoint.previousDatapoint.globalRank ? 8595 : 8593)}
+                      (datapoint.datapoint.globalRank || 15001) > (datapoint.previousDatapoint.globalRank || 15001) ?
+                        8595 : 8593)}
                     {' '}
-                    {Math.abs(datapoint.datapoint.globalRank - datapoint.previousDatapoint.globalRank)}
+                    {Math.abs(
+                      (datapoint.datapoint.globalRank || 15001) -
+                      (datapoint.previousDatapoint.globalRank || 15001))}
                   </small>
                 </React.Fragment>
               )}

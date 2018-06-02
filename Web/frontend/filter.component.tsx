@@ -70,8 +70,8 @@ export default class FilterComponent extends React.Component<IFilterComponentPro
     // Finally, sort and return whatever remains.
     return datapoints.sort((a, b) =>
       a.datapoint.experience === b.datapoint.experience ?
-        a.datapoint.globalRank - b.datapoint.globalRank :
-        b.datapoint.experience - a.datapoint.experience);
+        (a.datapoint.globalRank || 15001) - (b.datapoint.globalRank || 15001) :
+          b.datapoint.experience - a.datapoint.experience);
   }
 
   onLeagueSelect(league: string) {

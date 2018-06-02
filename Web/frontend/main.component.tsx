@@ -16,14 +16,14 @@ export interface IDatapoint {
   charId: string;
   charname: string;
   experience: number;
-  globalRank: number;
+  globalRank?: number;
   league: ILeagueType;
   leagueId: string;
   level: number;
   timestamp: string;
   class: string;
   dead: boolean;
-  online: boolean;
+  online?: boolean;
   poeProfileURL: string;
 }
 

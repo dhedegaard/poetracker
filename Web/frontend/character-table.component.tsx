@@ -12,7 +12,7 @@ interface ICharacterTableComponentProps {
   // Callbacks
   clickedLeague: (leagueId: string) => void;
   // Forwarded methods */
-  getCharData: (charId: string) => Promise<IDatapoint[]>;
+  getCharData: (leagueId: string, charname: string) => Promise<IDatapoint[]>;
 }
 
 export default class CharacterTableComponent extends React.Component<ICharacterTableComponentProps, {}> {

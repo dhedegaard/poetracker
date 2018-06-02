@@ -92,13 +92,13 @@ export default class GlobalrankGraphComponent extends React.Component<IComponent
                     labelString: 'Global rank',
                   },
                   ticks: {
-                    min: 1,
                     callback: (value) => {
                       if (Number.isInteger(value)) {
                         return value;
                       }
                     },
                     fontColor: '#4b367c',
+                    min: 1,
                     reverse: true,
                   },
                 },
