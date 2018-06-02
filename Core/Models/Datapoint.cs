@@ -9,13 +9,11 @@ namespace Core.Models {
         /// </summary>
         [Key]
         public int? Id { get; set; }
-        [Required]
         public string CharId { get; set; }
         [Required]
         public DateTimeOffset Timestamp { get; set; }
         [Required]
         public string Charname { get; set; }
-        [Required]
         public int? GlobalRank { get; set; }
         [Required]
         public long Experience { get; set; }
@@ -23,8 +21,7 @@ namespace Core.Models {
         public int Level { get; set; }
         [Required]
         public string Class { get; set; }
-        [Required]
-        public bool Online { get; set; }
+        public bool? Online { get; set; }
         [Required]
         public bool Dead { get; set; }
 

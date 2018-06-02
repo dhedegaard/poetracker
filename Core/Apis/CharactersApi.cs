@@ -13,6 +13,7 @@ namespace Core.Apis {
         public string Class { get; set; }
         public int Level { get; set; }
         public long Experience { get; set; }
+        public bool? LastActive { get; set; }
     }
     public static class CharactersApi {
         public async static Task<IList<WindowCharacter>> GetCharacters(string accountName) {
