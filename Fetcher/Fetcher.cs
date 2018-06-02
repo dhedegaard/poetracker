@@ -59,8 +59,9 @@ namespace Fetcher {
                 logger.LogInformation("Fetching new datapoints for account: {0}", account);
                 foreach (var league in leagues) {
                     var characters = await LaddersApi.GetAccountCharacters(league.Id, account.AccountName);
+                    var datapoints = new List<Datapoint>();
+                    var datapointCharnames = new HashSet<string>();
                     if (characters.Any()) {
-                        var datapoints = new List<Datapoint>();
                         foreach (var character in characters) {
 
                             // If there are no characters with that name in
@@ -71,6 +72,7 @@ namespace Fetcher {
                                     c.League == league.Id)) {
                                 continue;
                             }
+
                             // Find the latest datapoint for the same character, in the same league. If
                             // there's no existing data, the XP has changed or the dead state has changed.
                             // Added a new datapoint.
@@ -101,15 +103,64 @@ namespace Fetcher {
                                     Online = character.Online,
                                 };
                                 datapoints.Add(datapoint);
+                                datapointCharnames.Add(datapoint.Charname);
                                 context.Add(datapoint);
                                 await context.SaveChangesAsync();
                             }
+                            /* If there's a datapoint, avoid registering datapoints based on window data. */
+                            if (latestDatapoint != null) {
+                                datapointCharnames.Add(character.Name);
+                            }
                         }
-                        /* If we created any datapoints, serialize them over the Hub to notify listeners. */
-                        if (datapoints.Any()) {
-                            logger.LogInformation("NotifyNewData: {0}", datapoints);
-                            await hubConnection.InvokeAsync("NotifyNewData", datapoints);
+                    }
+
+                    // Go looking for datapoints that should be created, for characters out of the league.
+                    foreach (var windowChar in windowCharacters
+                            .Where(e => e.League == league.Id && !datapointCharnames.Contains(e.Name))) {
+
+                        // Otherwise, proceed more or less as above.
+                        var latestDatapoint = context.Datapoints
+                            .Include(e => e.League)
+                            .Where(e => e.Charname == windowChar.Name &&
+                                        e.LeagueId == league.Id &&
+                                        e.AccountId == account.AccountName)
+                            .OrderByDescending(e => e.Timestamp)
+                            .FirstOrDefault();
+
+                        if (latestDatapoint == null ||
+                                latestDatapoint.Experience != windowChar.Experience) {
+
+                            var datapoint = new Datapoint {
+                                CharId = await context.Datapoints
+                                    .Where(e =>
+                                        e.Charname == windowChar.Name &&
+                                        e.LeagueId == league.Id &&
+                                        e.AccountId == account.AccountName &&
+                                        e.CharId != null)
+                                    .Select(e => e.CharId)
+                                    .FirstOrDefaultAsync(),
+                                Account = account,
+                                Charname = windowChar.Name,
+                                Experience = windowChar.Experience,
+                                GlobalRank = null,
+                                League = league,
+                                Level = windowChar.Level,
+                                Timestamp = DateTimeOffset.Now,
+                                Class = windowChar.Class,
+                                Dead = false,
+                                Online = null,
+                            };
+                            datapoints.Add(datapoint);
+                            datapointCharnames.Add(datapoint.Charname);
+                            context.Add(datapoint);
+                            await context.SaveChangesAsync();
                         }
+
+                    }
+                    /* If we created any datapoints, serialize them over the Hub to notify listeners. */
+                    if (datapoints.Any()) {
+                        logger.LogInformation("NotifyNewData: {0}", datapoints);
+                        await hubConnection.InvokeAsync("NotifyNewData", datapoints);
                     }
 
                     // Sleep for a bit.
