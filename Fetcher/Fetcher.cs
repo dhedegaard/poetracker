@@ -86,6 +86,7 @@ namespace Fetcher {
 
                             if (latestDatapoint == null ||
                                     latestDatapoint.Experience != character.Experience ||
+                                    latestDatapoint.GlobalRank != character.Rank ||
                                     latestDatapoint.Dead != character.Dead ||
                                     latestDatapoint.Online != character.Online) {
 
