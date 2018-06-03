@@ -94,6 +94,11 @@ export default class CharacterTableRowComponent extends React.Component<ICompone
                 <React.Fragment>
                   {' '}
                   <small
+                    title={
+                      datapoint.previousDatapoint && datapoint.previousDatapoint.timestamp ?
+                      `Compared to: ${new Date(datapoint.previousDatapoint.timestamp).toLocaleString()}` :
+                      undefined
+                    }
                     className={
                       'badge ' + (
                         (datapoint.datapoint.globalRank || 15001) < (datapoint.previousDatapoint.globalRank || 15001) ?
