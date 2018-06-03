@@ -61,7 +61,10 @@ export default class CharacterTableRowComponent extends React.Component<ICompone
 
     return (
       <React.Fragment>
-        <tr onClick={this.onRowClick}>
+        <tr
+          className={this.props.isSelected ? 'table-secondary' : undefined}
+          onClick={this.onRowClick}
+        >
           <td className="text-nowrap">
             <img
               src={`https://www.pathofexile.com/image/ladder/${datapoint.datapoint.online ? 'online' : 'offline'}.png`}

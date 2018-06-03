@@ -51,7 +51,7 @@ export default class CharacterTableComponent extends React.Component<ICharacterT
 
   render() {
     return (
-      <div className="table-responsive">
+      <div className="table-responsive" style={{ overflowX: 'hidden' }}>
         <table className="table table-bordered table-hover table-dark">
           <thead>
             <tr>
