@@ -96,8 +96,8 @@ export default class CharacterTableRowComponent extends React.Component<ICompone
                   <small
                     title={
                       datapoint.previousDatapoint && datapoint.previousDatapoint.timestamp ?
-                      `Compared to: ${new Date(datapoint.previousDatapoint.timestamp).toLocaleString()}` :
-                      undefined
+                        `Compared to: ${new Date(datapoint.previousDatapoint.timestamp).toLocaleString()}` :
+                        undefined
                     }
                     className={
                       'badge ' + (
@@ -155,7 +155,14 @@ export default class CharacterTableRowComponent extends React.Component<ICompone
           <td className="text-right">
             {datapoint.previousDatapoint && datapoint.previousDatapoint.level !== datapoint.datapoint.level && (
               <React.Fragment>
-                <span className="badge badge-success">
+                <span
+                  title={
+                    datapoint.previousDatapoint && datapoint.previousDatapoint.timestamp ?
+                      `Compared to: ${new Date(datapoint.previousDatapoint.timestamp).toLocaleString()}` :
+                      undefined
+                  }
+                  className="badge badge-success"
+                >
                   +{datapoint.datapoint.level - datapoint.previousDatapoint.level}
                 </span>
                 {' '}
