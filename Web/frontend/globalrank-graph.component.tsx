@@ -124,6 +124,7 @@ export default class GlobalrankGraphComponent extends React.Component<IComponent
                       minute: 'YYYY-MM-DD HH:MM',
                     },
                     unit: 'minute',
+                    max: new Date().getTime(),
                   },
                   type: 'time',
                 }],
