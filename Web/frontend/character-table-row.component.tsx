@@ -23,6 +23,7 @@ export default class CharacterTableRowComponent extends React.Component<ICompone
   constructor(props: IComponentProps) {
     super(props);
     this.onRowClick = this.onRowClick.bind(this);
+    this.ensureGraphData = this.ensureGraphData.bind(this);
     this.state = {
       graphData: [],
     };
@@ -34,7 +35,15 @@ export default class CharacterTableRowComponent extends React.Component<ICompone
       this.props.datapoint.datapoint.leagueId);
   }
 
-  async componentDidUpdate() {
+  componentDidMount() {
+    this.ensureGraphData();
+  }
+
+  componentDidUpdate() {
+    this.ensureGraphData();
+  }
+
+  async ensureGraphData() {
     /* If this row is not the currently selected one, or there already is some data: Avoid fetching new graph data. */
     if (!this.props.isSelected || this.state.graphData.length) {
       return;
@@ -46,13 +55,20 @@ export default class CharacterTableRowComponent extends React.Component<ICompone
       this.props.datapoint.datapoint.charname);
     console.log('GetCharData:', data);
 
-    /* Put the data in the state. */
-    this.setState({
-      graphData: data.map((e) => {
-        const res = e as IGraphData;
-        res.timestampDate = new Date(e.timestamp);
-        return res;
-      }),
+    /* Put the data in the state, if there's a change. */
+    const filteredData = data.map((e) => {
+      const res = e as IGraphData;
+      res.timestampDate = new Date(e.timestamp);
+      return res;
+    });
+    this.setState((oldState) => {
+      /* Only update the graph data state, if there's a change. */
+      if (oldState.graphData !== filteredData && filteredData.length) {
+        return {
+          graphData: filteredData,
+        };
+      }
+      return null;
     });
   }
 
