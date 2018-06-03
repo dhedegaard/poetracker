@@ -31,6 +31,7 @@ export default class GlobalrankGraphComponent extends React.Component<IComponent
                 })),
                 fill: false,
                 label: 'Experience',
+                pointRadius: 2,
                 yAxisID: 'xp-axis',
               },
               {
@@ -42,6 +43,7 @@ export default class GlobalrankGraphComponent extends React.Component<IComponent
                 })),
                 fill: false,
                 label: 'Global rank',
+                pointRadius: 2,
                 yAxisID: 'rank-axis',
               },
             ],
