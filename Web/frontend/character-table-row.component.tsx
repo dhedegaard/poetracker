@@ -35,6 +35,7 @@ export default class CharacterTableRowComponent extends React.Component<ICompone
   }
 
   async componentDidUpdate() {
+    /* If this row is not the currently selected one, or there already is some data: Avoid fetching new graph data. */
     if (!this.props.isSelected || this.state.graphData.length) {
       return;
     }

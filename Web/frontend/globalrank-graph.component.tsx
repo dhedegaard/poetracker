@@ -7,7 +7,27 @@ import { IGraphData } from "./character-table-row.component";
 interface IComponentProps {
   graphData: IGraphData[];
 }
-export default class GlobalrankGraphComponent extends React.Component<IComponentProps, {}> {
+
+interface IComponentState {
+  from: 'forever' | '1 day' | '6 hours';
+}
+
+export default class GlobalrankGraphComponent extends React.Component<IComponentProps, IComponentState> {
+  constructor(props: IComponentProps) {
+    super(props);
+    this.state = {
+      from: localStorage.getItem('graph-from') || 'forever' as any,
+    };
+    this.onChangeFrom = this.onChangeFrom.bind(this);
+  }
+
+  onChangeFrom(evt: React.ChangeEvent<HTMLSelectElement>) {
+    this.setState({
+      from: evt.currentTarget.value as any,
+    });
+    localStorage.setItem('graph-from', evt.currentTarget.value);
+  }
+
   render() {
     if (!this.props.graphData || this.props.graphData.length < 2) {
       return (
@@ -17,15 +37,51 @@ export default class GlobalrankGraphComponent extends React.Component<IComponent
       );
     }
 
+    /* Filter the dataset, if applicable. */
+    let fromDate: Date | null = null;
+    switch (this.state.from) {
+      case 'forever': break;
+      case '1 day':
+        fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 12);
+        break;
+      case '6 hours':
+        fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 6);
+        break;
+    }
+    let graphData = this.props.graphData;
+    if (fromDate) {
+      graphData = graphData.filter((e) => e.timestampDate >= fromDate!);
+    }
+
     return (
-      <div className="row">
+      <React.Fragment>
+        <div className="row">
+          <label htmlFor="id_graph_from" className="form-label col-2 offset-1 text-muted">
+            Show from:
+          </label>
+          <div className="col-2">
+            <select id="id_graph_from" className="form-control"
+              onChange={this.onChangeFrom} value={this.state.from}
+            >
+              <option key="forever" value="forever">
+                Forever
+            </option>
+              <option key="1 day" value="1 day">
+                The last day
+            </option>
+              <option key="6 hours" value="6 hours">
+                Last six hours
+            </option>
+            </select>
+          </div>
+        </div>
         <div className="col-10 offset-1">
           <Line data={{
             datasets: [
               {
                 backgroundColor: '#17a2b8',
                 borderColor: '#17a2b8',
-                data: this.props.graphData.map((e) => ({
+                data: graphData.map((e) => ({
                   x: e.timestampDate,
                   y: e.experience,
                 })),
@@ -37,7 +93,7 @@ export default class GlobalrankGraphComponent extends React.Component<IComponent
               {
                 backgroundColor: '#4b367c',
                 borderColor: '#4b367c',
-                data: this.props.graphData.map((e) => ({
+                data: graphData.map((e) => ({
                   x: e.timestampDate,
                   y: e.globalRank,
                 })),
@@ -47,7 +103,7 @@ export default class GlobalrankGraphComponent extends React.Component<IComponent
                 yAxisID: 'rank-axis',
               },
             ],
-            labels: this.props.graphData.map((e) => e.timestampDate.toLocaleString()),
+            labels: graphData.map((e) => e.timestampDate.toLocaleString()),
           }} options={{
             animation: false as any,
             scales: {
@@ -120,7 +176,7 @@ export default class GlobalrankGraphComponent extends React.Component<IComponent
           }}
           />
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }
