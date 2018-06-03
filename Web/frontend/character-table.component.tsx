@@ -9,16 +9,44 @@ interface ICharacterTableComponentProps {
   leagues: ILeagueType[];
   // Filters
   selectedLeague: string;
-  // Callbacks
-  clickedLeague: (leagueId: string) => void;
   // Forwarded methods */
   getCharData: (leagueId: string, charname: string) => Promise<IDatapoint[]>;
 }
 
-export default class CharacterTableComponent extends React.Component<ICharacterTableComponentProps, {}> {
+interface IComponentState {
+  selectedRow: {
+    charname: string,
+    leagueId: string,
+  } | undefined;
+}
+
+export default class CharacterTableComponent extends React.Component<ICharacterTableComponentProps, IComponentState> {
+  state: IComponentState = {
+    selectedRow: undefined,
+  };
 
   constructor(props: ICharacterTableComponentProps) {
     super(props);
+    this.onClickedRow = this.onClickedRow.bind(this);
+  }
+
+  onClickedRow(charname: string, leagueId: string) {
+    this.setState((oldState) => {
+      // If we selected the same row again, collapse it. */
+      if (oldState.selectedRow &&
+        oldState.selectedRow.charname === charname &&
+        oldState.selectedRow.leagueId === leagueId
+      ) {
+        return {
+          selectedRow: undefined,
+        };
+      }
+
+      /* Otherwise, modify the state. */
+      return {
+        selectedRow: { charname, leagueId },
+      };
+    });
   }
 
   render() {
@@ -31,9 +59,6 @@ export default class CharacterTableComponent extends React.Component<ICharacterT
               <th className="text-nowrap">Character name</th>
               <th>Class</th>
               <th className="text-right">Level</th>
-              {!this.props.selectedLeague && (
-                <th className="d-none d-sm-block">League</th>
-              ) || undefined}
             </tr>
           </thead>
           <tbody>
@@ -42,9 +67,14 @@ export default class CharacterTableComponent extends React.Component<ICharacterT
                 datapoint={datapoint}
                 getCharData={this.props.getCharData}
                 selectedLeague={this.props.selectedLeague}
-                clickedLeague={this.props.clickedLeague}
+                clickedRow={this.onClickedRow}
+                isSelected={
+                  this.state.selectedRow !== undefined &&
+                  this.state.selectedRow.charname === datapoint.datapoint.charname &&
+                  this.state.selectedRow.leagueId === datapoint.datapoint.leagueId
+                }
                 key={
-                  datapoint.datapoint.charId +
+                  datapoint.datapoint.charname +
                   datapoint.datapoint.experience +
                   datapoint.datapoint.online +
                   datapoint.datapoint.dead

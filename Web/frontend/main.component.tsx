@@ -62,7 +62,6 @@ export default class MainComponent extends React.Component<{}, IMainComponentSta
     this.onSignalRNotifyNewData = this.onSignalRNotifyNewData.bind(this);
     this.onSignalRInitialPayload = this.onSignalRInitialPayload.bind(this);
     this.onSignalRConnectionClosed = this.onSignalRConnectionClosed.bind(this);
-    this.onLeagueSelect = this.onLeagueSelect.bind(this);
     this.onClickReloadPage = this.onClickReloadPage.bind(this);
   }
 
@@ -149,20 +148,6 @@ export default class MainComponent extends React.Component<{}, IMainComponentSta
     window.location.reload();
   }
 
-  /**
-   * Triggers when the league select element triggers a change event.
-   */
-  onLeagueSelect(value: string) {
-    // Set the value in the state.
-    this.setState({
-      selectedLeague: value,
-    });
-    // Store the value in the localStorage for reloads and such.
-    if (window.localStorage) {
-      localStorage.setItem('selectedLeague', value);
-    }
-  }
-
   render() {
     const datapoints = (this.filterComponent || new FilterComponent({} as any)).filterDatapoints(this.state.datapoints);
 
@@ -198,7 +183,6 @@ export default class MainComponent extends React.Component<{}, IMainComponentSta
               leagues={this.state.leagues}
               datapoints={datapoints}
               selectedLeague={this.state.selectedLeague}
-              clickedLeague={this.onLeagueSelect}
               getCharData={this.signalRComponent.getCharData}
             />
           </React.Fragment>

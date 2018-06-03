@@ -7,7 +7,8 @@ interface IComponentProps {
   datapoint: IDatapointResult;
   getCharData: (leagueId: string, charname: string) => Promise<IDatapoint[]>;
   selectedLeague: string;
-  clickedLeague: (leagueId: string) => void;
+  clickedRow: (charname: string, leagueId: string) => void;
+  isSelected: boolean;
 }
 
 export interface IGraphData extends IDatapoint {
@@ -27,12 +28,14 @@ export default class CharacterTableRowComponent extends React.Component<ICompone
     };
   }
 
-  async onRowClick() {
-    /* If there's already data, clear it to hide the graph again. */
-    if (this.state.graphData && this.state.graphData.length) {
-      this.setState({
-        graphData: [],
-      });
+  onRowClick() {
+    this.props.clickedRow(
+      this.props.datapoint.datapoint.charname,
+      this.props.datapoint.datapoint.leagueId);
+  }
+
+  async componentDidUpdate() {
+    if (!this.props.isSelected || this.state.graphData.length) {
       return;
     }
 
@@ -136,23 +139,8 @@ export default class CharacterTableRowComponent extends React.Component<ICompone
               {datapoint.datapoint.level}
             </span>
           </td>
-          {!this.props.selectedLeague && (
-            <td className="d-none d-sm-block">
-              <small>
-                <a
-                  href="javascript:void(0);"
-                  onClick={() => { this.props.clickedLeague(datapoint.datapoint.leagueId); }}
-                  title="Go to the league"
-                  className="badge badge-light float-right text-nowrap"
-                >
-                  Filter this league
-                </a>
-                {datapoint.datapoint.leagueId}
-              </small>
-            </td>
-          ) || undefined}
         </tr>
-        {this.state.graphData && this.state.graphData.length && (
+        {this.props.isSelected && this.state.graphData && this.state.graphData.length && (
           <tr>
             <td colSpan={4} className="bg-light">
               <GlobalrankGraphComponent
