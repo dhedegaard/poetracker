@@ -123,8 +123,8 @@ export default class GlobalrankGraphComponent extends React.Component<IComponent
                     displayFormats: {
                       minute: 'YYYY-MM-DD HH:MM',
                     },
+                    max: new Date().getTime() as any,
                     unit: 'minute',
-                    max: new Date().getTime(),
                   },
                   type: 'time',
                 }],
