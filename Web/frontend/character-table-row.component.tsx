@@ -79,7 +79,7 @@ export default class CharacterTableRowComponent extends React.Component<ICompone
     return (
       <React.Fragment>
         <tr
-          className={isVisible ? 'table-secondary' : undefined}
+          className={isVisible ? 'table-active' : undefined}
           onClick={this.onRowClick}
         >
           <td className="text-nowrap">
