@@ -62,6 +62,9 @@ namespace Web.Hubs {
                   .Where(e => e.EndAt == null || e.EndAt >= DateTimeOffset.UtcNow)
                   .OrderByDescending(e => e.StartAt)
                   .ToList(),
+                Accounts = poeContext.Accounts
+                  .OrderByDescending(e => string.IsNullOrWhiteSpace(e.TwitchUsername))
+                  .ThenBy(e => e.AccountName),
             });
         }
 

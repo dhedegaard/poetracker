@@ -27,10 +27,10 @@ export interface IDatapoint {
   poeProfileURL: string;
 }
 
-interface IAccountType {
+export interface IAccountType {
   accountName: string;
   twitchUsername?: string;
-  twitchURL: string;
+  twitchURL?: string;
 }
 
 export interface ILeagueType {
@@ -45,6 +45,7 @@ interface IMainComponentState {
   leagues: ILeagueType[];
   selectedLeague: string;
   datapoints: IDatapointResult[];
+  accounts: IAccountType[];
 }
 
 export default class MainComponent extends React.Component<{}, IMainComponentState> {
@@ -54,6 +55,7 @@ export default class MainComponent extends React.Component<{}, IMainComponentSta
   constructor(props: {}) {
     super(props);
     this.state = {
+      accounts: [],
       datapoints: [],
       error: '',
       leagues: [],
@@ -99,6 +101,7 @@ export default class MainComponent extends React.Component<{}, IMainComponentSta
     }
 
     this.setState({
+      accounts: data.accounts,
       datapoints: data.latestDatapoints,
       leagues: data.leagues,
       selectedLeague,
@@ -174,6 +177,7 @@ export default class MainComponent extends React.Component<{}, IMainComponentSta
               </React.Fragment>
             )}
             <FilterComponent
+              accounts={this.state.accounts}
               onFilterChanged={() => { this.forceUpdate(); }}
               leagues={this.state.leagues}
               ref={(filterComponent) => { this.filterComponent = filterComponent!; }}

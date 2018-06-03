@@ -1,11 +1,17 @@
 ﻿import * as SignalR from '@aspnet/signalr';
 import React from "react";
 
-import { IDatapoint, IDatapointResult, ILeagueType } from "./main.component";
+import {
+  IAccountType,
+  IDatapoint,
+  IDatapointResult,
+  ILeagueType,
+} from "./main.component";
 
 export interface IInitialPayload {
   leagues: ILeagueType[];
   latestDatapoints: IDatapointResult[];
+  accounts: IAccountType[];
 }
 
 interface ISignalRComponentProps {
