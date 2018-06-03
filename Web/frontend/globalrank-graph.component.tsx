@@ -19,7 +19,7 @@ export default class GlobalrankGraphComponent extends React.Component<IComponent
 
     return (
       <div className="row">
-        <div className="col-12">
+        <div className="col-10 offset-1">
           <Line data={{
             datasets: [
               {
@@ -47,6 +47,7 @@ export default class GlobalrankGraphComponent extends React.Component<IComponent
             ],
             labels: this.props.graphData.map((e) => e.timestampDate.toLocaleString()),
           }} options={{
+            animation: false as any,
             scales: {
               xAxes: [{
                 distribution: 'linear',
