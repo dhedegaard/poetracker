@@ -55,12 +55,14 @@ export default class GlobalrankGraphComponent extends React.Component<IComponent
 
     return (
       <React.Fragment>
-        <div className="row">
-          <label htmlFor="id_graph_from" className="form-label col-2 offset-1 text-muted">
-            Show from:
+        <div className="row" style={{ paddingBottom: 20 }}>
+          <label htmlFor="id_graph_from" className="form-label col-2 offset-1 text-muted text-right">
+            <small>Show from:</small>
           </label>
           <div className="col-2">
-            <select id="id_graph_from" className="form-control"
+            <select
+              id="id_graph_from"
+              className="form-control form-control-sm"
               onChange={this.onChangeFrom} value={this.state.from}
             >
               <option key="forever" value="forever">
@@ -106,6 +108,9 @@ export default class GlobalrankGraphComponent extends React.Component<IComponent
             labels: graphData.map((e) => e.timestampDate.toLocaleString()),
           }} options={{
             animation: false as any,
+            legend: {
+              display: false,
+            },
             scales: {
               xAxes: [{
                 distribution: 'linear',
