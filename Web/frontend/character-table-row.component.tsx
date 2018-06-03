@@ -74,11 +74,12 @@ export default class CharacterTableRowComponent extends React.Component<ICompone
 
   render() {
     const datapoint = this.props.datapoint;
+    const isVisible = this.props.isSelected && this.state.graphData && this.state.graphData.length;
 
     return (
       <React.Fragment>
         <tr
-          className={this.props.isSelected ? 'table-secondary' : undefined}
+          className={isVisible ? 'table-secondary' : undefined}
           onClick={this.onRowClick}
         >
           <td className="text-nowrap">
@@ -160,7 +161,7 @@ export default class CharacterTableRowComponent extends React.Component<ICompone
             </span>
           </td>
         </tr>
-        {this.props.isSelected && this.state.graphData && this.state.graphData.length && (
+        {isVisible && (
           <tr>
             <td colSpan={4} className="bg-light">
               <GlobalrankGraphComponent
