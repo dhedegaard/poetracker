@@ -33,7 +33,8 @@ namespace Web.Hubs {
                 .Include(e => e.League)
                 .OrderByDescending(e => e.Id)
                 .Where(e =>
-                    e.CharId == datapoint.CharId &&
+                    e.LeagueId == datapoint.LeagueId &&
+                    e.Charname == datapoint.Charname &&
                     e.Timestamp <= dateBreakpoint)
                 .FirstOrDefault();
 
@@ -55,7 +56,7 @@ namespace Web.Hubs {
                   .Include(e => e.League)
                   .Where(e => e.League.EndAt == null || e.League.EndAt >= DateTimeOffset.UtcNow)
                   .OrderByDescending(e => e.Id)
-                  .GroupBy(e => e.CharId)
+                  .GroupBy(e => new { e.Charname, e.LeagueId })
                   .ToList()
                   .Select(e => GenerateDatapointResult(e.First())),
                 Leagues = poeContext.Leagues
