@@ -58,7 +58,7 @@ namespace Fetcher {
                 var windowCharacters = await CharactersApi.GetCharacters(account.AccountName);
                 logger.LogInformation("Fetching new datapoints for account: {0}", account);
                 foreach (var league in leagues) {
-                    var characters = await LaddersApi.GetAccountCharacters(league.Id, account.AccountName);
+                    var characters = await LaddersApi.GetAccountCharacters(league.Id, account.AccountName, null);
                     var datapoints = new List<Datapoint>();
                     var datapointCharnames = new HashSet<string>();
                     if (characters.Any()) {
