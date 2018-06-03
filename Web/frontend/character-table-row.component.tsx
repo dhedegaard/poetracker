@@ -1,6 +1,6 @@
 import React from "react";
 
-import GlobalrankGraphComponent from "./globalrank-graph.component";
+import GlobalrankGraphComponent from "./character-graph.component";
 import { IDatapoint, IDatapointResult } from "./main.component";
 
 interface IComponentProps {

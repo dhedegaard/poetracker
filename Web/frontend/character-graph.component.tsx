@@ -12,7 +12,7 @@ interface IComponentState {
   from: 'forever' | '1 day' | '6 hours' | '1 hour';
 }
 
-export default class GlobalrankGraphComponent extends React.Component<IComponentProps, IComponentState> {
+export default class CharacterGraphComponent extends React.Component<IComponentProps, IComponentState> {
   constructor(props: IComponentProps) {
     super(props);
     this.state = {
