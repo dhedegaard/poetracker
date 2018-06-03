@@ -51,10 +51,7 @@ export default class GlobalrankGraphComponent extends React.Component<IComponent
         fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 1);
         break;
     }
-    let graphData = this.props.graphData;
-    if (fromDate) {
-      graphData = graphData.filter((e) => e.timestampDate >= fromDate!);
-    }
+    const graphData = this.props.graphData;
 
     return (
       <React.Fragment>
