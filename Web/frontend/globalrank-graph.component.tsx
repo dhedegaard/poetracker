@@ -9,7 +9,7 @@ interface IComponentProps {
 }
 
 interface IComponentState {
-  from: 'forever' | '1 day' | '6 hours';
+  from: 'forever' | '1 day' | '6 hours' | '1 hour';
 }
 
 export default class GlobalrankGraphComponent extends React.Component<IComponentProps, IComponentState> {
@@ -47,6 +47,9 @@ export default class GlobalrankGraphComponent extends React.Component<IComponent
       case '6 hours':
         fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 6);
         break;
+      case '1 hour':
+        fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 1);
+        break;
     }
     let graphData = this.props.graphData;
     if (fromDate) {
@@ -67,13 +70,16 @@ export default class GlobalrankGraphComponent extends React.Component<IComponent
             >
               <option key="forever" value="forever">
                 Forever
-            </option>
+              </option>
               <option key="1 day" value="1 day">
                 The last day
-            </option>
+              </option>
               <option key="6 hours" value="6 hours">
                 Last six hours
-            </option>
+              </option>
+              <option key="1 hour" value="1 hour">
+                Last hour
+              </option>
             </select>
           </div>
         </div>
@@ -124,6 +130,7 @@ export default class GlobalrankGraphComponent extends React.Component<IComponent
                       minute: 'YYYY-MM-DD HH:MM',
                     },
                     max: new Date().getTime() as any,
+                    min: fromDate ? fromDate : undefined as any,
                     unit: 'minute',
                   },
                   type: 'time',
