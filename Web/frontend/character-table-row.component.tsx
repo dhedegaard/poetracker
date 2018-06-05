@@ -152,7 +152,7 @@ export default class CharacterTableRowComponent extends React.Component<ICompone
             )}
           </td>
           <td>{datapoint.datapoint.class}</td>
-          <td className="text-right">
+          <td className="text-right text-nowrap">
             {datapoint.previousDatapoint && datapoint.previousDatapoint.level !== datapoint.datapoint.level && (
               <React.Fragment>
                 <span
