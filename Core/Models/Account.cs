@@ -27,7 +27,8 @@ namespace Core.Models {
                 new Account { AccountName = "dclara", TwitchUsername = "DCLara1" },
                 new Account { AccountName = "havoc6", TwitchUsername = "havoc616" },
                 new Account { AccountName = "alkaizerx", TwitchUsername = "alkaizerx" },
-                new Account { AccountName = "pinytenis", TwitchUsername = "Bakedchicken" }
+                new Account { AccountName = "pinytenis", TwitchUsername = "Bakedchicken" },
+                new Account { AccountName = "cohhcarnage", TwitchUsername = "cohhcarnage" }
             );
         }
     }
