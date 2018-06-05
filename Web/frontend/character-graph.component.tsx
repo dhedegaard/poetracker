@@ -56,10 +56,10 @@ export default class CharacterGraphComponent extends React.Component<IComponentP
     return (
       <React.Fragment>
         <div className="row" style={{ paddingBottom: 20 }}>
-          <label htmlFor="id_graph_from" className="form-label col-2 offset-1 text-muted text-right">
+          <label htmlFor="id_graph_from" className="form-label col-3 col-sm-2 offset-1 text-muted text-right">
             <small>Show from:</small>
           </label>
-          <div className="col-2">
+          <div className="col-sm-2 col-4">
             <select
               id="id_graph_from"
               className="form-control form-control-sm"
