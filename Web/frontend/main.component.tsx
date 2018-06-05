@@ -13,7 +13,7 @@ export interface IDatapointResult {
 export interface IDatapoint {
   account: IAccountType;
   accountId: string;
-  charId: string;
+  charId: string | undefined;
   charname: string;
   experience: number;
   globalRank?: number;
@@ -122,7 +122,9 @@ export default class MainComponent extends React.Component<{}, IMainComponentSta
 
       // Remove any existing entries for the given char, probably not the
       // most efficient if there's a lot of datapoints.
-      datapoints = datapoints.filter((e) => e.datapoint.charId !== datapoint.datapoint.charId);
+      datapoints = datapoints.filter((e) => !(
+        e.datapoint.charname === datapoint.datapoint.charname &&
+        e.datapoint.leagueId === datapoint.datapoint.leagueId));
 
       // Push the new datapoint.
       datapoints.push(datapoint);
