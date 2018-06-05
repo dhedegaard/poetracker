@@ -67,7 +67,10 @@ namespace Fetcher {
                             // If there are no characters with that name in
                             // the current league, based on the character
                             // window data, skip it.
-                            if (!windowCharacters.Any(c =>
+                            // Unless the character is dead, in which case the
+                            // character no longer exists in the league but
+                            // should still keep the stop as "dead".
+                            if (!character.Dead && !windowCharacters.Any(c =>
                                     c.Name == character.Name &&
                                     c.League == league.Id)) {
                                 continue;
