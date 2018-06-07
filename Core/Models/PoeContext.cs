@@ -4,12 +4,19 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace Core {
     public class PoeContext : DbContext {
+        public PoeContext() : base() { }
+        public PoeContext(DbContextOptions<PoeContext> options) : base(options) { }
+
         public DbSet<Datapoint> Datapoints { get; set; }
         public DbSet<League> Leagues { get; set; }
         public DbSet<Account> Accounts { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder
-            .UseNpgsql("Server=localhost;Database=poetracker;Username=poetracker;Password=poetracker123");
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
+            if (!optionsBuilder.IsConfigured) {
+                optionsBuilder
+                    .UseNpgsql("Server=localhost;Database=poetracker;Username=poetracker;Password=poetracker123");
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             Datapoint.OnModelCreating(modelBuilder);
@@ -19,8 +26,7 @@ namespace Core {
     }
 
     public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<PoeContext> {
-        public PoeContext CreateDbContext(string[] args) {
-            return new PoeContext();
-        }
+        public PoeContext CreateDbContext(string[] args) =>
+            new PoeContext();
     }
 }
