@@ -45,6 +45,8 @@ namespace Core.Models {
 
             entity.HasKey(e => e.Id);
             entity.HasIndex(e => e.CharId);
+            // For fetching all the datapoints, for a given char in a given league.
+            entity.HasIndex(e => new { e.LeagueId, e.Charname, e.Timestamp });
             entity.HasIndex(e => new { e.CharId, e.Timestamp });
         }
     }
