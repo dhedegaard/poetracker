@@ -12,10 +12,8 @@ namespace Core {
         public DbSet<Account> Accounts { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
-            if (!optionsBuilder.IsConfigured) {
-                optionsBuilder
-                    .UseNpgsql("Server=localhost;Database=poetracker;Username=poetracker;Password=poetracker123");
-            }
+            optionsBuilder
+                .UseNpgsql("Server=localhost;Database=poetracker;Username=poetracker;Password=poetracker123");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
