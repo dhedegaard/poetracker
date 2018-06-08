@@ -23,14 +23,13 @@ namespace Web.Hubs {
 
         /// <summary>
         /// Takes a datapoint and translates it to a DatapointResult, by querying the backend for extra data (in this case an older datapoint).
+        /// Rather slow, avoid using in 1+N conditions and such.
         /// </summary>
         internal DatapointResult GenerateDatapointResult(Datapoint datapoint) {
             // Change as appropriate.
-            var dateBreakpoint = DateTimeOffset.Now - TimeSpan.FromHours(6);
+            var dateBreakpoint = DateTime.Now - TimeSpan.FromHours(6);
 
             var previousDatapoint = poeContext.Datapoints
-                .Include(e => e.Account)
-                .Include(e => e.League)
                 .OrderByDescending(e => e.Id)
                 .Where(e =>
                     e.LeagueId == datapoint.LeagueId &&
@@ -50,17 +49,47 @@ namespace Web.Hubs {
         }
 
         internal void SendInitialPayload() {
-            Clients.Caller.SendAsync("InitialPayload", new InitialPayload {
-                LatestDatapoints = poeContext.Datapoints
-                  .Include(e => e.Account)
+            // Implement as LINQ later, when EFCore/Npgsql supports proper groupby's.
+            var datapoints = poeContext.Datapoints
+                  .FromSql(@"
+                    SELECT * FROM ""Datapoints"" WHERE ""Id"" IN (
+                      SELECT MAX(d.""Id"")
+                      FROM ""Datapoints"" d
+                        JOIN ""Leagues"" l ON d.""LeagueId"" = l.""Id""
+                      WHERE (l.""EndAt"" IS NULL OR l.""EndAt"" >= NOW())
+                      GROUP BY d.""Charname"", d.""LeagueId""
+                    )", DateTime.Now)
                   .Include(e => e.League)
-                  .Where(e => e.League.EndAt == null || e.League.EndAt >= DateTimeOffset.UtcNow)
-                  .OrderByDescending(e => e.Id)
-                  .GroupBy(e => new { e.Charname, e.LeagueId })
-                  .ToList()
-                  .Select(e => GenerateDatapointResult(e.First())),
+                  .Include(e => e.Account)
+                  .ToList();
+            var previousDatapoints = poeContext.Datapoints
+                  .FromSql(@"
+                    SELECT * FROM ""Datapoints"" WHERE ""Id"" IN (
+                      SELECT MAX(d.""Id"")
+                      FROM ""Datapoints"" d
+                        JOIN ""Leagues"" l ON d.""LeagueId"" = l.""Id""
+                      WHERE (l.""EndAt"" IS NULL OR l.""EndAt"" >= NOW())
+                        AND d.""Timestamp"" <={0}
+                        AND NOT (d.""Id"" = ANY({1}))
+                      GROUP BY d.""Charname"", d.""LeagueId""
+                    )",
+                    DateTime.Now - TimeSpan.FromHours(6),
+                    datapoints.Select(e => e.Id.Value).ToArray()
+                  )
+                  .ToList();
+
+            Clients.Caller.SendAsync("InitialPayload", new InitialPayload {
+                LatestDatapoints = datapoints
+                    .Select(datapoint => new DatapointResult{
+                        Datapoint= datapoint,
+                        PreviousDatapoint = previousDatapoints
+                            .Where(e =>
+                                e.LeagueId == datapoint.LeagueId &&
+                                e.Charname == datapoint.Charname)
+                            .FirstOrDefault(),
+                    }),
                 Leagues = poeContext.Leagues
-                  .Where(e => e.EndAt == null || e.EndAt >= DateTimeOffset.UtcNow)
+                  .Where(e => e.EndAt == null || e.EndAt >= DateTime.Now)
                   .OrderByDescending(e => e.StartAt)
                   .ToList(),
                 Accounts = poeContext.Accounts
