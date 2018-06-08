@@ -58,7 +58,7 @@ namespace Web.Hubs {
                         JOIN ""Leagues"" l ON d.""LeagueId"" = l.""Id""
                       WHERE (l.""EndAt"" IS NULL OR l.""EndAt"" >= NOW())
                       GROUP BY d.""Charname"", d.""LeagueId""
-                    )", DateTime.Now)
+                    )")
                   .Include(e => e.League)
                   .Include(e => e.Account)
                   .ToList();
@@ -69,11 +69,10 @@ namespace Web.Hubs {
                       FROM ""Datapoints"" d
                         JOIN ""Leagues"" l ON d.""LeagueId"" = l.""Id""
                       WHERE (l.""EndAt"" IS NULL OR l.""EndAt"" >= NOW())
-                        AND d.""Timestamp"" <={0}
-                        AND NOT (d.""Id"" = ANY({1}))
+                        AND d.""Timestamp"" <= NOW() - INTERVAL '6 hours'
+                        AND NOT (d.""Id"" = ANY({0}))
                       GROUP BY d.""Charname"", d.""LeagueId""
                     )",
-                    DateTime.Now - TimeSpan.FromHours(6),
                     datapoints.Select(e => e.Id.Value).ToArray()
                   )
                   .ToList();
