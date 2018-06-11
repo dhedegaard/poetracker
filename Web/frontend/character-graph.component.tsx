@@ -9,7 +9,7 @@ interface IComponentProps {
 }
 
 interface IComponentState {
-  from: 'forever' | '1 day' | '6 hours' | '1 hour';
+  from: 'forever' | '1 week' | '3 days' | '1 day' | '6 hours' | '1 hour';
 }
 
 export default class CharacterGraphComponent extends React.Component<IComponentProps, IComponentState> {
@@ -40,16 +40,11 @@ export default class CharacterGraphComponent extends React.Component<IComponentP
     /* Filter the dataset, if applicable. */
     let fromDate: Date | null = null;
     switch (this.state.from) {
-      case 'forever': break;
-      case '1 day':
-        fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 12);
-        break;
-      case '6 hours':
-        fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 6);
-        break;
-      case '1 hour':
-        fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 1);
-        break;
+      case '1 week': fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 7); break;
+      case '3 days': fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 3); break;
+      case '1 day': fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 24); break;
+      case '6 hours': fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 6); break;
+      case '1 hour': fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 1); break;
     }
     const graphData = this.props.graphData;
 
@@ -67,6 +62,12 @@ export default class CharacterGraphComponent extends React.Component<IComponentP
             >
               <option key="forever" value="forever">
                 Forever
+              </option>
+              <option key="1 week" value="1 week">
+                The last week
+              </option>
+              <option key="3 days" value="3 days">
+                Last three days
               </option>
               <option key="1 day" value="1 day">
                 The last day
