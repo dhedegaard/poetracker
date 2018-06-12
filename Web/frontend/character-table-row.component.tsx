@@ -84,7 +84,7 @@ export default class CharacterTableRowComponent extends React.Component<ICompone
         >
           <td className="text-nowrap">
             <img
-              src={`https://www.pathofexile.com/image/ladder/${datapoint.datapoint.online ? 'online' : 'offline'}.png`}
+              src={`/${datapoint.datapoint.online ? 'online' : 'offline'}.png`}
               title={datapoint.datapoint.online ? 'Online' : 'Offline'} width={15} height={15}
             />
             {' '}
