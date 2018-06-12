@@ -31,7 +31,7 @@ export default class FilterComponent extends React.Component<IFilterComponentPro
     /* Determine the initial state. */
     this.state = {
       hideDead: false,
-      hideStandardLeagues: false,
+      hideStandardLeagues: true,
       hideStreamers: false,
       onlyShowOnline: false,
       selectedLeague: '',
@@ -202,7 +202,7 @@ export default class FilterComponent extends React.Component<IFilterComponentPro
         <div className="row">
           <div className="col-md-5 col-12">
             <div className="row">
-              <label className="col-4 col-md-2 text-right">Account:</label>
+              <label htmlFor="id_filter_account" className="col-4 col-md-2 text-right">Account:</label>
               <div className="col-md-6">
                 <select
                   id="id_filter_account"
