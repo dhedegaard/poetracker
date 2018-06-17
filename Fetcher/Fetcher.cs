@@ -52,7 +52,7 @@ namespace Fetcher {
 
         static async Task FetchUpdateDatapoints(PoeContext context, HubConnection hubConnection) {
             var leagues = context.Leagues
-                .Where(e => e.EndAt == null || e.EndAt >= DateTimeOffset.UtcNow)
+                .Where(e => e.EndAt == null || e.EndAt >= DateTime.Now)
                 .ToList();
             foreach (var account in context.Accounts) {
                 var windowCharacters = await CharactersApi.GetCharacters(account.AccountName);
@@ -100,7 +100,7 @@ namespace Fetcher {
                                     GlobalRank = character.Rank,
                                     League = league,
                                     Level = character.Level,
-                                    Timestamp = DateTimeOffset.Now,
+                                    Timestamp = DateTime.Now,
                                     Class = character.Class,
                                     Dead = character.Dead,
                                     Online = character.Online,
@@ -131,7 +131,8 @@ namespace Fetcher {
                             .FirstOrDefault();
 
                         if (latestDatapoint == null ||
-                                latestDatapoint.Experience != windowChar.Experience) {
+                                latestDatapoint.Experience != windowChar.Experience ||
+                                (DateTime.Now - latestDatapoint.Timestamp).Days >= 1) {
 
                             var datapoint = new Datapoint {
                                 Account = account,
@@ -140,7 +141,7 @@ namespace Fetcher {
                                 GlobalRank = null,
                                 League = league,
                                 Level = windowChar.Level,
-                                Timestamp = DateTimeOffset.Now,
+                                Timestamp = DateTime.Now,
                                 Class = windowChar.Class,
                                 Dead = false,
                                 Online = null,
