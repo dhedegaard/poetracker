@@ -9,7 +9,6 @@ namespace Core.Models {
         /// </summary>
         [Key]
         public int? Id { get; set; }
-        public string CharId { get; set; }
         [Required]
         public DateTimeOffset Timestamp { get; set; }
         [Required]
@@ -44,10 +43,8 @@ namespace Core.Models {
             var entity = modelBuilder.Entity<Datapoint>();
 
             entity.HasKey(e => e.Id);
-            entity.HasIndex(e => e.CharId);
             // For fetching all the datapoints, for a given char in a given league.
             entity.HasIndex(e => new { e.LeagueId, e.Charname, e.Timestamp });
-            entity.HasIndex(e => new { e.CharId, e.Timestamp });
         }
     }
 }

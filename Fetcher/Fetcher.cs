@@ -81,7 +81,7 @@ namespace Fetcher {
                             // Added a new datapoint.
                             var latestDatapoint = context.Datapoints
                                 .Include(e => e.League)
-                                .Where(e => e.CharId == character.CharId &&
+                                .Where(e => e.Charname == character.Name &&
                                             e.LeagueId == league.Id &&
                                             e.AccountId == account.AccountName)
                                 .OrderByDescending(e => e.Timestamp)
@@ -94,7 +94,6 @@ namespace Fetcher {
                                     latestDatapoint.Online != character.Online) {
 
                                 var datapoint = new Datapoint {
-                                    CharId = character.CharId,
                                     Account = account,
                                     Charname = character.Name,
                                     Experience = character.Experience,
@@ -135,14 +134,6 @@ namespace Fetcher {
                                 latestDatapoint.Experience != windowChar.Experience) {
 
                             var datapoint = new Datapoint {
-                                CharId = await context.Datapoints
-                                    .Where(e =>
-                                        e.Charname == windowChar.Name &&
-                                        e.LeagueId == league.Id &&
-                                        e.AccountId == account.AccountName &&
-                                        e.CharId != null)
-                                    .Select(e => e.CharId)
-                                    .FirstOrDefaultAsync(),
                                 Account = account,
                                 Charname = windowChar.Name,
                                 Experience = windowChar.Experience,
