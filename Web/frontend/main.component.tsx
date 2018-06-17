@@ -13,7 +13,6 @@ export interface IDatapointResult {
 export interface IDatapoint {
   account: IAccountType;
   accountId: string;
-  charId: string | undefined;
   charname: string;
   experience: number;
   globalRank?: number;
