@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';
 import MainComponent, { IMainComponentProps } from './main.component';
 
 const initialPayload = (window as any).InitialPayload as IMainComponentProps;
-console.log(initialPayload);
 
 ReactDOM.render(
   <MainComponent
