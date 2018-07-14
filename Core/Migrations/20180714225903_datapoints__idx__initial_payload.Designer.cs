@@ -3,15 +3,17 @@ using System;
 using Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Core.Migrations
 {
     [DbContext(typeof(PoeContext))]
-    partial class PoeContextModelSnapshot : ModelSnapshot
+    [Migration("20180714225903_datapoints__idx__initial_payload")]
+    partial class datapoints__idx__initial_payload
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
