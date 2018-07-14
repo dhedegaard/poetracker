@@ -45,4 +45,4 @@ RUN dotnet publish --output /app --configuration Release
 
 # Run the published application.
 WORKDIR /app
-CMD ["dotnet", "Web.dll"]
+CMD ["dotnet", "Web.dll", "-c", "Release"]
