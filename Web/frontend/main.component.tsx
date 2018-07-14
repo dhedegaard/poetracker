@@ -69,6 +69,7 @@ export default class MainComponent extends React.Component<IMainComponentProps, 
     this.onSignalRInitialPayload = this.onSignalRInitialPayload.bind(this);
     this.onSignalRConnectionClosed = this.onSignalRConnectionClosed.bind(this);
     this.onClickReloadPage = this.onClickReloadPage.bind(this);
+    this.filterComponent = React.createRef<FilterComponent>();
     this.signalRComponent = React.createRef<SignalRComponent>();
   }
 
@@ -159,7 +160,7 @@ export default class MainComponent extends React.Component<IMainComponentProps, 
   }
 
   render() {
-    const datapoints = (this.filterComponent && this.filterComponent.current || new FilterComponent({} as any))
+    const datapoints = (this.filterComponent.current || new FilterComponent({} as any))
       .filterDatapoints(this.state.datapoints);
 
     return (
