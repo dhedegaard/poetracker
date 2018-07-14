@@ -53,7 +53,7 @@ interface IState {
 }
 
 export default class MainComponent extends React.Component<IMainComponentProps, IState> {
-  filterComponent!: FilterComponent;
+  filterComponent: React.RefObject<FilterComponent>;
   signalRComponent: React.RefObject<SignalRComponent>;
 
   constructor(props: IMainComponentProps) {
@@ -159,7 +159,8 @@ export default class MainComponent extends React.Component<IMainComponentProps, 
   }
 
   render() {
-    const datapoints = (this.filterComponent || new FilterComponent({} as any)).filterDatapoints(this.state.datapoints);
+    const datapoints = (this.filterComponent.current || new FilterComponent({} as any))
+      .filterDatapoints(this.state.datapoints);
 
     return (
       <React.Fragment>
@@ -187,7 +188,7 @@ export default class MainComponent extends React.Component<IMainComponentProps, 
               accounts={this.state.accounts}
               onFilterChanged={() => { this.forceUpdate(); }}
               leagues={this.state.leagues}
-              ref={(filterComponent) => { this.filterComponent = filterComponent!; }}
+              ref={this.filterComponent}
             />
             <hr />
             <CharacterTableComponent
