@@ -48,53 +48,60 @@ namespace Web.Hubs {
             };
         }
 
-        internal void SendInitialPayload() {
+        public static async Task<InitialPayload> BuildInitialPayload(PoeContext poeContext) {
             // Implement as LINQ later, when EFCore/Npgsql supports proper groupby's.
-            var datapoints = poeContext.Datapoints
+            var validLeagueIds = await poeContext.Leagues
+                .Where(l => l.EndAt == null || l.EndAt >= DateTime.Now)
+                .Select(l => l.Id)
+                .ToListAsync();
+            var datapoints = await poeContext.Datapoints
                   .FromSql(@"
                     SELECT * FROM ""Datapoints"" WHERE ""Id"" IN (
                       SELECT MAX(d.""Id"")
                       FROM ""Datapoints"" d
-                        JOIN ""Leagues"" l ON d.""LeagueId"" = l.""Id""
-                      WHERE (l.""EndAt"" IS NULL OR l.""EndAt"" >= NOW())
-                      GROUP BY d.""Charname"", d.""LeagueId""
-                    )")
-                  .Include(e => e.League)
-                  .Include(e => e.Account)
-                  .ToList();
-            var previousDatapoints = poeContext.Datapoints
-                  .FromSql(@"
-                    SELECT * FROM ""Datapoints"" WHERE ""Id"" IN (
-                      SELECT MAX(d.""Id"")
-                      FROM ""Datapoints"" d
-                        JOIN ""Leagues"" l ON d.""LeagueId"" = l.""Id""
-                      WHERE (l.""EndAt"" IS NULL OR l.""EndAt"" >= NOW())
-                        AND d.""Timestamp"" <= NOW() - INTERVAL '6 hours'
-                        AND NOT (d.""Id"" = ANY({0}))
+                      WHERE d.""LeagueId"" = ANY({0})
                       GROUP BY d.""Charname"", d.""LeagueId""
                     )",
+                    validLeagueIds)
+                  .Include(e => e.League)
+                  .Include(e => e.Account)
+                  .ToListAsync();
+            var previousDatapoints = await poeContext.Datapoints
+                  .FromSql(@"
+                    SELECT * FROM ""Datapoints"" WHERE ""Id"" IN (
+                      SELECT MAX(d.""Id"")
+                      FROM ""Datapoints"" d
+                        JOIN ""Leagues"" l ON d.""LeagueId"" = l.""Id""
+                      WHERE d.""LeagueId"" = ANY({0})
+                        AND d.""Timestamp"" <= NOW() - INTERVAL '6 hours'
+                        AND NOT (d.""Id"" = ANY({1}))
+                      GROUP BY d.""Charname"", d.""LeagueId""
+                    )",
+                    validLeagueIds,
                     datapoints.Select(e => e.Id.Value).ToArray()
                   )
-                  .ToList();
-
-            Clients.Caller.SendAsync("InitialPayload", new InitialPayload {
+                  .ToListAsync();
+            return new InitialPayload {
                 LatestDatapoints = datapoints
-                    .Select(datapoint => new DatapointResult{
-                        Datapoint= datapoint,
+                    .Select(datapoint => new DatapointResult {
+                        Datapoint = datapoint,
                         PreviousDatapoint = previousDatapoints
                             .Where(e =>
                                 e.LeagueId == datapoint.LeagueId &&
                                 e.Charname == datapoint.Charname)
                             .FirstOrDefault(),
                     }),
-                Leagues = poeContext.Leagues
+                Leagues = await poeContext.Leagues
                   .Where(e => e.EndAt == null || e.EndAt >= DateTime.Now)
                   .OrderByDescending(e => e.StartAt)
-                  .ToList(),
+                  .ToListAsync(),
                 Accounts = poeContext.Accounts
-                  .OrderByDescending(e => string.IsNullOrWhiteSpace(e.TwitchUsername))
-                  .ThenBy(e => e.AccountName),
-            });
+                  .OrderByDescending(e => e.TwitchUsername ?? e.AccountName),
+            };
+        }
+
+        internal void SendInitialPayload() {
+            Clients.Caller.SendAsync("InitialPayload", BuildInitialPayload(poeContext).Result);
         }
 
         public override Task OnConnectedAsync() {
