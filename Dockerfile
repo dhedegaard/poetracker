@@ -11,7 +11,7 @@ RUN apt-get update -qq && \
     apt-get dist-upgrade -qqy
 
 # Add NodeJs.
-RUN curl -sL -q https://deb.nodesource.com/setup_8.x | bash - && \
+RUN curl -sL -q https://deb.nodesource.com/setup_10.x | bash - && \
     apt-get install -qqy nodejs
 
 # Restore .dotnet core packages.
