@@ -1,9 +1,16 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
 
-import MainComponent from './main.component';
+import MainComponent, { IMainComponentProps } from './main.component';
+
+const initialPayload = (window as any).InitialPayload as IMainComponentProps;
+console.log(initialPayload);
 
 ReactDOM.render(
-  <MainComponent />,
+  <MainComponent
+    accounts={initialPayload ? initialPayload.accounts : null}
+    latestDatapoints={initialPayload ? initialPayload.latestDatapoints : null}
+    leagues={initialPayload ? initialPayload.leagues : null}
+  />,
   document.getElementById('app'),
 );

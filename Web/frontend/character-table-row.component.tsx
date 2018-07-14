@@ -5,7 +5,7 @@ import { IDatapoint, IDatapointResult } from "./main.component";
 
 interface IComponentProps {
   datapoint: IDatapointResult;
-  getCharData: (leagueId: string, charname: string) => Promise<IDatapoint[]>;
+  getCharData?: (leagueId: string, charname: string) => Promise<IDatapoint[]>;
   selectedLeague: string;
   clickedRow: (charname: string, leagueId: string) => void;
   isSelected: boolean;
@@ -45,7 +45,7 @@ export default class CharacterTableRowComponent extends React.Component<ICompone
 
   async ensureGraphData() {
     /* If this row is not the currently selected one, or there already is some data: Avoid fetching new graph data. */
-    if (!this.props.isSelected || this.state.graphData.length) {
+    if (!this.props.getCharData || !this.props.isSelected || this.state.graphData.length) {
       return;
     }
 

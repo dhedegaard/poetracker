@@ -2,7 +2,6 @@
 
 import CharacterTableComponent from './character-table.component';
 import FilterComponent from './filter.component';
-import LeagueSelectComponent from './league-select.component';
 import SignalRComponent, { IInitialPayload } from './signalr.component';
 
 export interface IDatapointResult {
@@ -39,7 +38,13 @@ export interface ILeagueType {
   url: string;
 }
 
-interface IMainComponentState {
+export interface IMainComponentProps {
+  leagues: ILeagueType[] | null;
+  latestDatapoints: IDatapointResult[] | null;
+  accounts: IAccountType[] | null;
+}
+
+interface IState {
   error: string;
   leagues: ILeagueType[];
   selectedLeague: string;
@@ -47,23 +52,24 @@ interface IMainComponentState {
   accounts: IAccountType[];
 }
 
-export default class MainComponent extends React.Component<{}, IMainComponentState> {
+export default class MainComponent extends React.Component<IMainComponentProps, IState> {
   filterComponent!: FilterComponent;
-  signalRComponent!: SignalRComponent;
+  signalRComponent: React.RefObject<SignalRComponent>;
 
-  constructor(props: {}) {
+  constructor(props: IMainComponentProps) {
     super(props);
     this.state = {
-      accounts: [],
-      datapoints: [],
+      accounts: props.accounts || [],
+      datapoints: props.latestDatapoints || [],
       error: '',
-      leagues: [],
+      leagues: props.leagues || [],
       selectedLeague: '',
     };
     this.onSignalRNotifyNewData = this.onSignalRNotifyNewData.bind(this);
     this.onSignalRInitialPayload = this.onSignalRInitialPayload.bind(this);
     this.onSignalRConnectionClosed = this.onSignalRConnectionClosed.bind(this);
     this.onClickReloadPage = this.onClickReloadPage.bind(this);
+    this.signalRComponent = React.createRef<SignalRComponent>();
   }
 
   componentDidMount() {
@@ -158,7 +164,7 @@ export default class MainComponent extends React.Component<{}, IMainComponentSta
     return (
       <React.Fragment>
         <SignalRComponent
-          ref={(elem) => { this.signalRComponent = elem!; }}
+          ref={this.signalRComponent}
           onSignalRInitialPayload={this.onSignalRInitialPayload}
           onSignalRNotifyNewData={this.onSignalRNotifyNewData}
           onSignalRConnectionClosed={this.onSignalRConnectionClosed}
@@ -188,7 +194,8 @@ export default class MainComponent extends React.Component<{}, IMainComponentSta
               leagues={this.state.leagues}
               datapoints={datapoints}
               selectedLeague={this.state.selectedLeague}
-              getCharData={this.signalRComponent.getCharData}
+              getCharData={this.signalRComponent.current ?
+                this.signalRComponent.current.getCharData : undefined}
             />
           </React.Fragment>
         ) || (

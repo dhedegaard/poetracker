@@ -10,7 +10,7 @@ interface ICharacterTableComponentProps {
   // Filters
   selectedLeague: string;
   // Forwarded methods */
-  getCharData: (leagueId: string, charname: string) => Promise<IDatapoint[]>;
+  getCharData?: (leagueId: string, charname: string) => Promise<IDatapoint[]>;
 }
 
 interface IComponentState {
