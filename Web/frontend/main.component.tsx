@@ -159,7 +159,7 @@ export default class MainComponent extends React.Component<IMainComponentProps, 
   }
 
   render() {
-    const datapoints = (this.filterComponent.current || new FilterComponent({} as any))
+    const datapoints = (this.filterComponent && this.filterComponent.current || new FilterComponent({} as any))
       .filterDatapoints(this.state.datapoints);
 
     return (
