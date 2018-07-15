@@ -8,19 +8,27 @@ using Web.Hubs;
 
 namespace Web {
     public class Startup {
-        public Startup(IConfiguration configuration) =>
-            Configuration = configuration;
+        private IConfiguration configuration;
+        private readonly IHostingEnvironment env;
 
-        public IConfiguration Configuration { get; }
+        public Startup(IConfiguration configuration, IHostingEnvironment env) {
+            this.configuration = configuration;
+            this.env = env;
+        }
 
         public void ConfigureServices(IServiceCollection services) {
             services.AddMvc();
             services.AddSignalR();
             services.AddDbContext<PoeContext>();
+            if (this.env.IsDevelopment()) {
+                services.AddMiniProfiler()
+                        .AddEntityFramework();
+            }
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
             if (env.IsDevelopment()) {
+                app.UseMiniProfiler();
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
             }

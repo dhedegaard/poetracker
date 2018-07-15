@@ -15,6 +15,9 @@
   <link rel="manifest" href="~/manifest.webmanifest" />
 </head>
 <body class="bg-light">
+  @if (env.IsDevelopment()) {
+    <mini-profiler />
+  }
   <script type="text/javascript">window.InitialPayload=@Json.Serialize(await PoeHub.BuildInitialPayload(poeContext));</script>
   <nav class="navbar navbar-dark bg-dark">
     <div class="container">
