@@ -1,6 +1,7 @@
 import React from "react";
 
 import GlobalrankGraphComponent from "./character-graph";
+import "./character-table-row.css";
 
 interface IProps {
   datapoint: poetracker.IDatapointResult;

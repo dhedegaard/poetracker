@@ -43,6 +43,9 @@ export default class CharacterGraph extends React.Component<IProps, IState> {
       case '1 day': fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 24); break;
       case '6 hours': fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 6); break;
       case '1 hour': fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 1); break;
+      case 'forever': break;
+      default:
+        throw new Error(`Unhandled case: ${this.state.from}`);
     }
     const graphData = this.props.graphData;
 
