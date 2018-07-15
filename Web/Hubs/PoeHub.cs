@@ -54,31 +54,35 @@ namespace Web.Hubs {
                 .Where(l => l.EndAt == null || l.EndAt >= DateTime.Now)
                 .Select(l => l.Id)
                 .ToListAsync();
+
             var datapoints = await poeContext.Datapoints
                   .FromSql(@"
-                    SELECT * FROM ""Datapoints"" WHERE ""Id"" IN (
-                      SELECT MAX(d.""Id"")
+                    SELECT d.*
+                    FROM ""Datapoints"" d
+                    INNER JOIN (
+                      SELECT MAX(d.""Id"") AS id
                       FROM ""Datapoints"" d
                       WHERE d.""LeagueId"" = ANY({0})
                       GROUP BY d.""Charname"", d.""LeagueId""
-                    )",
+                    ) AS q on q.id = d.""Id""",
                     validLeagueIds)
                   .Include(e => e.League)
                   .Include(e => e.Account)
                   .ToListAsync();
             var previousDatapoints = await poeContext.Datapoints
                   .FromSql(@"
-                    SELECT * FROM ""Datapoints"" WHERE ""Id"" IN (
-                      SELECT MAX(d.""Id"")
-                      FROM ""Datapoints"" d
-                        JOIN ""Leagues"" l ON d.""LeagueId"" = l.""Id""
-                      WHERE d.""LeagueId"" = ANY({0})
-                        AND d.""Timestamp"" <= NOW() - INTERVAL '6 hours'
-                        AND NOT (d.""Id"" = ANY({1}))
-                      GROUP BY d.""Charname"", d.""LeagueId""
-                    )",
+                    SELECT d.*
+                    FROM ""Datapoints"" d
+                      INNER JOIN (
+                        SELECT MAX(d.""Id"") as id
+                        FROM ""Datapoints"" d
+                        WHERE d.""LeagueId"" = ANY({0})
+                            AND d.""Timestamp"" <= NOW() - INTERVAL '6 hours'
+                            AND NOT (d.""Id"" = ANY({1}))
+                        GROUP BY d.""Charname"", d.""LeagueId""
+                      ) AS q ON d.""Id"" = q.id",
                     validLeagueIds,
-                    datapoints.Select(e => e.Id.Value).ToArray()
+                    datapoints.Select(e => e.Id.Value).ToList()
                   )
                   .ToListAsync();
             return new InitialPayload {
@@ -95,8 +99,9 @@ namespace Web.Hubs {
                   .Where(e => e.EndAt == null || e.EndAt >= DateTime.Now)
                   .OrderByDescending(e => e.StartAt)
                   .ToListAsync(),
-                Accounts = poeContext.Accounts
-                  .OrderByDescending(e => e.TwitchUsername ?? e.AccountName),
+                Accounts = await poeContext.Accounts
+                  .OrderByDescending(e => e.TwitchUsername ?? e.AccountName)
+                  .ToListAsync(),
             };
         }
 
