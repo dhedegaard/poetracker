@@ -1,10 +1,8 @@
 ﻿import React from "react";
 
-import { ILeagueType } from "./main.component";
-
 interface ILeagueSelectComponentProps {
   selectedLeague: string;
-  leagues: ILeagueType[];
+  leagues: poetracker.ILeagueType[];
   onLeagueSelect: (league: string) => void;
 }
 

@@ -1,19 +1,13 @@
 import React from "react";
-import LeagueSelectComponent from "./league-select.component";
-import {
-  IAccountType,
-  IDatapoint,
-  IDatapointResult,
-  ILeagueType,
-} from "./main.component";
+import LeagueSelectComponent from "./league-select";
 
-interface IFilterComponentProps {
-  accounts: IAccountType[];
-  leagues: ILeagueType[];
+interface IFilterProps {
+  accounts: poetracker.IAccountType[];
+  leagues: poetracker.ILeagueType[];
   onFilterChanged: () => void;
 }
 
-interface IFilterComponentState {
+interface IFilterState {
   selectedLeague: string;
   hideDead: boolean;
   onlyShowOnline: boolean;
@@ -22,8 +16,8 @@ interface IFilterComponentState {
   showOnlyAccount?: string;
 }
 
-export default class FilterComponent extends React.Component<IFilterComponentProps, IFilterComponentState> {
-  constructor(props: IFilterComponentProps) {
+export default class Filter extends React.Component<IFilterProps, IFilterState> {
+  constructor(props: IFilterProps) {
     super(props);
     this.onLeagueSelect = this.onLeagueSelect.bind(this);
     this.getCurrentLeague = this.getCurrentLeague.bind(this);
@@ -39,7 +33,7 @@ export default class FilterComponent extends React.Component<IFilterComponentPro
     const oldState = localStorage.getItem('filterState');
     if (oldState) {
       try {
-        this.state = JSON.parse(oldState) as IFilterComponentState;
+        this.state = JSON.parse(oldState) as IFilterState;
       } catch { /* noop */ }
     }
   }
@@ -47,7 +41,7 @@ export default class FilterComponent extends React.Component<IFilterComponentPro
   /**
    * Filters the given datapoints based on the current state.
    */
-  public filterDatapoints(datapoints: IDatapointResult[]): IDatapointResult[] {
+  public filterDatapoints(datapoints: poetracker.IDatapointResult[]): poetracker.IDatapointResult[] {
     // Filter based on league.
     if (this.state.selectedLeague) {
       datapoints = datapoints
@@ -94,14 +88,14 @@ export default class FilterComponent extends React.Component<IFilterComponentPro
   /**
    * Calculates and returns the current LeagueType object, based on what is current selected.
    */
-  getCurrentLeague(): ILeagueType | undefined {
+  getCurrentLeague(): poetracker.ILeagueType | undefined {
     if (!this.state.selectedLeague) {
       return undefined;
     }
     return this.props.leagues.filter((e) => e.id === this.state.selectedLeague)[0];
   }
 
-  componentDidUpdate(prevProps: IFilterComponentProps, prevState: IFilterComponentState) {
+  componentDidUpdate(prevProps: IFilterProps, prevState: IFilterState) {
     if (prevState !== this.state) {
       /* If the state changes, store the new state and propagate. */
       localStorage.setItem('filterState', JSON.stringify(this.state));

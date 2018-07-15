@@ -1,29 +1,16 @@
 ﻿import * as SignalR from '@aspnet/signalr';
 import React from "react";
 
-import {
-  IAccountType,
-  IDatapoint,
-  IDatapointResult,
-  ILeagueType,
-} from "./main.component";
-
-export interface IInitialPayload {
-  leagues: ILeagueType[];
-  latestDatapoints: IDatapointResult[];
-  accounts: IAccountType[];
-}
-
 interface ISignalRComponentProps {
-  onSignalRNotifyNewData: (data: IDatapointResult[]) => void;
-  onSignalRInitialPayload: (data: IInitialPayload) => void;
+  onSignalRNotifyNewData: (data: poetracker.IDatapointResult[]) => void;
+  onSignalRInitialPayload: (data: poetracker.IInitialPayload) => void;
   onSignalRConnectionClosed: () => void;
 }
 
 interface IGetCharDataResult {
   leagueId: string;
   charname: string;
-  datapoints: IDatapoint[];
+  datapoints: poetracker.IDatapoint[];
 }
 
 /**
@@ -81,7 +68,7 @@ export default class SignalRComponent extends React.Component<ISignalRComponentP
   /**
    * Fetches data for a given character, returning a resolvable promise.
    */
-  getCharData(leagueId: string, charname: string): Promise<IDatapoint[]> {
+  getCharData(leagueId: string, charname: string): Promise<poetracker.IDatapoint[]> {
     return new Promise((resolve, reject) => {
       /* Define a handler, that responds to character data. */
       const handler = (data: IGetCharDataResult) => {

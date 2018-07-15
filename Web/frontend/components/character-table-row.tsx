@@ -1,26 +1,21 @@
 import React from "react";
 
-import GlobalrankGraphComponent from "./character-graph.component";
-import { IDatapoint, IDatapointResult } from "./main.component";
+import GlobalrankGraphComponent from "./character-graph";
 
-interface IComponentProps {
-  datapoint: IDatapointResult;
-  getCharData?: (leagueId: string, charname: string) => Promise<IDatapoint[]>;
+interface IProps {
+  datapoint: poetracker.IDatapointResult;
+  getCharData?: (leagueId: string, charname: string) => Promise<poetracker.IDatapoint[]>;
   selectedLeague: string;
   clickedRow: (charname: string, leagueId: string) => void;
   isSelected: boolean;
 }
 
-export interface IGraphData extends IDatapoint {
-  timestampDate: Date;
+interface IState {
+  graphData: poetracker.IGraphData[];
 }
 
-interface IComponentState {
-  graphData: IGraphData[];
-}
-
-export default class CharacterTableRowComponent extends React.Component<IComponentProps, IComponentState> {
-  constructor(props: IComponentProps) {
+export default class CharacterTableRowComponent extends React.Component<IProps, IState> {
+  constructor(props: IProps) {
     super(props);
     this.onRowClick = this.onRowClick.bind(this);
     this.ensureGraphData = this.ensureGraphData.bind(this);
@@ -57,7 +52,7 @@ export default class CharacterTableRowComponent extends React.Component<ICompone
 
     /* Put the data in the state, if there's a change. */
     const filteredData = data.map((e) => {
-      const res = e as IGraphData;
+      const res = e as poetracker.IGraphData;
       res.timestampDate = new Date(e.timestamp);
       return res;
     });

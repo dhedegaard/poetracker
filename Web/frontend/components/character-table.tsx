@@ -1,31 +1,30 @@
 ﻿import React from "react";
 
-import CharacterTableRowComponent from "./character-table-row.component";
-import { IDatapoint, IDatapointResult, ILeagueType } from "./main.component";
+import CharacterTableRowComponent from "./character-table-row";
 
-interface ICharacterTableComponentProps {
+interface ICharacterTableProps {
   // Data
-  datapoints: IDatapointResult[];
-  leagues: ILeagueType[];
+  datapoints: poetracker.IDatapointResult[];
+  leagues: poetracker.ILeagueType[];
   // Filters
   selectedLeague: string;
   // Forwarded methods */
-  getCharData?: (leagueId: string, charname: string) => Promise<IDatapoint[]>;
+  getCharData?: (leagueId: string, charname: string) => Promise<poetracker.IDatapoint[]>;
 }
 
-interface IComponentState {
+interface IState {
   selectedRow: {
     charname: string,
     leagueId: string,
   } | undefined;
 }
 
-export default class CharacterTableComponent extends React.Component<ICharacterTableComponentProps, IComponentState> {
-  state: IComponentState = {
+export default class CharacterTable extends React.Component<ICharacterTableProps, IState> {
+  state: IState = {
     selectedRow: undefined,
   };
 
-  constructor(props: ICharacterTableComponentProps) {
+  constructor(props: ICharacterTableProps) {
     super(props);
     this.onClickedRow = this.onClickedRow.bind(this);
   }
@@ -77,7 +76,8 @@ export default class CharacterTableComponent extends React.Component<ICharacterT
                   datapoint.datapoint.charname +
                   datapoint.datapoint.experience +
                   datapoint.datapoint.online +
-                  datapoint.datapoint.dead
+                  datapoint.datapoint.dead +
+                  datapoint.datapoint.leagueId
                 }
               />
             ))}

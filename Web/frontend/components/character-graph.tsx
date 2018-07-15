@@ -2,18 +2,16 @@ import { ChartPoint } from "chart.js";
 import React from "react";
 import { Line } from "react-chartjs-2";
 
-import { IGraphData } from "./character-table-row.component";
-
-interface IComponentProps {
-  graphData: IGraphData[];
+interface IProps {
+  graphData: poetracker.IGraphData[];
 }
 
-interface IComponentState {
+interface IState {
   from: 'forever' | '1 week' | '3 days' | '1 day' | '6 hours' | '1 hour';
 }
 
-export default class CharacterGraphComponent extends React.Component<IComponentProps, IComponentState> {
-  constructor(props: IComponentProps) {
+export default class CharacterGraph extends React.Component<IProps, IState> {
+  constructor(props: IProps) {
     super(props);
     this.state = {
       from: localStorage.getItem('graph-from') || 'forever' as any,

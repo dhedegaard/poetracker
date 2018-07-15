@@ -1,12 +1,12 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
 
-import MainComponent, { IMainComponentProps } from './main.component';
+import MainContainer, { IMainContainerProps } from "./containers/main";
 
-const initialPayload = (window as any).InitialPayload as IMainComponentProps;
+const initialPayload = (window as any).InitialPayload as IMainContainerProps;
 
 ReactDOM.render(
-  <MainComponent
+  <MainContainer
     accounts={initialPayload ? initialPayload.accounts : null}
     latestDatapoints={initialPayload ? initialPayload.latestDatapoints : null}
     leagues={initialPayload ? initialPayload.leagues : null}
