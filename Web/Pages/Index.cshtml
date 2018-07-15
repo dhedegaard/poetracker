@@ -1,4 +1,8 @@
 ﻿@page
+@{
+  /* Go fishing for some cache. */
+  var initialPayload = cache.Get("initialPayload");
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +22,9 @@
   @if (env.IsDevelopment()) {
     <mini-profiler />
   }
-  <script type="text/javascript">window.InitialPayload=@Json.Serialize(await PoeHub.BuildInitialPayload(poeContext));</script>
+  @if (initialPayload != null) {
+    <script type="text/javascript">window.InitialPayload=@Json.Serialize(initialPayload);</script>
+  }
   <nav class="navbar navbar-dark bg-dark">
     <div class="container">
       <span class="navbar-brand">

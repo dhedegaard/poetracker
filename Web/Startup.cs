@@ -20,6 +20,7 @@ namespace Web {
             services.AddMvc();
             services.AddSignalR();
             services.AddDbContext<PoeContext>();
+            services.AddMemoryCache();
             if (this.env.IsDevelopment()) {
                 services.AddMiniProfiler()
                         .AddEntityFramework();

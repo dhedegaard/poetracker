@@ -5,6 +5,9 @@
 @using Microsoft.AspNetCore.Hosting.Internal
 @inject IHostingEnvironment env
 
+@using Microsoft.Extensions.Caching.Memory
+@inject IMemoryCache cache
+
 @using StackExchange.Profiling
 @addTagHelper *, MiniProfiler.AspNetCore.Mvc
 
