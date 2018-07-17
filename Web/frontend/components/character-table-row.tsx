@@ -29,7 +29,9 @@ const CharacterTableRow = (props: IProps) => {
         <td className="text-nowrap">
           <img
             src={`/${datapoint.datapoint.online ? 'online' : 'offline'}.png`}
-            title={datapoint.datapoint.online ? 'Online' : 'Offline'} width={15} height={15}
+            title={datapoint.datapoint.online ? 'Online' : 'Offline'}
+            width={15}
+            height={15}
           />
           {' '}
           <span>{datapoint.datapoint.globalRank || '15000+'}</span>
@@ -59,10 +61,12 @@ const CharacterTableRow = (props: IProps) => {
               </React.Fragment>
             )}
         </td>
-        <td className="text-nowrap" title={
-          `Account name: ${datapoint.datapoint.accountId}\n` +
-          `League: ${datapoint.datapoint.leagueId}`
-        }>
+        <td
+          className="text-nowrap"
+          title={
+            `Account name: ${datapoint.datapoint.accountId}\n` +
+            `League: ${datapoint.datapoint.leagueId}`}
+        >
           <div className="float-right d-none d-sm-block">
             {datapoint.datapoint.account.twitchURL && (
               <React.Fragment>
@@ -74,7 +78,7 @@ const CharacterTableRow = (props: IProps) => {
                   title={`Twitch username: ${datapoint.datapoint.account.twitchUsername}`}
                 >
                   Twitch
-                  </a>
+                </a>
                 {' '}
               </React.Fragment>
             )}
@@ -85,7 +89,7 @@ const CharacterTableRow = (props: IProps) => {
               className="badge badge-info"
             >
               Profile
-              </a>
+            </a>
           </div>
           {datapoint.datapoint.charname}
           {datapoint.datapoint.dead && (

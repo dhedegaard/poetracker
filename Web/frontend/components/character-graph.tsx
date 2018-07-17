@@ -72,109 +72,111 @@ const CharacterGraph = (props: ICharacterGraphProps) => {
       </div>
       <div className="row">
         <div className="col-10 offset-1">
-          <Line data={{
-            datasets: [
-              {
-                backgroundColor: '#17a2b8',
-                borderColor: '#17a2b8',
-                data: graphData.map((e) => ({
-                  x: e.timestampDate,
-                  y: e.experience,
-                })),
-                fill: false,
-                label: 'Experience',
-                pointRadius: 2,
-                yAxisID: 'xp-axis',
-              },
-              {
-                backgroundColor: '#4b367c',
-                borderColor: '#4b367c',
-                data: graphData.map((e) => ({
-                  x: e.timestampDate,
-                  y: e.globalRank,
-                })),
-                fill: false,
-                label: 'Global rank',
-                pointRadius: 2,
-                yAxisID: 'rank-axis',
-              },
-            ],
-            labels: graphData.map((e) => e.timestampDate.toLocaleString()),
-          }} options={{
-            animation: false as any,
-            legend: {
-              display: false,
-            },
-            scales: {
-              xAxes: [{
-                distribution: 'linear',
-                ticks: {
-                  autoSkip: true,
-                  source: 'auto',
-                },
-                time: {
-                  displayFormats: {
-                    minute: 'YYYY-MM-DD HH:MM',
-                  },
-                  max: new Date().getTime() as any,
-                  min: fromDate ? fromDate : undefined as any,
-                  unit: 'minute',
-                },
-                type: 'time',
-              }],
-              yAxes: [
+          <Line
+            data={{
+              datasets: [
                 {
-                  id: 'xp-axis',
-                  position: 'left',
-                  scaleLabel: {
-                    display: true,
-                    fontColor: '#17a2b8',
-                    fontStyle: 'bold',
-                    labelString: 'Experience',
-                  },
-                  ticks: {
-                    beginAtZero: true,
-                    callback: (value) => {
-                      if (Number.isInteger(value)) {
-                        return (value as number).toLocaleString() as any;
-                      }
-                    },
-                    fontColor: '#17a2b8',
-                  },
+                  backgroundColor: '#17a2b8',
+                  borderColor: '#17a2b8',
+                  data: graphData.map((e) => ({
+                    x: e.timestampDate,
+                    y: e.experience,
+                  })),
+                  fill: false,
+                  label: 'Experience',
+                  pointRadius: 2,
+                  yAxisID: 'xp-axis',
                 },
                 {
-                  id: 'rank-axis',
-                  position: 'right',
-                  scaleLabel: {
-                    display: true,
-                    fontColor: '#4b367c',
-                    fontStyle: 'bold',
-                    labelString: 'Global rank',
-                  },
-                  ticks: {
-                    callback: (value) => {
-                      if (Number.isInteger(value)) {
-                        return value;
-                      }
-                    },
-                    fontColor: '#4b367c',
-                    min: 1,
-                    reverse: true,
-                  },
+                  backgroundColor: '#4b367c',
+                  borderColor: '#4b367c',
+                  data: graphData.map((e) => ({
+                    x: e.timestampDate,
+                    y: e.globalRank,
+                  })),
+                  fill: false,
+                  label: 'Global rank',
+                  pointRadius: 2,
+                  yAxisID: 'rank-axis',
                 },
               ],
-            },
-            tooltips: {
-              callbacks: {
-                label: (item, data) => {
-                  const dataset = data.datasets![item.datasetIndex!];
-                  const datasetLabel = dataset.label || '';
-                  const point = dataset.data![item.index!] as ChartPoint;
-                  return `${datasetLabel}: ${point.y!.toLocaleString()}`;
+              labels: graphData.map((e) => e.timestampDate.toLocaleString()),
+            }}
+            options={{
+              animation: false as any,
+              legend: {
+                display: false,
+              },
+              scales: {
+                xAxes: [{
+                  distribution: 'linear',
+                  ticks: {
+                    autoSkip: true,
+                    source: 'auto',
+                  },
+                  time: {
+                    displayFormats: {
+                      minute: 'YYYY-MM-DD HH:MM',
+                    },
+                    max: new Date().getTime() as any,
+                    min: fromDate ? fromDate : undefined as any,
+                    unit: 'minute',
+                  },
+                  type: 'time',
+                }],
+                yAxes: [
+                  {
+                    id: 'xp-axis',
+                    position: 'left',
+                    scaleLabel: {
+                      display: true,
+                      fontColor: '#17a2b8',
+                      fontStyle: 'bold',
+                      labelString: 'Experience',
+                    },
+                    ticks: {
+                      beginAtZero: true,
+                      callback: (value) => {
+                        if (Number.isInteger(value)) {
+                          return (value as number).toLocaleString() as any;
+                        }
+                      },
+                      fontColor: '#17a2b8',
+                    },
+                  },
+                  {
+                    id: 'rank-axis',
+                    position: 'right',
+                    scaleLabel: {
+                      display: true,
+                      fontColor: '#4b367c',
+                      fontStyle: 'bold',
+                      labelString: 'Global rank',
+                    },
+                    ticks: {
+                      callback: (value) => {
+                        if (Number.isInteger(value)) {
+                          return value;
+                        }
+                      },
+                      fontColor: '#4b367c',
+                      min: 1,
+                      reverse: true,
+                    },
+                  },
+                ],
+              },
+              tooltips: {
+                callbacks: {
+                  label: (item, data) => {
+                    const dataset = data.datasets![item.datasetIndex!];
+                    const datasetLabel = dataset.label || '';
+                    const point = dataset.data![item.index!] as ChartPoint;
+                    return `${datasetLabel}: ${point.y!.toLocaleString()}`;
+                  },
                 },
               },
-            },
-          }}
+            }}
           />
         </div>
       </div>

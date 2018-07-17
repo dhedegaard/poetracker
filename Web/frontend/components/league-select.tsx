@@ -10,12 +10,16 @@ const LeagueSelect = (props: ILeagueSelectProps) => {
   const standardLeagues = props.leagues.filter((e) => e.endAt === null);
   const temporaryLeagues = props.leagues.filter((e) => e.endAt !== null);
 
+  const onChange = (evt: React.ChangeEvent<HTMLSelectElement>) => {
+    props.onLeagueSelect(evt.currentTarget.value);
+  };
+
   return (
     <select
       className="form-control form-control-sm"
       id="id_league_select"
       value={props.selectedLeague}
-      onChange={(evt) => { props.onLeagueSelect(evt.currentTarget.value); }}
+      onChange={onChange}
     >
       <option value="">-- Show all --</option>
       {temporaryLeagues && temporaryLeagues.length && (

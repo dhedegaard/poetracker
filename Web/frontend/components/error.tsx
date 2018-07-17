@@ -8,13 +8,21 @@ const Error = (props: IErrorProps) => {
   if (!props.error) {
     return null;
   }
+
+  const onClick = () => {
+    window.location.reload();
+  };
+
   return (
     <React.Fragment>
       <div className="alert alert-danger">
         <b>Error</b>: {props.error}
         {' '}
-        <a onClick={() => { window.location.reload(); }}
-          className="text-primary" href="javascript:void(0);">
+        <a
+          onClick={onClick}
+          className="text-primary"
+          href="javascript:void(0);"
+        >
           <b>Reload page</b>
         </a>
       </div>
