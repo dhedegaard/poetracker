@@ -1,96 +1,58 @@
 ﻿import React from "react";
 
-import CharacterTableRowComponent from "./character-table-row";
+import CharacterTableRow from "./character-table-row";
 
-interface ICharacterTableProps {
-  // Data
+export interface ICharacterTableProps {
   datapoints: poetracker.IDatapointResult[];
   leagues: poetracker.ILeagueType[];
-  // Filters
-  selectedLeague: string;
-  // Forwarded methods */
-  getCharData?: (leagueId: string, charname: string) => Promise<poetracker.IDatapoint[]>;
+  getCharData: (leagueId: string, charname: string) => void;
+  selectedRow: poetracker.ISelectedRowType;
 }
 
-interface IState {
-  selectedRow: {
-    charname: string,
-    leagueId: string,
-  } | undefined;
-}
-
-export default class CharacterTable extends React.Component<ICharacterTableProps, IState> {
-  state: IState = {
-    selectedRow: undefined,
+const CharacterTable = (props: ICharacterTableProps) => {
+  const onClickedRow = (charname: string, leagueId: string) => {
+    const { selectedRow, getCharData } = props;
+    if (selectedRow && selectedRow.charname === charname && selectedRow.leagueId === leagueId) {
+      getCharData('', '');
+    } else {
+      getCharData(leagueId, charname);
+    }
   };
 
-  constructor(props: ICharacterTableProps) {
-    super(props);
-    this.onClickedRow = this.onClickedRow.bind(this);
-  }
-
-  onClickedRow(charname: string, leagueId: string) {
-    this.setState((oldState) => {
-      // If we selected the same row again, collapse it. */
-      if (oldState.selectedRow &&
-        oldState.selectedRow.charname === charname &&
-        oldState.selectedRow.leagueId === leagueId
-      ) {
-        return {
-          selectedRow: undefined,
-        };
-      }
-
-      /* Otherwise, modify the state. */
-      return {
-        selectedRow: { charname, leagueId },
-      };
-    });
-  }
-
-  render() {
-    return (
-      <div className="table-responsive-sm">
-        <table className="table table-bordered table-hover table-dark">
-          <thead>
+  return (
+    <div className="table-responsive-sm">
+      <table className="table table-bordered table-hover table-dark">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th className="text-nowrap">Character name</th>
+            <th>Class</th>
+            <th className="text-right">Level</th>
+          </tr>
+        </thead>
+        <tbody>
+          {props.datapoints.map((datapoint) => (
+            <CharacterTableRow
+              datapoint={datapoint}
+              clickedRow={onClickedRow}
+              isSelected={
+                props.selectedRow !== undefined &&
+                props.selectedRow.charname === datapoint.datapoint.charname &&
+                props.selectedRow.leagueId === datapoint.datapoint.leagueId
+              }
+              key={datapoint.datapoint.id}
+            />
+          ))}
+          {!props.datapoints.length && (
             <tr>
-              <th>Rank</th>
-              <th className="text-nowrap">Character name</th>
-              <th>Class</th>
-              <th className="text-right">Level</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.props.datapoints.map((datapoint) => (
-              <CharacterTableRowComponent
-                datapoint={datapoint}
-                getCharData={this.props.getCharData}
-                selectedLeague={this.props.selectedLeague}
-                clickedRow={this.onClickedRow}
-                isSelected={
-                  this.state.selectedRow !== undefined &&
-                  this.state.selectedRow.charname === datapoint.datapoint.charname &&
-                  this.state.selectedRow.leagueId === datapoint.datapoint.leagueId
-                }
-                key={
-                  datapoint.datapoint.charname +
-                  datapoint.datapoint.experience +
-                  datapoint.datapoint.online +
-                  datapoint.datapoint.dead +
-                  datapoint.datapoint.leagueId
-                }
-              />
-            ))}
-            {!this.props.datapoints.length && (
-              <tr>
-                <td colSpan={4} className="text-center">
-                  <b>Sorry!</b> I've got no datapoints for the given league, try filtering on another league.
+              <td colSpan={4} className="text-center">
+                <b>Sorry!</b> I've got no datapoints for the given league, try filtering on another league.
                 </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
-    );
-  }
-}
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+export default CharacterTable;

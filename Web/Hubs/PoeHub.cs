@@ -65,14 +65,14 @@ namespace Web.Hubs {
         internal struct GetCharDataResult {
             public string LeagueId { get; set; }
             public string Charname { get; set; }
-            public IEnumerable<Datapoint> Datapoints { get; set; }
+            public IEnumerable<Datapoint> Result { get; set; }
         }
 
         public Task GetCharData(string leagueId, string charname) {
             return Clients.Caller.SendAsync("GetCharData", new GetCharDataResult {
                 LeagueId = leagueId,
                 Charname = charname,
-                Datapoints = poeContext.Datapoints
+                Result = poeContext.Datapoints
                     .Where(e =>
                         e.LeagueId == leagueId &&
                         e.Charname == charname)

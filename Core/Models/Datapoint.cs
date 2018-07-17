@@ -4,9 +4,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Core.Models {
     public class Datapoint {
-        /// <summary>
-        /// The primary key, as a serial.
-        /// </summary>
         [Key]
         public int? Id { get; set; }
         [Required]

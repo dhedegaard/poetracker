@@ -1,28 +1,39 @@
-﻿import * as SignalR from '@aspnet/signalr';
+﻿import * as aspnet_SignalR from '@aspnet/signalr';
 import React from "react";
 
-interface ISignalRComponentProps {
+export interface ISignalRProps {
   onSignalRNotifyNewData: (data: poetracker.IDatapointResult[]) => void;
   onSignalRInitialPayload: (data: poetracker.IInitialPayload) => void;
   onSignalRConnectionClosed: () => void;
-}
-
-interface IGetCharDataResult {
-  leagueId: string;
-  charname: string;
-  datapoints: poetracker.IDatapoint[];
+  getCharData?: poetracker.IGetCharDataInput;
+  receivedCharData: (chardata: poetracker.IGetCharDataResult) => void;
 }
 
 /**
  * Handles the wrapping of the SignalR stuff, emits events with data from the callbacks in props.
  */
-export default class SignalRComponent extends React.Component<ISignalRComponentProps, {}> {
-  connection!: SignalR.HubConnection;
+export default class SignalR extends React.Component<ISignalRProps, {}> {
+  connection!: aspnet_SignalR.HubConnection;
 
-  constructor(props: ISignalRComponentProps) {
+  constructor(props: ISignalRProps) {
     super(props);
     this.connectSignalR = this.connectSignalR.bind(this);
     this.getCharData = this.getCharData.bind(this);
+  }
+
+  componentDidUpdate() {
+    const { props } = this;
+    const { getCharData } = props;
+    if (getCharData) {
+      (async () => {
+        const result = await this.getCharData(getCharData.leagueId, getCharData.charname);
+        props.receivedCharData({
+          charname: getCharData.charname,
+          leagueId: getCharData.leagueId,
+          result,
+        });
+      })();
+    }
   }
 
   /**
@@ -30,7 +41,7 @@ export default class SignalRComponent extends React.Component<ISignalRComponentP
    */
   connectSignalR() {
     // Build the connection.
-    this.connection = new SignalR.HubConnectionBuilder()
+    this.connection = new aspnet_SignalR.HubConnectionBuilder()
       .withUrl("/data")
       .build();
 
@@ -68,17 +79,22 @@ export default class SignalRComponent extends React.Component<ISignalRComponentP
   /**
    * Fetches data for a given character, returning a resolvable promise.
    */
-  getCharData(leagueId: string, charname: string): Promise<poetracker.IDatapoint[]> {
+  getCharData(leagueId: string, charname: string): Promise<poetracker.IGraphData[]> {
     return new Promise((resolve, reject) => {
       /* Define a handler, that responds to character data. */
-      const handler = (data: IGetCharDataResult) => {
+      const handler = (data: poetracker.IGetCharDataResult) => {
         /* If this data is not what we expect, skip it. */
         if (data.leagueId !== leagueId || data.charname !== charname) {
           return;
         }
+        /* Add some mapping for the timestampDate field. */
+        const result = data.result.map((e) => {
+          e.timestampDate = new Date(e.timestamp);
+          return e;
+        });
         /* Otherwise, remove the handler and return the datapoints. */
         this.connection.off('GetCharData', handler);
-        return resolve(data.datapoints);
+        return resolve(data.result);
       };
 
       /* Add the handler and invoke the SignalR method on the Hub. */

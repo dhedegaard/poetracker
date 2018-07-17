@@ -1,15 +1,13 @@
-﻿import React from 'react';
+﻿import React from "react";
 import ReactDOM from 'react-dom';
+import { Provider } from "react-redux";
 
-import MainContainer, { IMainContainerProps } from "./containers/main";
-
-const initialPayload = (window as any).InitialPayload as IMainContainerProps;
+import MainContainer from "./containers/main";
+import store from './store';
 
 ReactDOM.render(
-  <MainContainer
-    accounts={initialPayload ? initialPayload.accounts : null}
-    latestDatapoints={initialPayload ? initialPayload.latestDatapoints : null}
-    leagues={initialPayload ? initialPayload.leagues : null}
-  />,
+  <Provider store={store}>
+    <MainContainer />
+  </Provider>,
   document.getElementById('app'),
 );

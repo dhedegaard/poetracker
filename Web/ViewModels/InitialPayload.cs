@@ -10,7 +10,7 @@ using Web.ViewModels;
 namespace Web.ViewModels {
     public class InitialPayload {
         public IEnumerable<League> Leagues { get; set; }
-        public IEnumerable<DatapointResult> LatestDatapoints { get; set; }
+        public IEnumerable<DatapointResult> Datapoints { get; set; }
         public IEnumerable<Account> Accounts { get; set; }
 
         public static async Task<InitialPayload> BuildInitialPayload(PoeContext poeContext) {
@@ -51,7 +51,7 @@ namespace Web.ViewModels {
                   )
                   .ToListAsync();
             return new InitialPayload {
-                LatestDatapoints = datapoints
+                Datapoints = datapoints
                     .Select(datapoint => new DatapointResult {
                         Datapoint = datapoint,
                         PreviousDatapoint = previousDatapoints
