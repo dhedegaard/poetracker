@@ -137,7 +137,9 @@ const rootReducer = (state: poetracker.IState = initialState, action: poetracker
         graphFrom: action.from,
       };
     default:
-      console.log('HIT DEFAULT CASE:', action);
+      if (process.env.NODE_ENV === 'development') {
+        console.log('HIT DEFAULT CASE:', action);
+      }
       return state;
   }
 };
