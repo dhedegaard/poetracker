@@ -69,7 +69,8 @@ const rootReducer = (state: poetracker.IState = initialState, action: poetracker
     case 'INITIAL_DATA':
       return {
         ...state,
-        accounts: action.accounts,
+        accounts: action.accounts.sort((a, b) => (
+          (a.twitchUsername || a.accountName).localeCompare(b.twitchUsername || b.accountName))),
         datapoints: action.datapoints,
         filteredDatapoints: buildFilteredDatapoints(action.datapoints, state.filter),
         leagues: action.leagues,
@@ -103,6 +104,7 @@ const rootReducer = (state: poetracker.IState = initialState, action: poetracker
         ...state,
         chardata: undefined,
         getCharData: action.getData,
+        selectedRow: undefined,
       };
     case 'RECEIVED_CHAR_DATA':
       return {
