@@ -6,3 +6,4 @@ install:
   - dotnet restore Poetracker.sln
 script:
   - dotnet build Poetracker.sln
+  - node --version
