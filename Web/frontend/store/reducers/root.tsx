@@ -154,6 +154,7 @@ const rootReducer = (state: poetracker.IState = initialState, action: poetracker
         filteredDatapoints: buildFilteredDatapoints(state.datapoints, filter),
       };
     case "GRAPH_FROM_CHANGED":
+      localStorage.setItem("graph-from", action.from);
       return {
         ...state,
         graphFrom: action.from,

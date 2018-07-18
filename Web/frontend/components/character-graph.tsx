@@ -48,6 +48,7 @@ const CharacterGraph = (props: ICharacterGraphProps) => {
             id="id_graph_from"
             className="form-control form-control-sm"
             onChange={onSelectChanged}
+            defaultValue={props.from}
           >
             <option key="forever" value="forever">
               Forever
