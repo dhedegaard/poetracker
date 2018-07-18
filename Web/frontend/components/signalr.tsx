@@ -1,4 +1,4 @@
-﻿import * as aspnet_SignalR from '@aspnet/signalr';
+﻿import * as aspnet_SignalR from "@aspnet/signalr";
 import React from "react";
 
 export interface ISignalRProps {
@@ -46,20 +46,20 @@ export default class SignalR extends React.Component<ISignalRProps, {}> {
       .build();
 
     // Add handlers.
-    this.connection.on('NotifyNewData', this.props.onSignalRNotifyNewData);
-    this.connection.on('InitialPayload', this.props.onSignalRInitialPayload);
+    this.connection.on("NotifyNewData", this.props.onSignalRNotifyNewData);
+    this.connection.on("InitialPayload", this.props.onSignalRInitialPayload);
 
     // Handle connection errors to the hub (using private API, fix this later when proper error handling has been
     // implemented).
     (this.connection as any).closedCallbacks.push(() => {
-      console.log('The SignalR connection got closed.');
+      console.log("The SignalR connection got closed.");
       this.props.onSignalRConnectionClosed();
     });
 
     // Connect and retry on failure, notifying the user.
     this.connection.start()
       .catch((reason) => {
-        console.log('Unable to connect because:', reason);
+        console.log("Unable to connect because:", reason);
         this.props.onSignalRConnectionClosed();
       });
   }
@@ -93,7 +93,7 @@ export default class SignalR extends React.Component<ISignalRProps, {}> {
           return e;
         });
         /* Otherwise, remove the handler and return the datapoints. */
-        this.connection.off('GetCharData', handler);
+        this.connection.off("GetCharData", handler);
         return resolve(data.result);
       };
 

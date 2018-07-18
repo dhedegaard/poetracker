@@ -13,7 +13,7 @@ const CharacterTable = (props: ICharacterTableProps) => {
   const onClickedRow = (charname: string, leagueId: string) => {
     const { selectedRow, getCharData } = props;
     if (selectedRow && selectedRow.charname === charname && selectedRow.leagueId === leagueId) {
-      getCharData('', '');
+      getCharData("", "");
     } else {
       getCharData(leagueId, charname);
     }

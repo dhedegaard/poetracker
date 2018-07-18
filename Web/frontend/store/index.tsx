@@ -1,8 +1,8 @@
-import { createStore } from 'redux';
+import { createStore } from "redux";
 
 import rootReducer from "./reducers/root";
 
-import { initialData as initialDataAction } from './actions';
+import { initialData as initialDataAction } from "./actions";
 
 const store = createStore(rootReducer);
 
@@ -12,9 +12,9 @@ if (initialPayload) {
 }
 
 /* When running in development, log any changes to the state to make development easier. */
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === "development") {
     store.subscribe(() => {
-        console.log('new state:', store.getState());
+        console.log("new state:", store.getState());
     });
 }
 

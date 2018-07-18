@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { connect } from "react-redux";
 import CharacterTable, { ICharacterTableProps } from "../components/character-table";
 import { getCharData } from "../store/actions";

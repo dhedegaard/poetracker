@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 
 export interface IErrorProps {
   error: string;
@@ -17,7 +17,7 @@ const Error = (props: IErrorProps) => {
     <React.Fragment>
       <div className="alert alert-danger">
         <b>Error</b>: {props.error}
-        {' '}
+        {" "}
         <a
           onClick={onClick}
           className="text-primary"

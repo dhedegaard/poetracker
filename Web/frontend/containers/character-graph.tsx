@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import CharacterGraph, { ICharacterGraphProps } from "../components/character-graph";
 import { IActionType } from "../poetracker";
-import * as Action from '../store/actions';
+import * as Action from "../store/actions";
 
 const mapStateToProps = (state: poetracker.IState): Partial<ICharacterGraphProps> => ({
   from: state.graphFrom,

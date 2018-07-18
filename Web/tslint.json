@@ -6,7 +6,6 @@
     "jsRules": {},
     "rules": {
         "member-access": false,
-        "quotemark": false,
         "no-console": false,
         "jsx-no-multiline-js": false
     },

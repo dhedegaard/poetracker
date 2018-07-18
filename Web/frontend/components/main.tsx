@@ -1,4 +1,4 @@
-﻿import React from 'react';
+﻿import React from "react";
 
 import CharacterTableContainer from "../containers/character-table";
 import ErrorContainer from "../containers/error";

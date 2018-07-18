@@ -27,12 +27,12 @@ const CharacterGraph = (props: ICharacterGraphProps) => {
   let fromDate: Date | null = null;
   /* Refactor to redux store later. */
   switch (from) {
-    case '1 week': fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 7); break;
-    case '3 days': fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 3); break;
-    case '1 day': fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 24); break;
-    case '6 hours': fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 6); break;
-    case '1 hour': fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 1); break;
-    case 'forever': break;
+    case "1 week": fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 7); break;
+    case "3 days": fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 3); break;
+    case "1 day": fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 24); break;
+    case "6 hours": fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 6); break;
+    case "1 hour": fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 1); break;
+    case "forever": break;
     default:
       throw new Error(`Unhandled case: ${props.from}`);
   }
@@ -76,28 +76,28 @@ const CharacterGraph = (props: ICharacterGraphProps) => {
             data={{
               datasets: [
                 {
-                  backgroundColor: '#17a2b8',
-                  borderColor: '#17a2b8',
+                  backgroundColor: "#17a2b8",
+                  borderColor: "#17a2b8",
                   data: graphData.map((e) => ({
                     x: e.timestampDate,
                     y: e.experience,
                   })),
                   fill: false,
-                  label: 'Experience',
+                  label: "Experience",
                   pointRadius: 2,
-                  yAxisID: 'xp-axis',
+                  yAxisID: "xp-axis",
                 },
                 {
-                  backgroundColor: '#4b367c',
-                  borderColor: '#4b367c',
+                  backgroundColor: "#4b367c",
+                  borderColor: "#4b367c",
                   data: graphData.map((e) => ({
                     x: e.timestampDate,
                     y: e.globalRank,
                   })),
                   fill: false,
-                  label: 'Global rank',
+                  label: "Global rank",
                   pointRadius: 2,
-                  yAxisID: 'rank-axis',
+                  yAxisID: "rank-axis",
                 },
               ],
               labels: graphData.map((e) => e.timestampDate.toLocaleString()),
@@ -109,30 +109,30 @@ const CharacterGraph = (props: ICharacterGraphProps) => {
               },
               scales: {
                 xAxes: [{
-                  distribution: 'linear',
+                  distribution: "linear",
                   ticks: {
                     autoSkip: true,
-                    source: 'auto',
+                    source: "auto",
                   },
                   time: {
                     displayFormats: {
-                      minute: 'YYYY-MM-DD HH:MM',
+                      minute: "YYYY-MM-DD HH:MM",
                     },
                     max: new Date().getTime() as any,
                     min: fromDate ? fromDate : undefined as any,
-                    unit: 'minute',
+                    unit: "minute",
                   },
-                  type: 'time',
+                  type: "time",
                 }],
                 yAxes: [
                   {
-                    id: 'xp-axis',
-                    position: 'left',
+                    id: "xp-axis",
+                    position: "left",
                     scaleLabel: {
                       display: true,
-                      fontColor: '#17a2b8',
-                      fontStyle: 'bold',
-                      labelString: 'Experience',
+                      fontColor: "#17a2b8",
+                      fontStyle: "bold",
+                      labelString: "Experience",
                     },
                     ticks: {
                       beginAtZero: true,
@@ -141,17 +141,17 @@ const CharacterGraph = (props: ICharacterGraphProps) => {
                           return (value as number).toLocaleString() as any;
                         }
                       },
-                      fontColor: '#17a2b8',
+                      fontColor: "#17a2b8",
                     },
                   },
                   {
-                    id: 'rank-axis',
-                    position: 'right',
+                    id: "rank-axis",
+                    position: "right",
                     scaleLabel: {
                       display: true,
-                      fontColor: '#4b367c',
-                      fontStyle: 'bold',
-                      labelString: 'Global rank',
+                      fontColor: "#4b367c",
+                      fontStyle: "bold",
+                      labelString: "Global rank",
                     },
                     ticks: {
                       callback: (value) => {
@@ -159,7 +159,7 @@ const CharacterGraph = (props: ICharacterGraphProps) => {
                           return value;
                         }
                       },
-                      fontColor: '#4b367c',
+                      fontColor: "#4b367c",
                       min: 1,
                       reverse: true,
                     },
@@ -170,7 +170,7 @@ const CharacterGraph = (props: ICharacterGraphProps) => {
                 callbacks: {
                   label: (item, data) => {
                     const dataset = data.datasets![item.datasetIndex!];
-                    const datasetLabel = dataset.label || '';
+                    const datasetLabel = dataset.label || "";
                     const point = dataset.data![item.index!] as ChartPoint;
                     return `${datasetLabel}: ${point.y!.toLocaleString()}`;
                   },

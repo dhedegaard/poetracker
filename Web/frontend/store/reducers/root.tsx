@@ -4,9 +4,9 @@ let initialFilter: poetracker.IFilter = {
   hideStandardLeagues: true,
   hideStreamers: true,
   onlyShowOnline: false,
-  selectedLeague: '',
+  selectedLeague: "",
 };
-const graphFilter = localStorage.getItem('graph-filter');
+const graphFilter = localStorage.getItem("graph-filter");
 if (graphFilter) {
   initialFilter = {
     ...initialFilter,
@@ -17,10 +17,10 @@ if (graphFilter) {
 const initialState: poetracker.IState = {
   accounts: [],
   datapoints: [],
-  error: '',
+  error: "",
   filter: initialFilter,
   filteredDatapoints: [],
-  graphFrom: (localStorage.getItem('graph-from') || 'forever') as poetracker.GraphFromType,
+  graphFrom: (localStorage.getItem("graph-from") || "forever") as poetracker.GraphFromType,
   leagues: [],
 };
 export { initialState };
@@ -66,7 +66,7 @@ const buildFilteredDatapoints = (
 
 const rootReducer = (state: poetracker.IState = initialState, action: poetracker.IActionType): poetracker.IState => {
   switch (action.type) {
-    case 'INITIAL_DATA':
+    case "INITIAL_DATA":
       return {
         ...state,
         accounts: action.accounts.sort((a, b) => (
@@ -75,7 +75,7 @@ const rootReducer = (state: poetracker.IState = initialState, action: poetracker
         filteredDatapoints: buildFilteredDatapoints(action.datapoints, state.filter),
         leagues: action.leagues,
       };
-    case 'NOTIFY_UPDATE':
+    case "NOTIFY_UPDATE":
       /* Start by filtering old datapoints that just got updated. */
       let datapoints = state.datapoints.slice().filter((datapoint) => {
         for (const newDatapoint of action.newDatapoints) {
@@ -94,19 +94,19 @@ const rootReducer = (state: poetracker.IState = initialState, action: poetracker
         datapoints,
         filteredDatapoints: buildFilteredDatapoints(datapoints, state.filter),
       };
-    case 'SET_ERROR':
+    case "SET_ERROR":
       return {
         ...state,
         error: action.error,
       };
-    case 'GET_CHAR_DATA':
+    case "GET_CHAR_DATA":
       return {
         ...state,
         chardata: undefined,
         getCharData: action.getData,
         selectedRow: undefined,
       };
-    case 'RECEIVED_CHAR_DATA':
+    case "RECEIVED_CHAR_DATA":
       return {
         ...state,
         chardata: {
@@ -118,7 +118,7 @@ const rootReducer = (state: poetracker.IState = initialState, action: poetracker
           leagueId: action.result.leagueId,
         },
       };
-    case 'FILTER_CHANGED':
+    case "FILTER_CHANGED":
       const filter = {
         hideDead: action.hideDead,
         hideStandardLeagues: action.hideStandardLeagues,
@@ -127,20 +127,20 @@ const rootReducer = (state: poetracker.IState = initialState, action: poetracker
         selectedLeague: action.selectedLeague,
         showOnlyAccount: action.showOnlyAccount,
       };
-      localStorage.setItem('graph-filter', JSON.stringify(filter));
+      localStorage.setItem("graph-filter", JSON.stringify(filter));
       return {
         ...state,
         filter,
         filteredDatapoints: buildFilteredDatapoints(state.datapoints, filter),
       };
-    case 'GRAPH_FROM_CHANGED':
+    case "GRAPH_FROM_CHANGED":
       return {
         ...state,
         graphFrom: action.from,
       };
     default:
-      if (process.env.NODE_ENV === 'development') {
-        console.log('HIT DEFAULT CASE:', action);
+      if (process.env.NODE_ENV === "development") {
+        console.log("HIT DEFAULT CASE:", action);
       }
       return state;
   }

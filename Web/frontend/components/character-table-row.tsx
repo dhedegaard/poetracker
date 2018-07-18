@@ -23,22 +23,22 @@ const CharacterTableRow = (props: IProps) => {
   return (
     <React.Fragment>
       <tr
-        className={isSelected ? 'table-active' : undefined}
+        className={isSelected ? "table-active" : undefined}
         onClick={onRowClick}
       >
         <td className="text-nowrap">
           <img
-            src={`/${datapoint.datapoint.online ? 'online' : 'offline'}.png`}
-            title={datapoint.datapoint.online ? 'Online' : 'Offline'}
+            src={`/${datapoint.datapoint.online ? "online" : "offline"}.png`}
+            title={datapoint.datapoint.online ? "Online" : "Offline"}
             width={15}
             height={15}
           />
-          {' '}
-          <span>{datapoint.datapoint.globalRank || '15000+'}</span>
+          {" "}
+          <span>{datapoint.datapoint.globalRank || "15000+"}</span>
           {datapoint.previousDatapoint &&
             (datapoint.previousDatapoint.globalRank || 15001) !== (datapoint.datapoint.globalRank || 15001) && (
               <React.Fragment>
-                {' '}
+                {" "}
                 <small
                   title={
                     datapoint.previousDatapoint && datapoint.previousDatapoint.timestamp ?
@@ -46,14 +46,14 @@ const CharacterTableRow = (props: IProps) => {
                       undefined
                   }
                   className={
-                    'badge ' + (
+                    "badge " + (
                       (datapoint.datapoint.globalRank || 15001) < (datapoint.previousDatapoint.globalRank || 15001) ?
-                        'badge-success' : 'badge-danger')}
+                        "badge-success" : "badge-danger")}
                 >
                   {String.fromCharCode(
                     (datapoint.datapoint.globalRank || 15001) > (datapoint.previousDatapoint.globalRank || 15001) ?
                       8595 : 8593)}
-                  {' '}
+                  {" "}
                   {Math.abs(
                     (datapoint.datapoint.globalRank || 15001) -
                     (datapoint.previousDatapoint.globalRank || 15001))}
@@ -79,7 +79,7 @@ const CharacterTableRow = (props: IProps) => {
                 >
                   Twitch
                 </a>
-                {' '}
+                {" "}
               </React.Fragment>
             )}
             <a
@@ -94,7 +94,7 @@ const CharacterTableRow = (props: IProps) => {
           {datapoint.datapoint.charname}
           {datapoint.datapoint.dead && (
             <React.Fragment>
-              {' '}
+              {" "}
               <small className="badge badge-danger">Dead</small>
             </React.Fragment>
           )}
@@ -113,7 +113,7 @@ const CharacterTableRow = (props: IProps) => {
               >
                 +{datapoint.datapoint.level - datapoint.previousDatapoint.level}
               </span>
-              {' '}
+              {" "}
             </React.Fragment>
           )}
           <span title={`XP: ${datapoint.datapoint.experience.toLocaleString()}`}>
