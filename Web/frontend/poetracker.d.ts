@@ -45,7 +45,7 @@ export interface IInitialPayload {
   accounts: IAccountType[];
 }
 
-export type GraphFromType = 'forever' | '1 week' | '3 days' | '1 day' | '6 hours' | '1 hour';
+export type GraphFromType = "forever" | "1 week" | "3 days" | "1 day" | "6 hours" | "1 hour";
 
 
 export interface IState {
@@ -67,18 +67,18 @@ export interface ISelectedRowType {
 }
 
 export type IActionType = {
-  type: 'INITIAL_DATA';
+  type: "INITIAL_DATA";
   datapoints: IDatapointResult[];
   leagues: ILeagueType[];
   accounts: IAccountType[];
 } | {
-  type: 'NOTIFY_UPDATE';
+  type: "NOTIFY_UPDATE";
   newDatapoints: IDatapointResult[];
 } | {
-  type: 'SET_ERROR',
+  type: "SET_ERROR",
   error: string;
 } | {
-  type: 'FILTER_CHANGED',
+  type: "FILTER_CHANGED",
   selectedLeague: string,
   hideDead: boolean,
   onlyShowOnly: boolean,
@@ -86,13 +86,13 @@ export type IActionType = {
   hideStandardLeagues: boolean,
   showOnlyAccount?: string,
 } | {
-  type: 'GET_CHAR_DATA',
+  type: "GET_CHAR_DATA",
   getData?: IGetCharDataInput;
 } | {
-  type: 'RECEIVED_CHAR_DATA',
+  type: "RECEIVED_CHAR_DATA",
   result: IGetCharDataResult;
 } | {
-  type:'GRAPH_FROM_CHANGED';
+  type:"GRAPH_FROM_CHANGED";
   from: GraphFromType;
 }
 

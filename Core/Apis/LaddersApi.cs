@@ -7,16 +7,6 @@ using System.Threading.Tasks;
 using System.Web;
 
 namespace Core.Apis {
-    public enum ClassInput {
-        Scion = 0,
-        Marauder = 1,
-        Ranger = 2,
-        Witch = 3,
-        Duelist = 4,
-        Templar = 5,
-        Shadow = 6,
-    }
-
     public static class LaddersApi {
         class Result {
             public IEnumerable<InternalEntry> Entries { get; set; }
@@ -57,11 +47,8 @@ namespace Core.Apis {
                 $"<{nameof(Character)} name=\"{Name}\" class=\"{Class}\" rank={Rank} level={Level} exp={Experience} dead={Dead} online={Online}>";
         }
 
-        public async static Task<IEnumerable<Character>> GetAccountCharacters(string ladderId, string accountName, ClassInput? classInput) {
+        public async static Task<IEnumerable<Character>> GetAccountCharacters(string ladderId, string accountName) {
             var url = $"https://www.pathofexile.com/api/ladders?id={HttpUtility.UrlEncode(ladderId)}&type=league&accountName={accountName}";
-            if (classInput.HasValue) {
-                url = $"{url}&class={(int) classInput}";
-            }
             using (var client = new WebClient()) {
                 var data = await client.DownloadStringTaskAsync(new Uri(url));
                 return JsonConvert.DeserializeObject<Result>(data).Entries

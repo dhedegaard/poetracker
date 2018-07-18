@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace Core {
     public class PoeContext : DbContext {
-        public PoeContext() : base() { }
+        public PoeContext() { }
         public PoeContext(DbContextOptions<PoeContext> options) : base(options) { }
 
         public DbSet<Datapoint> Datapoints { get; set; }

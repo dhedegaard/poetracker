@@ -8,7 +8,7 @@ using Web.Hubs;
 
 namespace Web {
     public class Startup {
-        private IConfiguration configuration;
+        private readonly IConfiguration configuration;
         private readonly IHostingEnvironment env;
 
         public Startup(IConfiguration configuration, IHostingEnvironment env) {
