@@ -1,25 +1,25 @@
-﻿const { CheckerPlugin } = require('awesome-typescript-loader');
-const path = require('path');
-const webpack = require('webpack');
+﻿const { CheckerPlugin } = require("awesome-typescript-loader");
+const path = require("path");
+const webpack = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-    context: path.resolve(__dirname, 'frontend'),
+    context: path.resolve(__dirname, "frontend"),
     entry: {
-        bundle: './index.tsx'
+        bundle: "./index.tsx"
     },
     output: {
-        path: path.resolve(__dirname, 'wwwroot'),
-        filename: '[name].js'
+        path: path.resolve(__dirname, "wwwroot"),
+        filename: "[name].js"
     },
     resolve: {
-        extensions: ['.ts', '.tsx', '.js', '.jsx']
+        extensions: [".ts", ".tsx", ".js", ".jsx"]
     },
     module: {
         rules: [
             {
                 test: /\.tsx?$/,
-                loader: 'awesome-typescript-loader'
+                loader: "awesome-typescript-loader"
             },
             {
                 test: /\.css$/,
@@ -29,7 +29,7 @@ module.exports = {
                         options: {
                             // you can specify a publicPath here
                             // by default it use publicPath in webpackOptions.output
-                            publicPath: '../'
+                            publicPath: "../"
                         }
                     },
                     "css-loader"
