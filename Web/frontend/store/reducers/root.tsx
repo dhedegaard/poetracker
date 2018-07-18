@@ -89,8 +89,28 @@ const rootReducer = (state: poetracker.IState = initialState, action: poetracker
       });
       /* Finally append the old and the new to a final result. */
       datapoints = [...datapoints, ...action.newDatapoints];
+
+      /* If we're viewing graph data and we just got notified with new data
+         for that character, append data onto the graph data array. */
+      let chardata = state.chardata;
+      if (state.selectedRow && chardata) {
+        for (const newDatapoint of action.newDatapoints) {
+          if (newDatapoint.datapoint.charname === state.selectedRow.charname &&
+            newDatapoint.datapoint.leagueId === state.selectedRow.leagueId) {
+            const newElem = newDatapoint.datapoint as poetracker.IGraphData;
+            newElem.timestampDate = new Date(newElem.timestamp);
+            chardata = {
+              ...chardata,
+              result: [...chardata.result, newElem],
+            };
+          }
+        }
+      }
+
+      /* Assemble and return the new state. */
       return {
         ...state,
+        chardata,
         datapoints,
         filteredDatapoints: buildFilteredDatapoints(datapoints, state.filter),
       };
