@@ -1,4 +1,5 @@
 FROM microsoft/dotnet:2.1-sdk
+LABEL maintainer="dennis@dhedegaard.dk"
 ARG DEBIAN_FRONTEND=noninteractive
 EXPOSE 5123
 ENV ASPNETCORE_URLS=http://127.0.0.1:5123
@@ -6,13 +7,13 @@ ENV FETCHER_HUB_CONNECTION_URL=http://127.0.0.1:5123/data
 
 WORKDIR /source
 
-# Update everything in the image.
+# Update everything in the image and install NodeJS.
 RUN apt-get update -qq && \
-    apt-get dist-upgrade -qqy
-
-# Add NodeJs.
-RUN curl -sL -q https://deb.nodesource.com/setup_10.x | bash - && \
-    apt-get install -qqy nodejs
+    apt-get dist-upgrade -qqy && \
+    curl -sL -q https://deb.nodesource.com/setup_10.x | bash - && \
+    apt-get install --no-install-recommends -qqy nodejs && \
+    apt clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Restore .dotnet core packages.
 WORKDIR /source/Core
