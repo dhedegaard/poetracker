@@ -1,0 +1,8 @@
+language: csharp
+mono: none
+dotnet: 2.1.302
+
+install:
+  - dotnet restore Poetracker.sln
+script:
+  - dotnet build Poetracker.sln
