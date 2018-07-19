@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Web.Tests {
-    public class IndexTest : IClassFixture<WebApplicationFactory<Web.Startup>> {
+    public class IndexTest : IClassFixture<WebApplicationFactory<StartupTest>> {
         private readonly HttpClient client;
 
         public IndexTest(WebApplicationFactory<Web.Startup> factory) =>
