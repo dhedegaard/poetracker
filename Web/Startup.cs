@@ -29,7 +29,7 @@ namespace Web {
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
             if (env.IsDevelopment()) {
-                app.UseMiniProfiler();
+                // app.UseMiniProfiler();
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
             }

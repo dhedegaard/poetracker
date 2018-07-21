@@ -3,13 +3,15 @@ using Xunit;
 using Microsoft.AspNetCore.Mvc.Testing;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore;
 
 namespace Web.Tests {
-    public class IndexTest : IClassFixture<WebApplicationFactory<StartupTest>> {
+    public class IndexTest : IClassFixture<WebApplicationFactory<Startup>> {
         private readonly HttpClient client;
 
-        public IndexTest(WebApplicationFactory<Web.Startup> factory) =>
-            client = factory.CreateClient();
+        public IndexTest(WebApplicationFactory<Startup> factory) =>
+            client = factory
+                .CreateClient();
 
         [Fact]
         public async Task TestGet() {
