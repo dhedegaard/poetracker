@@ -92,7 +92,7 @@ export type IActionType = {
   type: "RECEIVED_CHAR_DATA",
   result: IGetCharDataResult;
 } | {
-  type:"GRAPH_FROM_CHANGED";
+  type: "GRAPH_FROM_CHANGED";
   from: GraphFromType;
 }
 
