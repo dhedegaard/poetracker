@@ -104,7 +104,7 @@ interface IGetCharDataInput {
 interface IGetCharDataResult {
   leagueId: string;
   charname: string;
-  result: poetracker.IGraphData[];
+  result: IGraphData[];
 }
 
 interface IFilter {
