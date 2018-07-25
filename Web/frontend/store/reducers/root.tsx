@@ -127,10 +127,15 @@ const rootReducer = (state: poetracker.IState = initialState, action: poetracker
         selectedRow: undefined,
       };
     case "RECEIVED_CHAR_DATA":
+      const result = action.result.result.map((e) => {
+        e.timestampDate = new Date(e.timestamp);
+        return e;
+      });
       return {
         ...state,
         chardata: {
           ...action.result,
+          result,
         },
         getCharData: undefined,
         selectedRow: {

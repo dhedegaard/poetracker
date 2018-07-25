@@ -80,18 +80,13 @@ export default class SignalR extends React.Component<ISignalRProps, {}> {
    * Fetches data for a given character, returning a resolvable promise.
    */
   getCharData(leagueId: string, charname: string): Promise<poetracker.IGraphData[]> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       /* Define a handler, that responds to character data. */
       const handler = (data: poetracker.IGetCharDataResult) => {
         /* If this data is not what we expect, skip it. */
         if (data.leagueId !== leagueId || data.charname !== charname) {
           return;
         }
-        /* Add some mapping for the timestampDate field. */
-        const result = data.result.map((e) => {
-          e.timestampDate = new Date(e.timestamp);
-          return e;
-        });
         /* Otherwise, remove the handler and return the datapoints. */
         this.connection.off("GetCharData", handler);
         return resolve(data.result);
