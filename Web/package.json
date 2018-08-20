@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "@aspnet/signalr": "^1.0.2",
-    "@types/chart.js": "2.7.22",
+    "@types/chart.js": "2.7.31",
     "@types/react": "^16.4.9",
     "@types/react-dom": "^16.0.7",
     "@types/react-redux": "^6.0.6",
