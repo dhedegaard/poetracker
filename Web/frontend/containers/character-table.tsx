@@ -15,5 +15,5 @@ const mapDispatchToProps = (dispatch: (action: poetracker.IActionType) => void):
 const CharacterTableContainer = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(CharacterTable);
+)(CharacterTable as any);
 export default CharacterTableContainer;

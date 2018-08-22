@@ -15,5 +15,5 @@ const mapDespatchToProps = (despatch: (action: IActionType) => void): Partial<IC
 const CharacterGraphContainer = connect(
   mapStateToProps,
   mapDespatchToProps,
-)(CharacterGraph);
+)(CharacterGraph as any);
 export default CharacterGraphContainer;
