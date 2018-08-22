@@ -13,7 +13,7 @@
     "awesome-typescript-loader": "^5.2.0",
     "chart.js": "^2.7.2",
     "css-loader": "^1.0.0",
-    "mini-css-extract-plugin": "^0.4.1",
+    "mini-css-extract-plugin": "^0.4.2",
     "react": "^16.4.2",
     "react-chartjs-2": "2.7.2",
     "react-dom": "^16.4.1",
