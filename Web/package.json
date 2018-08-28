@@ -2,7 +2,8 @@
   "private": true,
   "scripts": {
     "watch": "webpack -w --mode development --display-modules",
-    "start": "webpack -p"
+    "start": "webpack -p",
+    "tslint": "tslint --project tsconfig.json"
   },
   "dependencies": {
     "@aspnet/signalr": "^1.0.3",

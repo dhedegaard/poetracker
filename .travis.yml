@@ -7,6 +7,6 @@ install:
   - sh -c "cd Web && npm install"
 
 script:
-  - sh -c "cd Web && npm start"
+  - sh -c "cd Web && npm start && npm run tslint"
   - dotnet test ./Web.Tests/Web.Tests.csproj
   - dotnet publish ./Poetracker.sln
