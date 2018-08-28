@@ -8,16 +8,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="theme-color" content="#ffffff" />
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
   <link rel="stylesheet" href="./bundle.css" asp-append-version="true" />
-  <link rel="icon" type="image/png" href="~/favicon.png" asp-append-version="true" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" asp-append-version="true" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" asp-append-version="true" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" asp-append-version="true" />
+  <link rel="manifest" href="~/manifest.webmanifest" asp-append-version="true" />
   <title>Poetracker</title>
   <meta name="robots" content="noindex,nofollow" />
   <meta property="og:title" content="Poetracker" />
   <meta property="og:type" content="website" />
   <meta property="og:description" content="Path of Exile rank tracker" />
   <meta property="og:image" content="@Request.Scheme://@Request.Host/favicon.png" />
-  <link rel="manifest" href="~/manifest.webmanifest" />
 </head>
 <body class="bg-light">
   @if (env.IsDevelopment()) {
@@ -26,7 +29,7 @@
   <nav class="navbar navbar-dark bg-dark">
     <div class="container">
       <span class="navbar-brand">
-        <img src="~/favicon.png" width="30" height="30" alt="Poetracker" />
+        <img src="~/favicon-32x32.png" width="30" height="30" alt="Poetracker" asp-append-version="true" />
         Poetracker
       </span>
       <a class="navbar-text text-right" href="https://github.com/dhedegaard/poetracker" target="_blank">
