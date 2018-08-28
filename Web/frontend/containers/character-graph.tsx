@@ -1,19 +1,27 @@
 import { connect } from "react-redux";
-import CharacterGraph, { ICharacterGraphProps } from "../components/character-graph";
+
+import CharacterGraph from "../components/character-graph";
 import { IActionType } from "../poetracker";
 import * as Action from "../store/actions";
 
-const mapStateToProps = (state: poetracker.IState): Partial<ICharacterGraphProps> => ({
+export interface ICharacterGraphStateToProps {
+  graphData: poetracker.IGraphData[];
+  from: poetracker.GraphFromType;
+}
+const mapStateToProps = (state: poetracker.IState): ICharacterGraphStateToProps => ({
   from: state.graphFrom,
   graphData: state.chardata ? state.chardata.result : [],
 });
 
-const mapDespatchToProps = (despatch: (action: IActionType) => void): Partial<ICharacterGraphProps> => ({
-  fromChanged: (from: poetracker.GraphFromType) => despatch(Action.graphFromChanged(from)),
+export interface ICharacterGraphDispatchToProps {
+  fromChanged: (from: poetracker.GraphFromType) => void;
+}
+const mapDispatchToProps = (dispatch: (action: IActionType) => void): ICharacterGraphDispatchToProps => ({
+  fromChanged: (from: poetracker.GraphFromType) => dispatch(Action.graphFromChanged(from)),
 });
 
 const CharacterGraphContainer = connect(
   mapStateToProps,
-  mapDespatchToProps,
-)(CharacterGraph as any);
+  mapDispatchToProps,
+)(CharacterGraph);
 export default CharacterGraphContainer;

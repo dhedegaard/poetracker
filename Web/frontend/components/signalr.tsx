@@ -1,21 +1,16 @@
 ﻿import * as aspnet_SignalR from "@aspnet/signalr";
 import React from "react";
+import { ISignalRDispatchToProps, ISignalRStateToProps } from "../containers/signalr";
 
-export interface ISignalRProps {
-  onSignalRNotifyNewData: (data: poetracker.IDatapointResult[]) => void;
-  onSignalRInitialPayload: (data: poetracker.IInitialPayload) => void;
-  onSignalRConnectionClosed: () => void;
-  getCharData?: poetracker.IGetCharDataInput;
-  receivedCharData: (chardata: poetracker.IGetCharDataResult) => void;
-}
+type IProps = ISignalRStateToProps & ISignalRDispatchToProps;
 
 /**
  * Handles the wrapping of the SignalR stuff, emits events with data from the callbacks in props.
  */
-export default class SignalR extends React.Component<ISignalRProps, {}> {
+export default class SignalR extends React.Component<IProps, {}> {
   connection!: aspnet_SignalR.HubConnection;
 
-  constructor(props: ISignalRProps) {
+  constructor(props: IProps) {
     super(props);
     this.connectSignalR = this.connectSignalR.bind(this);
     this.getCharData = this.getCharData.bind(this);

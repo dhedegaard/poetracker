@@ -1,14 +1,11 @@
 import { ChartPoint } from "chart.js";
 import React from "react";
 import { Line } from "react-chartjs-2";
+import { ICharacterGraphDispatchToProps, ICharacterGraphStateToProps } from "../containers/character-graph";
 
-export interface ICharacterGraphProps {
-  graphData: poetracker.IGraphData[];
-  from: poetracker.GraphFromType;
-  fromChanged: (from: poetracker.GraphFromType) => void;
-}
+type IProps = ICharacterGraphStateToProps & ICharacterGraphDispatchToProps;
 
-const CharacterGraph = (props: ICharacterGraphProps) => {
+const CharacterGraph = (props: IProps) => {
   const { graphData, from } = props;
 
   if (!graphData || graphData.length < 2) {

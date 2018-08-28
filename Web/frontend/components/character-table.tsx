@@ -1,15 +1,11 @@
 ﻿import React from "react";
 
+import { ICharacterTableDispatchToProps, ICharacterTableStateToProps } from "../containers/character-table";
 import CharacterTableRow from "./character-table-row";
 
-export interface ICharacterTableProps {
-  datapoints: poetracker.IDatapointResult[];
-  leagues: poetracker.ILeagueType[];
-  getCharData: (leagueId: string, charname: string) => void;
-  selectedRow: poetracker.ISelectedRowType;
-}
+type IProps = ICharacterTableStateToProps & ICharacterTableDispatchToProps;
 
-const CharacterTable = (props: ICharacterTableProps) => {
+const CharacterTable = (props: IProps) => {
   const onClickedRow = (charname: string, leagueId: string) => {
     const { selectedRow, getCharData } = props;
     if (selectedRow && selectedRow.charname === charname && selectedRow.leagueId === leagueId) {

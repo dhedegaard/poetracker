@@ -1,19 +1,28 @@
 import { connect } from "react-redux";
-import CharacterTable, { ICharacterTableProps } from "../components/character-table";
+
+import CharacterTable from "../components/character-table";
 import { getCharData } from "../store/actions";
 
-const mapStateToProps = (state: poetracker.IState): Partial<ICharacterTableProps> => ({
+export interface ICharacterTableStateToProps {
+  datapoints: poetracker.IDatapointResult[];
+  leagues: poetracker.ILeagueType[];
+  selectedRow?: poetracker.ISelectedRowType;
+}
+const mapStateToProps = (state: poetracker.IState): ICharacterTableStateToProps => ({
   datapoints: state.filteredDatapoints,
   leagues: state.leagues,
   selectedRow: state.selectedRow,
 });
 
-const mapDispatchToProps = (dispatch: (action: poetracker.IActionType) => void): Partial<ICharacterTableProps> => ({
+export interface ICharacterTableDispatchToProps {
+  getCharData: (leagueId: string, charname: string) => void;
+}
+const mapDispatchToProps = (dispatch: (action: poetracker.IActionType) => void): ICharacterTableDispatchToProps => ({
   getCharData: (leagueId: string, charname: string) => dispatch(getCharData(leagueId, charname)),
 });
 
 const CharacterTableContainer = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(CharacterTable as any);
+)(CharacterTable);
 export default CharacterTableContainer;
