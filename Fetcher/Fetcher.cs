@@ -16,7 +16,6 @@ namespace Fetcher {
         internal readonly static int SleepInternal = 1_200;
 
         private readonly static ILogger logger = new LoggerFactory()
-            .AddConsole()
             .CreateLogger<Fetcher>();
 
         static HubConnection ConnectToTheHub() {
