@@ -1,12 +1,5 @@
-language: csharp
-mono: none
-dotnet: 2.2.101
-
-install:
-  - dotnet restore Poetracker.sln
-  - sh -c "cd Web && npm install"
+services:
+  - docker
 
 script:
-  - sh -c "cd Web && npm start && npm run tslint"
-  - dotnet test ./Web.Tests/Web.Tests.csproj
-  - dotnet publish ./Poetracker.sln
+  - docker build -t test .
