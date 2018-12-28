@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/dhedegaard/poetracker.svg?branch=master)](https://travis-ci.org/dhedegaard/poetracker)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/3d78afbdef7f44669e34d79a2483a9eb)](https://www.codacy.com/app/dhedegaard/poetracker?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=dhedegaard/poetracker&amp;utm_campaign=Badge_Grade)
+[![Build Status](https://dev.azure.com/dhedegaard/personlig/_apis/build/status/dhedegaard.poetracker?branchName=master)](https://dev.azure.com/dhedegaard/personlig/_build/latest?definitionId=2?branchName=master)
 
 A simple app for tracking the ranks of friends and such in [Path of Exile](https://www.pathofexile.com).
 
