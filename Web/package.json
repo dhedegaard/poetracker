@@ -6,25 +6,28 @@
     "tslint": "tslint --project tsconfig.json"
   },
   "dependencies": {
-    "@aspnet/signalr": "^1.0.3",
-    "@types/chart.js": "2.7.22",
-    "@types/react": "^16.4.13",
-    "@types/react-dom": "^16.0.7",
-    "@types/react-redux": "^6.0.7",
-    "awesome-typescript-loader": "^5.2.0",
-    "chart.js": "^2.7.2",
-    "css-loader": "^1.0.0",
-    "mini-css-extract-plugin": "^0.4.2",
-    "react": "^16.4.2",
-    "react-chartjs-2": "2.7.2",
-    "react-dom": "^16.4.2",
-    "react-redux": "^5.0.7",
-    "redux": "^4.0.0",
-    "style-loader": "^0.23.0",
-    "tslint": "^5.11.0",
+    "@aspnet/signalr": "^1.1.0",
+    "@types/chart.js": "2.7.42",
+    "@types/react": "^16.7.18",
+    "@types/react-dom": "^16.0.11",
+    "@types/react-redux": "^6.0.11",
+    "awesome-typescript-loader": "^5.2.1",
+    "chart.js": "^2.7.3",
+    "css-loader": "^2.1.0",
+    "mini-css-extract-plugin": "^0.5.0",
+    "react": "^16.7.0",
+    "react-chartjs-2": "2.7.4",
+    "react-dom": "^16.7.0",
+    "react-redux": "^6.0.0",
+    "redux": "^4.0.1",
+    "style-loader": "^0.23.1",
+    "tslint": "^5.12.0",
     "tslint-react": "^3.6.0",
-    "typescript": "^3.0.3",
-    "webpack": "^4.17.2",
-    "webpack-cli": "^3.1.0"
+    "typescript": "^3.2.2",
+    "webpack": "^4.28.2",
+    "webpack-cli": "^3.1.2"
+  },
+  "devDependencies": {
+    "@types/node": "^10.12.18"
   }
 }
