@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
+import Loader from "../components/CharacterGraph/Loader";
 import { IActionType } from "../poetracker";
 import * as Action from "../store/actions";
 
@@ -10,6 +11,7 @@ export type ICharacterGraphStateToProps = ReturnType<typeof mapStateToProps>;
 const mapStateToProps = (state: poetracker.IState) => ({
   from: state.graphFrom,
   graphData: state.chardata ? state.chardata.result : [],
+  isLoadingGraphData: state.getCharData != null,
 });
 
 export interface ICharacterGraphDispatchToProps {
@@ -26,19 +28,7 @@ const CharacterGraphContainer = connect(
   mapStateToProps,
   mapDispatchToProps,
 )((props) => (
-  <React.Suspense
-    fallback={
-      <div
-        style={{
-          color: "#000",
-          fontSize: 24,
-          textAlign: "center",
-        }}
-      >
-        loading...
-      </div>
-    }
-  >
+  <React.Suspense fallback={<Loader />}>
     <CharacterGraph {...props} />
   </React.Suspense>
 ));
