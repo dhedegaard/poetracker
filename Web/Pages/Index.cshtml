@@ -42,7 +42,8 @@
     @if (initialPayload != null) {
       <script type="text/javascript">window.InitialPayload=@Json.Serialize(initialPayload);</script>
     }
-    <script async type="text/javascript" src="./bundle.js" asp-append-version="true"></script>
+    <script async type="text/javascript" src="./main.js" asp-append-version="true"></script>
+    <script async type="text/javascript" src="./vendor.js" asp-append-version="true"></script>
   </div>
 </body>
 </html>
