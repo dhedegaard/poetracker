@@ -6,6 +6,7 @@ import { getCharData } from "../store/actions";
 export type ICharacterTableStateToProps = ReturnType<typeof mapStateToProps>;
 const mapStateToProps = (state: poetracker.IState) => ({
   datapoints: state.filteredDatapoints,
+  isLoadingCharData: state.getCharData != null ? state.getCharData : undefined,
   leagues: state.leagues,
   selectedRow: state.selectedRow,
 });

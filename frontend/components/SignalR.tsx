@@ -13,7 +13,6 @@ export default class SignalR extends React.Component<IProps, {}> {
   constructor(props: IProps) {
     super(props);
     this.connectSignalR = this.connectSignalR.bind(this);
-    this.getCharData = this.getCharData.bind(this);
   }
 
   componentDidUpdate() {
@@ -74,7 +73,8 @@ export default class SignalR extends React.Component<IProps, {}> {
   /**
    * Fetches data for a given character, returning a resolvable promise.
    */
-  getCharData(leagueId: string, charname: string): Promise<poetracker.IGraphData[]> {
+  getCharData = (leagueId: string, charname: string): Promise<poetracker.IGraphData[]> => {
+    document.body.style.cursor = "wait";
     return new Promise((resolve) => {
       /* Define a handler, that responds to character data. */
       const handler = (data: poetracker.IGetCharDataResult) => {
@@ -84,6 +84,7 @@ export default class SignalR extends React.Component<IProps, {}> {
         }
         /* Otherwise, remove the handler and return the datapoints. */
         this.connection.off("GetCharData", handler);
+        document.body.style.cursor = null;
         return resolve(data.result);
       };
 

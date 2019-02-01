@@ -1,6 +1,9 @@
 ﻿import React from "react";
 
-import { ICharacterTableDispatchToProps, ICharacterTableStateToProps } from "../containers/character-table";
+import {
+  ICharacterTableDispatchToProps,
+  ICharacterTableStateToProps,
+} from "../containers/character-table";
 import Row from "./CharacterTable/Row";
 
 type IProps = ICharacterTableStateToProps & ICharacterTableDispatchToProps;
@@ -8,7 +11,11 @@ type IProps = ICharacterTableStateToProps & ICharacterTableDispatchToProps;
 const CharacterTable = (props: IProps) => {
   const onClickedRow = (charname: string, leagueId: string) => {
     const { selectedRow, getCharData } = props;
-    if (selectedRow && selectedRow.charname === charname && selectedRow.leagueId === leagueId) {
+    if (
+      selectedRow &&
+      selectedRow.charname === charname &&
+      selectedRow.leagueId === leagueId
+    ) {
       getCharData("", "");
     } else {
       getCharData(leagueId, charname);
@@ -32,9 +39,17 @@ const CharacterTable = (props: IProps) => {
               datapoint={datapoint}
               clickedRow={onClickedRow}
               isSelected={
-                props.selectedRow !== undefined &&
-                props.selectedRow.charname === datapoint.datapoint.charname &&
-                props.selectedRow.leagueId === datapoint.datapoint.leagueId
+                // We're loaded some graph data for the row.
+                (props.selectedRow !== undefined &&
+                  props.selectedRow.charname === datapoint.datapoint.charname &&
+                  props.selectedRow.leagueId ===
+                    datapoint.datapoint.leagueId) ||
+                // Or we're waiting for graph data.
+                (props.isLoadingCharData != null &&
+                  props.isLoadingCharData.charname ===
+                    datapoint.datapoint.charname &&
+                  props.isLoadingCharData.leagueId ===
+                    datapoint.datapoint.leagueId)
               }
               key={datapoint.datapoint.id}
             />
@@ -42,8 +57,9 @@ const CharacterTable = (props: IProps) => {
           {!props.datapoints.length && (
             <tr>
               <td colSpan={4} className="text-center">
-                <b>Sorry!</b> I've got no datapoints for the given league, try filtering on another league.
-                </td>
+                <b>Sorry!</b> I've got no datapoints for the given league, try
+                filtering on another league.
+              </td>
             </tr>
           )}
         </tbody>
