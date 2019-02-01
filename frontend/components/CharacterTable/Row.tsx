@@ -94,8 +94,8 @@ const Row = (props: IProps) => {
               <React.Fragment>
                 <TwitchBadge
                   href={datapoint.datapoint.account.twitchURL}
-                  target="_blank"
-                  rel="nofollow"
+                  target="_blank "
+                  rel="nofollow noreferrer"
                   className="badge badge-dark"
                   title={`Twitch username: ${
                     datapoint.datapoint.account.twitchUsername
@@ -108,7 +108,7 @@ const Row = (props: IProps) => {
             <a
               href={datapoint.datapoint.poeProfileURL}
               target="_blank"
-              rel="nofollow"
+              rel="nofollow noreferrer"
               className="badge badge-info"
             >
               Profile
