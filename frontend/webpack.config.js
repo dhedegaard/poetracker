@@ -10,7 +10,14 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, "..", "Web", "wwwroot"),
-    filename: "[name].js"
+    filename: "[name].js",
+    chunkFilename: "[name].[hash].chunk.js",
+    publicPath: "/"
+  },
+  optimization: {
+    splitChunks: {
+      chunks: "async"
+    }
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx"]
