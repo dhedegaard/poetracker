@@ -4,17 +4,10 @@ import { connect } from "react-redux";
 import { IActionType } from "../poetracker";
 import * as Action from "../store/actions";
 
-const CharacterGraph = React.lazy(() =>
-  import("../components/CharacterGraph"),
-);
+const CharacterGraph = React.lazy(() => import("../components/CharacterGraph"));
 
-export interface ICharacterGraphStateToProps {
-  graphData: poetracker.IGraphData[];
-  from: poetracker.GraphFromType;
-}
-const mapStateToProps = (
-  state: poetracker.IState,
-): ICharacterGraphStateToProps => ({
+export type ICharacterGraphStateToProps = ReturnType<typeof mapStateToProps>;
+const mapStateToProps = (state: poetracker.IState) => ({
   from: state.graphFrom,
   graphData: state.chardata ? state.chardata.result : [],
 });
