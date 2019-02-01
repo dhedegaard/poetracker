@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 
-import CharacterTable from "../components/character-table";
+import CharacterTable from "../components/CharacterTable";
 import { getCharData } from "../store/actions";
 
 export interface ICharacterTableStateToProps {

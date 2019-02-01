@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 
-import SignalR from "../components/signalr";
+import SignalR from "../components/SignalR";
 import * as actions from "../store/actions";
 
 export interface ISignalRStateToProps {

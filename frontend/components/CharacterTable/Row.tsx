@@ -1,8 +1,8 @@
 import React from "react";
 
-import CharacterGraphContainer from "../containers/character-graph";
+import CharacterGraphContainer from "../../containers/character-graph";
 
-import "./character-table-row.css";
+import "./Row.css";
 
 interface IProps {
   datapoint: poetracker.IDatapointResult;
@@ -11,7 +11,7 @@ interface IProps {
   isSelected: boolean;
 }
 
-const CharacterTableRow = (props: IProps) => {
+const Row = (props: IProps) => {
   const { datapoint, isSelected } = props;
 
   const onRowClick = () => {
@@ -131,4 +131,4 @@ const CharacterTableRow = (props: IProps) => {
     </React.Fragment>
   );
 };
-export default CharacterTableRow;
+export default Row;

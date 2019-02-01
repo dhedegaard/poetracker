@@ -1,7 +1,7 @@
-﻿import React from "react";
+import React from "react";
 
-import { ICharacterTableDispatchToProps, ICharacterTableStateToProps } from "../containers/character-table";
-import CharacterTableRow from "./character-table-row";
+import { ICharacterTableDispatchToProps, ICharacterTableStateToProps } from "../../containers/character-table";
+import Row from "./Row";
 
 type IProps = ICharacterTableStateToProps & ICharacterTableDispatchToProps;
 
@@ -28,7 +28,7 @@ const CharacterTable = (props: IProps) => {
         </thead>
         <tbody>
           {props.datapoints.map((datapoint) => (
-            <CharacterTableRow
+            <Row
               datapoint={datapoint}
               clickedRow={onClickedRow}
               isSelected={

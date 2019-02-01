@@ -5,7 +5,7 @@ import { IActionType } from "../poetracker";
 import * as Action from "../store/actions";
 
 const CharacterGraph = React.lazy(() =>
-  import("../components/character-graph"),
+  import("../components/CharacterGraph"),
 );
 
 export interface ICharacterGraphStateToProps {

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import Main from "../components/main";
+import Main from "../components/Main";
 import SignalRContainer from "./signalr";
 
 export default class MainContainer extends React.Component<{}, {}> {

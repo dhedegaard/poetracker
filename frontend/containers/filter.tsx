@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import Filter from "../components/filter";
+import Filter from "../components/Filter";
 import { filterChanged } from "../store/actions";
 
 const mapStateToProps = (state: poetracker.IState) => ({
