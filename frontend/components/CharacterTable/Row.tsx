@@ -1,12 +1,24 @@
 import React from "react";
+import styled from "styled-components";
 
 import CharacterGraphContainer from "../../containers/character-graph";
 
-import "./Row.css";
+const TwitchBadge = styled.a`
+  &,
+  &:link,
+  &:visited,
+  &:hover,
+  &:active {
+    background-color: #4b367c !important;
+  }
+`;
 
 interface IProps {
   datapoint: poetracker.IDatapointResult;
-  getCharData?: (leagueId: string, charname: string) => Promise<poetracker.IDatapoint[]>;
+  getCharData?: (
+    leagueId: string,
+    charname: string,
+  ) => Promise<poetracker.IDatapoint[]>;
   clickedRow: (charname: string, leagueId: string) => void;
   isSelected: boolean;
 }
@@ -17,7 +29,8 @@ const Row = (props: IProps) => {
   const onRowClick = () => {
     props.clickedRow(
       props.datapoint.datapoint.charname,
-      props.datapoint.datapoint.leagueId);
+      props.datapoint.datapoint.leagueId,
+    );
   };
 
   return (
@@ -32,31 +45,40 @@ const Row = (props: IProps) => {
             title={datapoint.datapoint.online ? "Online" : "Offline"}
             width={15}
             height={15}
-          />
-          {" "}
+          />{" "}
           <span>{datapoint.datapoint.globalRank || "15000+"}</span>
           {datapoint.previousDatapoint &&
-            (datapoint.previousDatapoint.globalRank || 15001) !== (datapoint.datapoint.globalRank || 15001) && (
+            (datapoint.previousDatapoint.globalRank || 15001) !==
+              (datapoint.datapoint.globalRank || 15001) && (
               <React.Fragment>
                 {" "}
                 <small
                   title={
-                    datapoint.previousDatapoint && datapoint.previousDatapoint.timestamp ?
-                      `Compared to: ${new Date(datapoint.previousDatapoint.timestamp).toLocaleString()}` :
-                      undefined
+                    datapoint.previousDatapoint &&
+                    datapoint.previousDatapoint.timestamp
+                      ? `Compared to: ${new Date(
+                          datapoint.previousDatapoint.timestamp,
+                        ).toLocaleString()}`
+                      : undefined
                   }
                   className={
-                    "badge " + (
-                      (datapoint.datapoint.globalRank || 15001) < (datapoint.previousDatapoint.globalRank || 15001) ?
-                        "badge-success" : "badge-danger")}
+                    "badge " +
+                    ((datapoint.datapoint.globalRank || 15001) <
+                    (datapoint.previousDatapoint.globalRank || 15001)
+                      ? "badge-success"
+                      : "badge-danger")
+                  }
                 >
                   {String.fromCharCode(
-                    (datapoint.datapoint.globalRank || 15001) > (datapoint.previousDatapoint.globalRank || 15001) ?
-                      8595 : 8593)}
-                  {" "}
+                    (datapoint.datapoint.globalRank || 15001) >
+                      (datapoint.previousDatapoint.globalRank || 15001)
+                      ? 8595
+                      : 8593,
+                  )}{" "}
                   {Math.abs(
                     (datapoint.datapoint.globalRank || 15001) -
-                    (datapoint.previousDatapoint.globalRank || 15001))}
+                      (datapoint.previousDatapoint.globalRank || 15001),
+                  )}
                 </small>
               </React.Fragment>
             )}
@@ -70,16 +92,17 @@ const Row = (props: IProps) => {
           <div className="float-right d-none d-sm-block">
             {datapoint.datapoint.account.twitchURL && (
               <React.Fragment>
-                <a
+                <TwitchBadge
                   href={datapoint.datapoint.account.twitchURL}
                   target="_blank"
                   rel="nofollow"
-                  className="badge badge-dark badge-twitch"
-                  title={`Twitch username: ${datapoint.datapoint.account.twitchUsername}`}
+                  className="badge badge-dark"
+                  title={`Twitch username: ${
+                    datapoint.datapoint.account.twitchUsername
+                  }`}
                 >
                   Twitch
-                </a>
-                {" "}
+                </TwitchBadge>{" "}
               </React.Fragment>
             )}
             <a
@@ -101,33 +124,41 @@ const Row = (props: IProps) => {
         </td>
         <td>{datapoint.datapoint.class}</td>
         <td className="text-right text-nowrap">
-          {datapoint.previousDatapoint && datapoint.previousDatapoint.level !== datapoint.datapoint.level && (
-            <React.Fragment>
-              <span
-                title={
-                  datapoint.previousDatapoint && datapoint.previousDatapoint.timestamp ?
-                    `Compared to: ${new Date(datapoint.previousDatapoint.timestamp).toLocaleString()}` :
-                    undefined
-                }
-                className="badge badge-success"
-              >
-                +{datapoint.datapoint.level - datapoint.previousDatapoint.level}
-              </span>
-              {" "}
-            </React.Fragment>
-          )}
-          <span title={`XP: ${datapoint.datapoint.experience.toLocaleString()}`}>
+          {datapoint.previousDatapoint &&
+            datapoint.previousDatapoint.level !== datapoint.datapoint.level && (
+              <React.Fragment>
+                <span
+                  title={
+                    datapoint.previousDatapoint &&
+                    datapoint.previousDatapoint.timestamp
+                      ? `Compared to: ${new Date(
+                          datapoint.previousDatapoint.timestamp,
+                        ).toLocaleString()}`
+                      : undefined
+                  }
+                  className="badge badge-success"
+                >
+                  +
+                  {datapoint.datapoint.level -
+                    datapoint.previousDatapoint.level}
+                </span>{" "}
+              </React.Fragment>
+            )}
+          <span
+            title={`XP: ${datapoint.datapoint.experience.toLocaleString()}`}
+          >
             {datapoint.datapoint.level}
           </span>
         </td>
       </tr>
-      {isSelected && (
+      {(isSelected && (
         <tr>
           <td colSpan={4} className="bg-light">
             <CharacterGraphContainer />
           </td>
         </tr>
-      ) || null}
+      )) ||
+        null}
     </React.Fragment>
   );
 };
