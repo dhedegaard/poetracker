@@ -41,7 +41,7 @@
   <div class="container">
     <div id="app" />
     @if (initialPayload != null) {
-      <script type="text/javascript">window.InitialPayload=@initialPayload;</script>
+      <script type="text/javascript">window.InitialPayload=@Html.Raw(initialPayload);</script>
     }
     <script async type="text/javascript" src="./main.js" asp-append-version="true"></script>
     <script async type="text/javascript" src="./vendor.js" asp-append-version="true"></script>
