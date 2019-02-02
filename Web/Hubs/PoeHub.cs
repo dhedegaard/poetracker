@@ -72,8 +72,8 @@ namespace Web.Hubs {
       public IEnumerable<Datapoint> Result { get; set; }
     }
 
-    public Task GetCharData(string leagueId, string charname) {
-      return Clients.Caller.SendAsync("GetCharData", new GetCharDataResult {
+    public Task GetCharData(string leagueId, string charname) =>
+      Clients.Caller.SendAsync("GetCharData", new GetCharDataResult {
         LeagueId = leagueId,
         Charname = charname,
         Result = poeContext.Datapoints
@@ -82,6 +82,5 @@ namespace Web.Hubs {
                   e.Charname == charname)
               .OrderBy(e => e.Timestamp),
       });
-    }
   }
 }
