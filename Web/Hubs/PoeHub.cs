@@ -3,6 +3,7 @@ using Core.Models;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,8 +54,8 @@ namespace Web.Hubs {
 
         internal void SendInitialPayload() {
             var initialPayload = InitialPayload.BuildInitialPayload(poeContext).Result;
-            cache.Set("initialPayload", initialPayload);
             Clients.Caller.SendAsync("InitialPayload", initialPayload);
+            cache.Set("initialPayload", JsonConvert.SerializeObject(initialPayload));
         }
 
         public override Task OnConnectedAsync() {
