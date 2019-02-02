@@ -55,7 +55,7 @@ const CharacterGraph = (props: IProps) => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <div className="row" style={{ paddingBottom: 20 }}>
         <label
           htmlFor="id_graph_from"
@@ -203,7 +203,7 @@ const CharacterGraph = (props: IProps) => {
           />
         </div>
       </div>
-    </React.Fragment>
+    </>
   );
 };
 export default CharacterGraph;

@@ -14,7 +14,7 @@ const Error = (props: IErrorProps) => {
   };
 
   return (
-    <React.Fragment>
+    <>
       <div className="alert alert-danger">
         <b>Error</b>: {props.error}
         {" "}
@@ -27,7 +27,7 @@ const Error = (props: IErrorProps) => {
         </a>
       </div>
       <hr />
-    </React.Fragment>
+    </>
   );
 };
 export default Error;

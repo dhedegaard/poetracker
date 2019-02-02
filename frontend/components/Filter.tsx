@@ -13,35 +13,43 @@ const Filter = (props: IFilterProps) => {
   const nonTwitchAccounts = accounts.filter((e) => !e.twitchURL);
   const twitchAccounts = accounts.filter((e) => e.twitchURL);
 
-  const onChangeSelectedLeague = (selectedLeague: string) => onFilterChanged({
-    ...filter,
-    selectedLeague,
-  });
+  const onChangeSelectedLeague = (selectedLeague: string) =>
+    onFilterChanged({
+      ...filter,
+      selectedLeague,
+    });
 
-  const onChangeHideDead = (evt: React.ChangeEvent<HTMLInputElement>) => onFilterChanged({
-    ...filter,
-    hideDead: evt.currentTarget.checked,
-  });
+  const onChangeHideDead = (evt: React.ChangeEvent<HTMLInputElement>) =>
+    onFilterChanged({
+      ...filter,
+      hideDead: evt.currentTarget.checked,
+    });
 
-  const onChangeShowOnline = (evt: React.ChangeEvent<HTMLInputElement>) => onFilterChanged({
-    ...filter,
-    onlyShowOnline: evt.currentTarget.checked,
-  });
+  const onChangeShowOnline = (evt: React.ChangeEvent<HTMLInputElement>) =>
+    onFilterChanged({
+      ...filter,
+      onlyShowOnline: evt.currentTarget.checked,
+    });
 
-  const onChangeHideStreamers = (evt: React.ChangeEvent<HTMLInputElement>) => onFilterChanged({
-    ...filter,
-    hideStreamers: evt.currentTarget.checked,
-  });
+  const onChangeHideStreamers = (evt: React.ChangeEvent<HTMLInputElement>) =>
+    onFilterChanged({
+      ...filter,
+      hideStreamers: evt.currentTarget.checked,
+    });
 
-  const onChangeHideStandardLeague = (evt: React.ChangeEvent<HTMLInputElement>) => onFilterChanged({
-    ...filter,
-    hideStandardLeagues: evt.currentTarget.checked,
-  });
+  const onChangeHideStandardLeague = (
+    evt: React.ChangeEvent<HTMLInputElement>,
+  ) =>
+    onFilterChanged({
+      ...filter,
+      hideStandardLeagues: evt.currentTarget.checked,
+    });
 
-  const onShowOnlyAccount = (evt: React.ChangeEvent<HTMLSelectElement>) => onFilterChanged({
-    ...filter,
-    showOnlyAccount: evt.currentTarget.value,
-  });
+  const onShowOnlyAccount = (evt: React.ChangeEvent<HTMLSelectElement>) =>
+    onFilterChanged({
+      ...filter,
+      showOnlyAccount: evt.currentTarget.value,
+    });
 
   return (
     <div className="alert alert-secondary">
@@ -115,7 +123,12 @@ const Filter = (props: IFilterProps) => {
       <div className="row">
         <div className="col-md-5 col-12">
           <div className="row">
-            <label htmlFor="id_filter_account" className="col-4 col-md-2 text-right">Account:</label>
+            <label
+              htmlFor="id_filter_account"
+              className="col-4 col-md-2 text-right"
+            >
+              Account:
+            </label>
             <div className="col-md-6">
               <select
                 id="id_filter_account"
@@ -127,7 +140,10 @@ const Filter = (props: IFilterProps) => {
                 {nonTwitchAccounts && nonTwitchAccounts.length && (
                   <optgroup label="Accounts">
                     {nonTwitchAccounts.map((account) => (
-                      <option key={account.accountName} value={account.accountName}>
+                      <option
+                        key={account.accountName}
+                        value={account.accountName}
+                      >
                         {account.accountName}
                       </option>
                     ))}
@@ -136,12 +152,13 @@ const Filter = (props: IFilterProps) => {
                 {twitchAccounts && twitchAccounts.length && (
                   <optgroup label="Streamers">
                     {twitchAccounts.map((account) => (
-                      <option key={account.accountName} value={account.accountName}>
+                      <option
+                        key={account.accountName}
+                        value={account.accountName}
+                      >
                         {account.accountName}
                         {account.twitchUsername !== account.accountName && (
-                          <React.Fragment>
-                            ({account.twitchUsername})
-                            </React.Fragment>
+                          <>({account.twitchUsername})</>
                         )}
                       </option>
                     ))}

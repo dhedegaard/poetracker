@@ -34,7 +34,7 @@ const Row = (props: IProps) => {
   };
 
   return (
-    <React.Fragment>
+    <>
       <tr
         className={isSelected ? "table-active" : undefined}
         onClick={onRowClick}
@@ -50,7 +50,7 @@ const Row = (props: IProps) => {
           {datapoint.previousDatapoint &&
             (datapoint.previousDatapoint.globalRank || 15001) !==
               (datapoint.datapoint.globalRank || 15001) && (
-              <React.Fragment>
+              <>
                 {" "}
                 <small
                   title={
@@ -80,7 +80,7 @@ const Row = (props: IProps) => {
                       (datapoint.previousDatapoint.globalRank || 15001),
                   )}
                 </small>
-              </React.Fragment>
+              </>
             )}
         </td>
         <td
@@ -91,7 +91,7 @@ const Row = (props: IProps) => {
         >
           <div className="float-right d-none d-sm-block">
             {datapoint.datapoint.account.twitchURL && (
-              <React.Fragment>
+              <>
                 <TwitchBadge
                   href={datapoint.datapoint.account.twitchURL}
                   target="_blank "
@@ -103,7 +103,7 @@ const Row = (props: IProps) => {
                 >
                   Twitch
                 </TwitchBadge>{" "}
-              </React.Fragment>
+              </>
             )}
             <a
               href={datapoint.datapoint.poeProfileURL}
@@ -116,17 +116,17 @@ const Row = (props: IProps) => {
           </div>
           {datapoint.datapoint.charname}
           {datapoint.datapoint.dead && (
-            <React.Fragment>
+            <>
               {" "}
               <small className="badge badge-danger">Dead</small>
-            </React.Fragment>
+            </>
           )}
         </td>
         <td>{datapoint.datapoint.class}</td>
         <td className="text-right text-nowrap">
           {datapoint.previousDatapoint &&
             datapoint.previousDatapoint.level !== datapoint.datapoint.level && (
-              <React.Fragment>
+              <>
                 <span
                   title={
                     datapoint.previousDatapoint &&
@@ -142,7 +142,7 @@ const Row = (props: IProps) => {
                   {datapoint.datapoint.level -
                     datapoint.previousDatapoint.level}
                 </span>{" "}
-              </React.Fragment>
+              </>
             )}
           <span
             title={`XP: ${datapoint.datapoint.experience.toLocaleString()}`}
@@ -159,7 +159,7 @@ const Row = (props: IProps) => {
         </tr>
       )) ||
         null}
-    </React.Fragment>
+    </>
   );
 };
 export default Row;

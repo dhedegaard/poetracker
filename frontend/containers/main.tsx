@@ -17,10 +17,10 @@ export default class MainContainer extends React.Component<{}, {}> {
 
   render() {
     return (
-      <React.Fragment>
+      <>
         <Main />
         <SignalRContainer />
-      </React.Fragment>
+      </>
     );
   }
 }
