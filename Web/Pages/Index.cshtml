@@ -40,11 +40,11 @@
   </nav>
   <div class="container">
     <div id="app" />
+    <script async type="text/javascript" src="./vendor.js" asp-append-version="true"></script>
     @if (initialPayload != null) {
       <script defer type="text/javascript">window.InitialPayload=@Html.Raw(initialPayload);</script>
     }
     <script async type="text/javascript" src="./main.js" asp-append-version="true"></script>
-    <script async type="text/javascript" src="./vendor.js" asp-append-version="true"></script>
   </div>
 </body>
 </html>
