@@ -6,8 +6,10 @@ import MainContainer from "./containers/main";
 import store from "./store";
 
 ReactDOM.render(
-  <Provider store={store}>
-    <MainContainer />
-  </Provider>,
+  <React.StrictMode>
+    <Provider store={store}>
+      <MainContainer />
+    </Provider>
+  </React.StrictMode>,
   document.getElementById("app"),
 );
