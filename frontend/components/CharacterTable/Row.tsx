@@ -23,7 +23,7 @@ interface IProps {
   isSelected: boolean;
 }
 
-const Row = (props: IProps) => {
+const Row: React.FunctionComponent<IProps> = (props) => {
   const { datapoint, isSelected } = props;
 
   const onRowClick = () => {
@@ -162,4 +162,5 @@ const Row = (props: IProps) => {
     </>
   );
 };
-export default Row;
+
+export default React.memo(Row);

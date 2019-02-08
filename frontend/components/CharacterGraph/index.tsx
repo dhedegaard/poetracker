@@ -100,7 +100,7 @@ const CharacterGraph = (props: IProps) => {
                   backgroundColor: "#17a2b8",
                   borderColor: "#17a2b8",
                   data: graphData.map((e) => ({
-                    x: e.timestampDate,
+                    x: e.timestampDate.toISOString(),
                     y: e.experience,
                   })),
                   fill: false,
@@ -112,7 +112,7 @@ const CharacterGraph = (props: IProps) => {
                   backgroundColor: "#4b367c",
                   borderColor: "#4b367c",
                   data: graphData.map((e) => ({
-                    x: e.timestampDate,
+                    x: e.timestampDate.toISOString(),
                     y: e.globalRank,
                   })),
                   fill: false,
@@ -124,7 +124,6 @@ const CharacterGraph = (props: IProps) => {
               labels: graphData.map((e) => e.timestampDate.toLocaleString()),
             }}
             options={{
-              animation: false as any,
               legend: {
                 display: false,
               },
@@ -140,8 +139,8 @@ const CharacterGraph = (props: IProps) => {
                       displayFormats: {
                         minute: "YYYY-MM-DD HH:MM",
                       },
-                      max: new Date().getTime() as any,
-                      min: fromDate ? fromDate : (undefined as any),
+                      max: new Date().toISOString(),
+                      min: fromDate ? fromDate.toISOString() : undefined,
                       unit: "minute",
                     },
                     type: "time",
@@ -161,7 +160,7 @@ const CharacterGraph = (props: IProps) => {
                       beginAtZero: true,
                       callback: (value) => {
                         if (Number.isInteger(value)) {
-                          return (value as number).toLocaleString() as any;
+                          return value.toLocaleString();
                         }
                       },
                       fontColor: "#17a2b8",

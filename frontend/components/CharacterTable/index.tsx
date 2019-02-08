@@ -51,4 +51,4 @@ const CharacterTable = (props: IProps) => {
     </div>
   );
 };
-export default CharacterTable;
+export default React.memo(CharacterTable);
