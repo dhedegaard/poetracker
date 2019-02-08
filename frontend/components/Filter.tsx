@@ -1,55 +1,55 @@
-import React from "react";
-import LeagueSelectComponent from "./LeagueSelect";
+import React from 'react'
+import LeagueSelectComponent from './LeagueSelect'
 
 interface IFilterProps {
-  accounts: poetracker.IAccountType[];
-  leagues: poetracker.ILeagueType[];
-  filter: poetracker.IFilter;
-  onFilterChanged: (filter: poetracker.IFilter) => void;
+  accounts: poetracker.IAccountType[]
+  leagues: poetracker.ILeagueType[]
+  filter: poetracker.IFilter
+  onFilterChanged: (filter: poetracker.IFilter) => void
 }
 
 const Filter = (props: IFilterProps) => {
-  const { filter, accounts, leagues, onFilterChanged } = props;
-  const nonTwitchAccounts = accounts.filter((e) => !e.twitchURL);
-  const twitchAccounts = accounts.filter((e) => e.twitchURL);
+  const { filter, accounts, leagues, onFilterChanged } = props
+  const nonTwitchAccounts = accounts.filter(e => !e.twitchURL)
+  const twitchAccounts = accounts.filter(e => e.twitchURL)
 
   const onChangeSelectedLeague = (selectedLeague: string) =>
     onFilterChanged({
       ...filter,
-      selectedLeague,
-    });
+      selectedLeague
+    })
 
   const onChangeHideDead = (evt: React.ChangeEvent<HTMLInputElement>) =>
     onFilterChanged({
       ...filter,
-      hideDead: evt.currentTarget.checked,
-    });
+      hideDead: evt.currentTarget.checked
+    })
 
   const onChangeShowOnline = (evt: React.ChangeEvent<HTMLInputElement>) =>
     onFilterChanged({
       ...filter,
-      onlyShowOnline: evt.currentTarget.checked,
-    });
+      onlyShowOnline: evt.currentTarget.checked
+    })
 
   const onChangeHideStreamers = (evt: React.ChangeEvent<HTMLInputElement>) =>
     onFilterChanged({
       ...filter,
-      hideStreamers: evt.currentTarget.checked,
-    });
+      hideStreamers: evt.currentTarget.checked
+    })
 
   const onChangeHideStandardLeague = (
-    evt: React.ChangeEvent<HTMLInputElement>,
+    evt: React.ChangeEvent<HTMLInputElement>
   ) =>
     onFilterChanged({
       ...filter,
-      hideStandardLeagues: evt.currentTarget.checked,
-    });
+      hideStandardLeagues: evt.currentTarget.checked
+    })
 
   const onShowOnlyAccount = (evt: React.ChangeEvent<HTMLSelectElement>) =>
     onFilterChanged({
       ...filter,
-      showOnlyAccount: evt.currentTarget.value,
-    });
+      showOnlyAccount: evt.currentTarget.value
+    })
 
   return (
     <div className="alert alert-secondary">
@@ -139,7 +139,7 @@ const Filter = (props: IFilterProps) => {
                 <option value="">-- Show all --</option>
                 {nonTwitchAccounts && nonTwitchAccounts.length && (
                   <optgroup label="Accounts">
-                    {nonTwitchAccounts.map((account) => (
+                    {nonTwitchAccounts.map(account => (
                       <option
                         key={account.accountName}
                         value={account.accountName}
@@ -151,7 +151,7 @@ const Filter = (props: IFilterProps) => {
                 )}
                 {twitchAccounts && twitchAccounts.length && (
                   <optgroup label="Streamers">
-                    {twitchAccounts.map((account) => (
+                    {twitchAccounts.map(account => (
                       <option
                         key={account.accountName}
                         value={account.accountName}
@@ -170,6 +170,6 @@ const Filter = (props: IFilterProps) => {
         </div>
       </div>
     </div>
-  );
-};
-export default Filter;
+  )
+}
+export default Filter

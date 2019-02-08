@@ -1,18 +1,18 @@
-﻿import React from "react";
+﻿import React from 'react'
 
 interface ILeagueSelectProps {
-  selectedLeague: string;
-  leagues: poetracker.ILeagueType[];
-  onLeagueSelect: (league: string) => void;
+  selectedLeague: string
+  leagues: poetracker.ILeagueType[]
+  onLeagueSelect: (league: string) => void
 }
 
 const LeagueSelect = (props: ILeagueSelectProps) => {
-  const standardLeagues = props.leagues.filter((e) => e.endAt === null);
-  const temporaryLeagues = props.leagues.filter((e) => e.endAt !== null);
+  const standardLeagues = props.leagues.filter(e => e.endAt === null)
+  const temporaryLeagues = props.leagues.filter(e => e.endAt !== null)
 
   const onChange = (evt: React.ChangeEvent<HTMLSelectElement>) => {
-    props.onLeagueSelect(evt.currentTarget.value);
-  };
+    props.onLeagueSelect(evt.currentTarget.value)
+  }
 
   return (
     <select
@@ -24,19 +24,23 @@ const LeagueSelect = (props: ILeagueSelectProps) => {
       <option value="">-- Show all --</option>
       {temporaryLeagues && temporaryLeagues.length && (
         <optgroup label="Temporary leagues">
-          {temporaryLeagues.map((league) => (
-            <option key={league.id} value={league.id}>{league.id}</option>
+          {temporaryLeagues.map(league => (
+            <option key={league.id} value={league.id}>
+              {league.id}
+            </option>
           ))}
         </optgroup>
       )}
       {standardLeagues && standardLeagues.length && (
         <optgroup label="Standard leagues">
-          {standardLeagues.map((league) => (
-            <option key={league.id} value={league.id}>{league.id}</option>
+          {standardLeagues.map(league => (
+            <option key={league.id} value={league.id}>
+              {league.id}
+            </option>
           ))}
         </optgroup>
       )}
     </select>
-  );
-};
-export default LeagueSelect;
+  )
+}
+export default LeagueSelect

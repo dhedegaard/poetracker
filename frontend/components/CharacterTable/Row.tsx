@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react'
+import styled from 'styled-components'
 
-import CharacterGraphContainer from "../../containers/character-graph";
+import CharacterGraphContainer from '../../containers/character-graph'
 
 const TwitchBadge = styled.a`
   &,
@@ -11,73 +11,73 @@ const TwitchBadge = styled.a`
   &:active {
     background-color: #4b367c !important;
   }
-`;
+`
 
 interface IProps {
-  datapoint: poetracker.IDatapointResult;
+  datapoint: poetracker.IDatapointResult
   getCharData?: (
     leagueId: string,
-    charname: string,
-  ) => Promise<poetracker.IDatapoint[]>;
-  clickedRow: (charname: string, leagueId: string) => void;
-  isSelected: boolean;
+    charname: string
+  ) => Promise<poetracker.IDatapoint[]>
+  clickedRow: (charname: string, leagueId: string) => void
+  isSelected: boolean
 }
 
-const Row: React.FunctionComponent<IProps> = (props) => {
-  const { datapoint, isSelected } = props;
+const Row: React.FunctionComponent<IProps> = props => {
+  const { datapoint, isSelected } = props
 
   const onRowClick = () => {
     props.clickedRow(
       props.datapoint.datapoint.charname,
-      props.datapoint.datapoint.leagueId,
-    );
-  };
+      props.datapoint.datapoint.leagueId
+    )
+  }
 
   return (
     <>
       <tr
-        className={isSelected ? "table-active" : undefined}
+        className={isSelected ? 'table-active' : undefined}
         onClick={onRowClick}
       >
         <td className="text-nowrap">
           <img
-            src={`/${datapoint.datapoint.online ? "online" : "offline"}.png`}
-            title={datapoint.datapoint.online ? "Online" : "Offline"}
+            src={`/${datapoint.datapoint.online ? 'online' : 'offline'}.png`}
+            title={datapoint.datapoint.online ? 'Online' : 'Offline'}
             width={15}
             height={15}
-          />{" "}
-          <span>{datapoint.datapoint.globalRank || "15000+"}</span>
+          />{' '}
+          <span>{datapoint.datapoint.globalRank || '15000+'}</span>
           {datapoint.previousDatapoint &&
             (datapoint.previousDatapoint.globalRank || 15001) !==
               (datapoint.datapoint.globalRank || 15001) && (
               <>
-                {" "}
+                {' '}
                 <small
                   title={
                     datapoint.previousDatapoint &&
                     datapoint.previousDatapoint.timestamp
                       ? `Compared to: ${new Date(
-                          datapoint.previousDatapoint.timestamp,
+                          datapoint.previousDatapoint.timestamp
                         ).toLocaleString()}`
                       : undefined
                   }
                   className={
-                    "badge " +
+                    'badge ' +
                     ((datapoint.datapoint.globalRank || 15001) <
                     (datapoint.previousDatapoint.globalRank || 15001)
-                      ? "badge-success"
-                      : "badge-danger")
+                      ? 'badge-success'
+                      : 'badge-danger')
                   }
                 >
                   {String.fromCharCode(
                     (datapoint.datapoint.globalRank || 15001) >
                       (datapoint.previousDatapoint.globalRank || 15001)
                       ? 8595
-                      : 8593,
-                  )}{" "}
+                      : 8593
+                  )}{' '}
                   {Math.abs(
                     (datapoint.datapoint.globalRank || 15001) -
-                      (datapoint.previousDatapoint.globalRank || 15001),
+                      (datapoint.previousDatapoint.globalRank || 15001)
                   )}
                 </small>
               </>
@@ -87,7 +87,8 @@ const Row: React.FunctionComponent<IProps> = (props) => {
           className="text-nowrap"
           title={
             `Account name: ${datapoint.datapoint.accountId}\n` +
-            `League: ${datapoint.datapoint.leagueId}`}
+            `League: ${datapoint.datapoint.leagueId}`
+          }
         >
           <div className="float-right d-none d-sm-block">
             {datapoint.datapoint.account.twitchURL && (
@@ -102,7 +103,7 @@ const Row: React.FunctionComponent<IProps> = (props) => {
                   }`}
                 >
                   Twitch
-                </TwitchBadge>{" "}
+                </TwitchBadge>{' '}
               </>
             )}
             <a
@@ -117,7 +118,7 @@ const Row: React.FunctionComponent<IProps> = (props) => {
           {datapoint.datapoint.charname}
           {datapoint.datapoint.dead && (
             <>
-              {" "}
+              {' '}
               <small className="badge badge-danger">Dead</small>
             </>
           )}
@@ -132,7 +133,7 @@ const Row: React.FunctionComponent<IProps> = (props) => {
                     datapoint.previousDatapoint &&
                     datapoint.previousDatapoint.timestamp
                       ? `Compared to: ${new Date(
-                          datapoint.previousDatapoint.timestamp,
+                          datapoint.previousDatapoint.timestamp
                         ).toLocaleString()}`
                       : undefined
                   }
@@ -141,7 +142,7 @@ const Row: React.FunctionComponent<IProps> = (props) => {
                   +
                   {datapoint.datapoint.level -
                     datapoint.previousDatapoint.level}
-                </span>{" "}
+                </span>{' '}
               </>
             )}
           <span
@@ -160,7 +161,7 @@ const Row: React.FunctionComponent<IProps> = (props) => {
       )) ||
         null}
     </>
-  );
-};
+  )
+}
 
-export default React.memo(Row);
+export default React.memo(Row)

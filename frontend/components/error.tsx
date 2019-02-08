@@ -1,23 +1,22 @@
-import * as React from "react";
+import * as React from 'react'
 
 export interface IErrorProps {
-  error: string;
+  error: string
 }
 
 const Error = (props: IErrorProps) => {
   if (!props.error) {
-    return null;
+    return null
   }
 
   const onClick = () => {
-    window.location.reload();
-  };
+    window.location.reload()
+  }
 
   return (
     <>
       <div className="alert alert-danger">
-        <b>Error</b>: {props.error}
-        {" "}
+        <b>Error</b>: {props.error}{' '}
         <a
           onClick={onClick}
           className="text-primary"
@@ -28,6 +27,6 @@ const Error = (props: IErrorProps) => {
       </div>
       <hr />
     </>
-  );
-};
-export default Error;
+  )
+}
+export default Error

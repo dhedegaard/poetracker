@@ -1,8 +1,8 @@
-﻿import React from "react";
+﻿import React from 'react'
 
-import CharacterTableContainer from "../containers/character-table";
-import ErrorContainer from "../containers/error";
-import FilterContainer from "../containers/filter";
+import CharacterTableContainer from '../containers/character-table'
+import ErrorContainer from '../containers/error'
+import FilterContainer from '../containers/filter'
 
 const Main: React.SFC<{}> = () => (
   <>
@@ -11,5 +11,5 @@ const Main: React.SFC<{}> = () => (
     <hr />
     <CharacterTableContainer />
   </>
-);
-export default Main;
+)
+export default Main

@@ -1,19 +1,26 @@
-import React from "react";
+import React from 'react'
 
-import { ICharacterTableDispatchToProps, ICharacterTableStateToProps } from "../../containers/character-table";
-import Row from "./Row";
+import {
+  ICharacterTableDispatchToProps,
+  ICharacterTableStateToProps
+} from '../../containers/character-table'
+import Row from './Row'
 
-type IProps = ICharacterTableStateToProps & ICharacterTableDispatchToProps;
+type IProps = ICharacterTableStateToProps & ICharacterTableDispatchToProps
 
 const CharacterTable = (props: IProps) => {
   const onClickedRow = (charname: string, leagueId: string) => {
-    const { selectedRow, getCharData } = props;
-    if (selectedRow && selectedRow.charname === charname && selectedRow.leagueId === leagueId) {
-      getCharData("", "");
+    const { selectedRow, getCharData } = props
+    if (
+      selectedRow &&
+      selectedRow.charname === charname &&
+      selectedRow.leagueId === leagueId
+    ) {
+      getCharData('', '')
     } else {
-      getCharData(leagueId, charname);
+      getCharData(leagueId, charname)
     }
-  };
+  }
 
   return (
     <div className="table-responsive-sm">
@@ -27,7 +34,7 @@ const CharacterTable = (props: IProps) => {
           </tr>
         </thead>
         <tbody>
-          {props.datapoints.map((datapoint) => (
+          {props.datapoints.map(datapoint => (
             <Row
               datapoint={datapoint}
               clickedRow={onClickedRow}
@@ -42,13 +49,14 @@ const CharacterTable = (props: IProps) => {
           {!props.datapoints.length && (
             <tr>
               <td colSpan={4} className="text-center">
-                <b>Sorry!</b> I've got no datapoints for the given league, try filtering on another league.
-                </td>
+                <b>Sorry!</b> I've got no datapoints for the given league, try
+                filtering on another league.
+              </td>
             </tr>
           )}
         </tbody>
       </table>
     </div>
-  );
-};
-export default React.memo(CharacterTable);
+  )
+}
+export default React.memo(CharacterTable)

@@ -1,19 +1,19 @@
-import { ChartPoint } from "chart.js";
-import React from "react";
-import { Line } from "react-chartjs-2";
+import { ChartPoint } from 'chart.js'
+import React from 'react'
+import { Line } from 'react-chartjs-2'
 import {
   ICharacterGraphDispatchToProps,
-  ICharacterGraphStateToProps,
-} from "../../containers/character-graph";
-import Loader from "./Loader";
+  ICharacterGraphStateToProps
+} from '../../containers/character-graph'
+import Loader from './Loader'
 
-type IProps = ICharacterGraphStateToProps & ICharacterGraphDispatchToProps;
+type IProps = ICharacterGraphStateToProps & ICharacterGraphDispatchToProps
 
 const CharacterGraph = (props: IProps) => {
-  const { graphData, from } = props;
+  const { graphData, from } = props
 
   if (props.isLoadingGraphData) {
-    return <Loader />;
+    return <Loader />
   }
 
   if (!graphData || graphData.length < 2) {
@@ -22,36 +22,36 @@ const CharacterGraph = (props: IProps) => {
         Not enough datapoints, sorry. Click on the character row above to hide
         me again.
       </div>
-    );
+    )
   }
 
   const onSelectChanged = (evt: React.ChangeEvent<HTMLSelectElement>) => {
-    props.fromChanged(evt.currentTarget.value as poetracker.GraphFromType);
-  };
+    props.fromChanged(evt.currentTarget.value as poetracker.GraphFromType)
+  }
 
   /* Filter the dataset, if applicable. */
-  let fromDate: Date | null = null;
+  let fromDate: Date | null = null
   /* Refactor to redux store later. */
   switch (from) {
-    case "1 week":
-      fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 7);
-      break;
-    case "3 days":
-      fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 3);
-      break;
-    case "1 day":
-      fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 24);
-      break;
-    case "6 hours":
-      fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 6);
-      break;
-    case "1 hour":
-      fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 1);
-      break;
-    case "forever":
-      break;
+    case '1 week':
+      fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 7)
+      break
+    case '3 days':
+      fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 3)
+      break
+    case '1 day':
+      fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 24)
+      break
+    case '6 hours':
+      fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 6)
+      break
+    case '1 hour':
+      fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 1)
+      break
+    case 'forever':
+      break
     default:
-      throw new Error(`Unhandled case: ${props.from}`);
+      throw new Error(`Unhandled case: ${props.from}`)
   }
 
   return (
@@ -97,112 +97,112 @@ const CharacterGraph = (props: IProps) => {
             data={{
               datasets: [
                 {
-                  backgroundColor: "#17a2b8",
-                  borderColor: "#17a2b8",
-                  data: graphData.map((e) => ({
+                  backgroundColor: '#17a2b8',
+                  borderColor: '#17a2b8',
+                  data: graphData.map(e => ({
                     x: e.timestampDate.toISOString(),
-                    y: e.experience,
+                    y: e.experience
                   })),
                   fill: false,
-                  label: "Experience",
+                  label: 'Experience',
                   pointRadius: 2,
-                  yAxisID: "xp-axis",
+                  yAxisID: 'xp-axis'
                 },
                 {
-                  backgroundColor: "#4b367c",
-                  borderColor: "#4b367c",
-                  data: graphData.map((e) => ({
+                  backgroundColor: '#4b367c',
+                  borderColor: '#4b367c',
+                  data: graphData.map(e => ({
                     x: e.timestampDate.toISOString(),
-                    y: e.globalRank,
+                    y: e.globalRank
                   })),
                   fill: false,
-                  label: "Global rank",
+                  label: 'Global rank',
                   pointRadius: 2,
-                  yAxisID: "rank-axis",
-                },
+                  yAxisID: 'rank-axis'
+                }
               ],
-              labels: graphData.map((e) => e.timestampDate.toLocaleString()),
+              labels: graphData.map(e => e.timestampDate.toLocaleString())
             }}
             options={{
               legend: {
-                display: false,
+                display: false
               },
               scales: {
                 xAxes: [
                   {
-                    distribution: "linear",
+                    distribution: 'linear',
                     ticks: {
                       autoSkip: true,
-                      source: "auto",
+                      source: 'auto'
                     },
                     time: {
                       displayFormats: {
-                        minute: "YYYY-MM-DD HH:MM",
+                        minute: 'YYYY-MM-DD HH:MM'
                       },
                       max: new Date().toISOString(),
                       min: fromDate ? fromDate.toISOString() : undefined,
-                      unit: "minute",
+                      unit: 'minute'
                     },
-                    type: "time",
-                  },
+                    type: 'time'
+                  }
                 ],
                 yAxes: [
                   {
-                    id: "xp-axis",
-                    position: "left",
+                    id: 'xp-axis',
+                    position: 'left',
                     scaleLabel: {
                       display: true,
-                      fontColor: "#17a2b8",
-                      fontStyle: "bold",
-                      labelString: "Experience",
+                      fontColor: '#17a2b8',
+                      fontStyle: 'bold',
+                      labelString: 'Experience'
                     },
                     ticks: {
                       beginAtZero: true,
-                      callback: (value) => {
+                      callback: value => {
                         if (Number.isInteger(value)) {
-                          return value.toLocaleString();
+                          return value.toLocaleString()
                         }
                       },
-                      fontColor: "#17a2b8",
-                    },
+                      fontColor: '#17a2b8'
+                    }
                   },
                   {
-                    id: "rank-axis",
-                    position: "right",
+                    id: 'rank-axis',
+                    position: 'right',
                     scaleLabel: {
                       display: true,
-                      fontColor: "#4b367c",
-                      fontStyle: "bold",
-                      labelString: "Global rank",
+                      fontColor: '#4b367c',
+                      fontStyle: 'bold',
+                      labelString: 'Global rank'
                     },
                     ticks: {
-                      callback: (value) => {
+                      callback: value => {
                         if (Number.isInteger(value)) {
-                          return value;
+                          return value
                         }
                       },
-                      fontColor: "#4b367c",
+                      fontColor: '#4b367c',
                       min: 1,
-                      reverse: true,
-                    },
-                  },
-                ],
+                      reverse: true
+                    }
+                  }
+                ]
               },
               tooltips: {
                 callbacks: {
                   label: (item, data) => {
-                    const dataset = data.datasets![item.datasetIndex!];
-                    const datasetLabel = dataset.label || "";
-                    const point = dataset.data![item.index!] as ChartPoint;
-                    return `${datasetLabel}: ${point.y!.toLocaleString()}`;
-                  },
-                },
-              },
+                    const dataset = data.datasets![item.datasetIndex!]
+                    const datasetLabel = dataset.label || ''
+                    const point = dataset.data![item.index!] as ChartPoint
+                    return `${datasetLabel}: ${point.y!.toLocaleString()}`
+                  }
+                }
+              }
             }}
           />
         </div>
       </div>
     </>
-  );
-};
-export default CharacterGraph;
+  )
+}
+export default CharacterGraph
