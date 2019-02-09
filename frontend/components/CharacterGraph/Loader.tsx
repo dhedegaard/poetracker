@@ -7,7 +7,7 @@ const Container = styled.div`
   }
 `
 
-const Loader: React.SFC<{}> = () => (
+const Loader: React.FunctionComponent<{}> = () => (
   <Container className="alert alert-info">
     Loading data, please wait...
   </Container>
