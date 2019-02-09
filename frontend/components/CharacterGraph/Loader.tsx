@@ -1,16 +1,17 @@
 import React from 'react'
-import styled from 'styled-components'
+import { createGlobalStyle } from 'styled-components'
 
-const Container = styled.div`
+const GlobalStyle = createGlobalStyle`
   body {
     cursor: wait;
   }
 `
 
 const Loader: React.FunctionComponent<{}> = () => (
-  <Container className="alert alert-info">
-    Loading data, please wait...
-  </Container>
+  <>
+    <GlobalStyle />
+    <div className="alert alert-info">Loading data, please wait...</div>
+  </>
 )
 
 export default Loader
