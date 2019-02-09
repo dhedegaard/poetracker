@@ -1,4 +1,5 @@
 import React from 'react'
+import FilterCheckbox from './FilterCheckbox'
 import LeagueSelectComponent from './LeagueSelect'
 
 interface IFilterProps {
@@ -73,50 +74,26 @@ const Filter = (props: IFilterProps) => {
         </div>
         <div className="col-md-7 col-12">
           <div className="row">
-            <div className="col-md-2">
-              <input
-                id="id_hide_dead"
-                type="checkbox"
-                checked={filter.hideDead}
-                onChange={onChangeHideDead}
-              />
-              <label htmlFor="id_hide_dead">
-                <small>Hide dead</small>
-              </label>
-            </div>
-            <div className="col-md-3">
-              <input
-                id="id_only_show_online"
-                type="checkbox"
-                checked={filter.onlyShowOnline}
-                onChange={onChangeShowOnline}
-              />
-              <label htmlFor="id_only_show_online">
-                <small>Only show online</small>
-              </label>
-            </div>
-            <div className="col-md-3">
-              <input
-                id="id_hide_streamers"
-                type="checkbox"
-                checked={filter.hideStreamers}
-                onChange={onChangeHideStreamers}
-              />
-              <label htmlFor="id_hide_streamers">
-                <small>Hide streamers</small>
-              </label>
-            </div>
-            <div className="col-md-4">
-              <input
-                id="id_hide_standard_leagues"
-                type="checkbox"
-                checked={filter.hideStandardLeagues}
-                onChange={onChangeHideStandardLeague}
-              />
-              <label htmlFor="id_hide_standard_leagues">
-                <small>Hide standard leagues</small>
-              </label>
-            </div>
+            <FilterCheckbox
+              checked={filter.hideDead}
+              onChange={onChangeHideDead}
+              label="Hide dead"
+            />
+            <FilterCheckbox
+              checked={filter.onlyShowOnline}
+              onChange={onChangeShowOnline}
+              label="Only show online"
+            />
+            <FilterCheckbox
+              checked={filter.hideStreamers}
+              onChange={onChangeHideStreamers}
+              label="Hide streamers"
+            />
+            <FilterCheckbox
+              checked={filter.hideStandardLeagues}
+              onChange={onChangeHideStandardLeague}
+              label="Hide standard"
+            />
           </div>
         </div>
       </div>
