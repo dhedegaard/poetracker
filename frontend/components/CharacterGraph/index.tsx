@@ -35,7 +35,7 @@ const CharacterGraph = (props: IProps) => {
                   backgroundColor: '#17a2b8',
                   borderColor: '#17a2b8',
                   data: graphData.map(e => ({
-                    x: e.timestampDate.toISOString(),
+                    x: e.timestampDate.getTime(),
                     y: e.experience
                   })),
                   fill: false,
@@ -47,7 +47,7 @@ const CharacterGraph = (props: IProps) => {
                   backgroundColor: '#4b367c',
                   borderColor: '#4b367c',
                   data: graphData.map(e => ({
-                    x: e.timestampDate.toISOString(),
+                    x: e.timestampDate.getTime(),
                     y: e.globalRank
                   })),
                   fill: false,
@@ -59,6 +59,9 @@ const CharacterGraph = (props: IProps) => {
               labels: graphData.map(e => e.timestampDate.toLocaleString())
             }}
             options={{
+              animation: {
+                duration: 0
+              },
               legend: {
                 display: false
               },
@@ -76,7 +79,8 @@ const CharacterGraph = (props: IProps) => {
                       },
                       max: new Date().toISOString(),
                       min: fromDate ? fromDate.toISOString() : undefined,
-                      unit: 'minute'
+                      unit: 'minute',
+                      minUnit: 'minute'
                     },
                     type: 'time'
                   }
