@@ -8,7 +8,7 @@ import ShowFromSelect from './ShowFromSelect'
 type IProps = ICharacterGraphStateToProps
 
 const CharacterGraph = (props: IProps) => {
-  const { graphData, from } = props
+  const { graphData, fromDate } = props
 
   if (props.isLoadingGraphData) {
     return <Loader />
@@ -21,31 +21,6 @@ const CharacterGraph = (props: IProps) => {
         me again.
       </div>
     )
-  }
-
-  /* Filter the dataset, if applicable. */
-  let fromDate: Date | null = null
-  /* Refactor to redux store later. */
-  switch (from) {
-    case '1 week':
-      fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 7)
-      break
-    case '3 days':
-      fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 3)
-      break
-    case '1 day':
-      fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 24)
-      break
-    case '6 hours':
-      fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 6)
-      break
-    case '1 hour':
-      fromDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 1)
-      break
-    case 'forever':
-      break
-    default:
-      throw new Error(`Unhandled case: ${props.from}`)
   }
 
   return (
