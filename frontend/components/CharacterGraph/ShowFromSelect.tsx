@@ -1,7 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import styled from 'styled-components'
 import { IActionType } from '../../poetracker'
 import { graphFromChanged } from '../../store/actions'
+
+const Container = styled.div`
+  padding-bottom: 20px;
+`
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>
@@ -12,14 +17,14 @@ const ShowFromSelect: React.FunctionComponent<Props> = props => {
   }
 
   return (
-    <div className="row" style={{ paddingBottom: 20 }}>
+    <Container className="row">
       <label
         htmlFor="id_graph_from"
         className="form-label col-3 col-sm-2 offset-1 text-muted text-right"
       >
         <small>Show from:</small>
       </label>
-      <div className="col-sm-2 col-4">
+      <div className="col-lg-2 col-4">
         <select
           id="id_graph_from"
           className="form-control form-control-sm"
@@ -46,7 +51,7 @@ const ShowFromSelect: React.FunctionComponent<Props> = props => {
           </option>
         </select>
       </div>
-    </div>
+    </Container>
   )
 }
 

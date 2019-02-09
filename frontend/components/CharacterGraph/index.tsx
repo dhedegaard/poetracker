@@ -3,6 +3,7 @@ import React from 'react'
 import { Line } from 'react-chartjs-2'
 import { ICharacterGraphStateToProps } from '../../containers/character-graph'
 import Loader from './Loader'
+import ShowFromSelect from './ShowFromSelect'
 
 type IProps = ICharacterGraphStateToProps
 
@@ -48,117 +49,120 @@ const CharacterGraph = (props: IProps) => {
   }
 
   return (
-    <div className="row">
-      <div className="col-10 offset-1">
-        <Line
-          data={{
-            datasets: [
-              {
-                backgroundColor: '#17a2b8',
-                borderColor: '#17a2b8',
-                data: graphData.map(e => ({
-                  x: e.timestampDate.toISOString(),
-                  y: e.experience
-                })),
-                fill: false,
-                label: 'Experience',
-                pointRadius: 2,
-                yAxisID: 'xp-axis'
-              },
-              {
-                backgroundColor: '#4b367c',
-                borderColor: '#4b367c',
-                data: graphData.map(e => ({
-                  x: e.timestampDate.toISOString(),
-                  y: e.globalRank
-                })),
-                fill: false,
-                label: 'Global rank',
-                pointRadius: 2,
-                yAxisID: 'rank-axis'
-              }
-            ],
-            labels: graphData.map(e => e.timestampDate.toLocaleString())
-          }}
-          options={{
-            legend: {
-              display: false
-            },
-            scales: {
-              xAxes: [
+    <>
+      <ShowFromSelect />
+      <div className="row">
+        <div className="col-10 offset-1">
+          <Line
+            data={{
+              datasets: [
                 {
-                  distribution: 'linear',
-                  ticks: {
-                    autoSkip: true,
-                    source: 'auto'
-                  },
-                  time: {
-                    displayFormats: {
-                      minute: 'YYYY-MM-DD HH:MM'
-                    },
-                    max: new Date().toISOString(),
-                    min: fromDate ? fromDate.toISOString() : undefined,
-                    unit: 'minute'
-                  },
-                  type: 'time'
-                }
-              ],
-              yAxes: [
-                {
-                  id: 'xp-axis',
-                  position: 'left',
-                  scaleLabel: {
-                    display: true,
-                    fontColor: '#17a2b8',
-                    fontStyle: 'bold',
-                    labelString: 'Experience'
-                  },
-                  ticks: {
-                    beginAtZero: true,
-                    callback: value => {
-                      if (Number.isInteger(value)) {
-                        return value.toLocaleString()
-                      }
-                    },
-                    fontColor: '#17a2b8'
-                  }
+                  backgroundColor: '#17a2b8',
+                  borderColor: '#17a2b8',
+                  data: graphData.map(e => ({
+                    x: e.timestampDate.toISOString(),
+                    y: e.experience
+                  })),
+                  fill: false,
+                  label: 'Experience',
+                  pointRadius: 2,
+                  yAxisID: 'xp-axis'
                 },
                 {
-                  id: 'rank-axis',
-                  position: 'right',
-                  scaleLabel: {
-                    display: true,
-                    fontColor: '#4b367c',
-                    fontStyle: 'bold',
-                    labelString: 'Global rank'
-                  },
-                  ticks: {
-                    callback: value => {
-                      if (Number.isInteger(value)) {
-                        return value
-                      }
+                  backgroundColor: '#4b367c',
+                  borderColor: '#4b367c',
+                  data: graphData.map(e => ({
+                    x: e.timestampDate.toISOString(),
+                    y: e.globalRank
+                  })),
+                  fill: false,
+                  label: 'Global rank',
+                  pointRadius: 2,
+                  yAxisID: 'rank-axis'
+                }
+              ],
+              labels: graphData.map(e => e.timestampDate.toLocaleString())
+            }}
+            options={{
+              legend: {
+                display: false
+              },
+              scales: {
+                xAxes: [
+                  {
+                    distribution: 'linear',
+                    ticks: {
+                      autoSkip: true,
+                      source: 'auto'
                     },
-                    fontColor: '#4b367c',
-                    min: 1,
-                    reverse: true
+                    time: {
+                      displayFormats: {
+                        minute: 'YYYY-MM-DD HH:MM'
+                      },
+                      max: new Date().toISOString(),
+                      min: fromDate ? fromDate.toISOString() : undefined,
+                      unit: 'minute'
+                    },
+                    type: 'time'
+                  }
+                ],
+                yAxes: [
+                  {
+                    id: 'xp-axis',
+                    position: 'left',
+                    scaleLabel: {
+                      display: true,
+                      fontColor: '#17a2b8',
+                      fontStyle: 'bold',
+                      labelString: 'Experience'
+                    },
+                    ticks: {
+                      beginAtZero: true,
+                      callback: value => {
+                        if (Number.isInteger(value)) {
+                          return value.toLocaleString()
+                        }
+                      },
+                      fontColor: '#17a2b8'
+                    }
+                  },
+                  {
+                    id: 'rank-axis',
+                    position: 'right',
+                    scaleLabel: {
+                      display: true,
+                      fontColor: '#4b367c',
+                      fontStyle: 'bold',
+                      labelString: 'Global rank'
+                    },
+                    ticks: {
+                      callback: value => {
+                        if (Number.isInteger(value)) {
+                          return value
+                        }
+                      },
+                      fontColor: '#4b367c',
+                      min: 1,
+                      reverse: true
+                    }
+                  }
+                ]
+              },
+              tooltips: {
+                callbacks: {
+                  label: (item, data) => {
+                    const dataset = data.datasets![item.datasetIndex!]
+                    const datasetLabel = dataset.label || ''
+                    const point = dataset.data![item.index!] as ChartPoint
+                    return `${datasetLabel}: ${point.y!.toLocaleString()}`
                   }
                 }
-              ]
-            },
-            tooltips: {
-              callbacks: {
-                label: (item, data) => {
-                  const dataset = data.datasets![item.datasetIndex!]
-                  const datasetLabel = dataset.label || ''
-                  const point = dataset.data![item.index!] as ChartPoint
-                  return `${datasetLabel}: ${point.y!.toLocaleString()}`
-                }
               }
-            }
-          }}
-        />
+            }}
+          />
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 export default CharacterGraph
