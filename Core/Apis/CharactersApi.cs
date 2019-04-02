@@ -17,12 +17,11 @@ namespace Core.Apis {
     }
     public static class CharactersApi {
         public async static Task<IList<WindowCharacter>> GetCharacters(string accountName) {
-            using (var client = new WebClient()) {
-                var data = await client.DownloadStringTaskAsync(new Uri(
-                    $"https://www.pathofexile.com/character-window/get-characters?accountName={accountName}"
-                ));
-                return JsonConvert.DeserializeObject<IList<WindowCharacter>>(data);
-            }
+            using var client = new WebClient();
+            var data = await client.DownloadStringTaskAsync(new Uri(
+                $"https://www.pathofexile.com/character-window/get-characters?accountName={accountName}"
+            ));
+            return JsonConvert.DeserializeObject<IList<WindowCharacter>>(data);
         }
     }
 }
