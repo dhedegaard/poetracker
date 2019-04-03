@@ -7,7 +7,7 @@ COPY frontend ./
 RUN npm start
 
 # Build the main packages.
-FROM microsoft/dotnet:2.2-sdk
+FROM mcr.microsoft.com/dotnet/core/sdk:3.0.100-preview3
 LABEL maintainer="dennis@dhedegaard.dk"
 ARG DEBIAN_FRONTEND=noninteractive
 EXPOSE 5123
