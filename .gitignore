@@ -66,3 +66,4 @@ Web/wwwroot/**/*.js
 Web/wwwroot/**/*.css
 Web/frontend/**/*.js
 **/*.csproj.user
+.vscode
