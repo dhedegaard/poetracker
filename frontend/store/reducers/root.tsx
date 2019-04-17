@@ -91,7 +91,7 @@ const rootReducer = (
           action.datapoints,
           state.filter
         ),
-        leagues: action.leagues
+        leagues: action.leagues,
         loading: false
       }
     case 'NOTIFY_UPDATE':
