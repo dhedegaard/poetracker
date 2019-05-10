@@ -18,13 +18,14 @@ namespace Fetcher {
         private readonly static ILogger logger = new LoggerFactory()
             .CreateLogger<Fetcher>();
 
-        static HubConnection ConnectToTheHub() {
+        static async Task<HubConnection> ConnectToTheHub() {
             logger.LogInformation("Connecting to hub: {0}", HubConnection);
-            // Connect to the hub.
+            // Build the connection.
             var connection = new HubConnectionBuilder()
                 .WithUrl(HubConnection)
                 .Build();
-            connection.StartAsync().Wait();
+            // Connect to the hub.
+            await connection.StartAsync();
             return connection;
         }
 
@@ -159,7 +160,7 @@ namespace Fetcher {
                     }
 
                     // Sleep for a bit.
-                    Thread.Sleep(SleepInternal);
+                    await Task.Delay(SleepInternal);
                 }
             }
         }
@@ -172,14 +173,15 @@ namespace Fetcher {
             await FetchUpdateDatapoints(context, connection);
         }
 
-        static void Main(string[] args) {
-            // Connect to the hub and create the DB context.
-            var hubConnection = ConnectToTheHub();
-            using (var context = new PoeContext()) {
-                // Do the looping dance.
-                for (; ; ) {
+        static async Task Main(string[] args) {
+            // Do the looping dance.
+            for (; ; ) {
+                // Connect to the hub and create the DB context.
+                var hubConnection = await ConnectToTheHub();
+                using (var context = new PoeContext()) {
                     FetchNewDataAsync(context, hubConnection).Wait();
                 }
+                await hubConnection.DisposeAsync();
             }
         }
     }
