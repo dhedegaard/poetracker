@@ -15,7 +15,7 @@
     "awesome-typescript-loader": "^5.2.1",
     "chart.js": "^2.8.0",
     "css-loader": "^2.1.1",
-    "mini-css-extract-plugin": "^0.6.0",
+    "mini-css-extract-plugin": "^0.7.0",
     "react": "^16.8.6",
     "react-chartjs-2": "2.7.6",
     "react-dom": "^16.8.6",
