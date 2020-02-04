@@ -2,8 +2,8 @@ import React from 'react'
 
 interface Props {
   checked: boolean
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
   label: string
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 const FilterCheckbox: React.FunctionComponent<Props> = props => {
