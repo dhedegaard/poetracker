@@ -17,9 +17,11 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: cd frontend
     - run: npm install
+      working-directory: ./frontend
     - run: npm run tslint
+      working-directory: ./frontend
     - run: npm start
+      working-directory: ./frontend
       env:
         CI: true
