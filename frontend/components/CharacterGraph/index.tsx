@@ -79,8 +79,8 @@ const CharacterGraph = (props: IProps) => {
                       },
                       max: new Date().toISOString(),
                       min: fromDate ? fromDate.toISOString() : undefined,
+                      minUnit: 'minute',
                       unit: 'minute',
-                      minUnit: 'minute'
                     },
                     type: 'time'
                   }

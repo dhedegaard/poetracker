@@ -18,12 +18,12 @@ const initialState: poetracker.IState = {
   accounts: [],
   datapoints: [],
   error: '',
-  loading: true,
   filter: initialFilter,
   filteredDatapoints: [],
   graphFrom: (localStorage.getItem('graph-from') ||
     'forever') as poetracker.GraphFromType,
-  leagues: []
+  leagues: [],
+  loading: true
 }
 export { initialState }
 
@@ -149,8 +149,8 @@ const rootReducer = (
         ...state,
         chardata: undefined,
         getCharData: action.getData,
-        selectedRow: undefined,
-        loading: true
+        loading: true,
+        selectedRow: undefined
       }
     case 'RECEIVED_CHAR_DATA':
       const result = action.result.result.map(e => {
@@ -164,11 +164,11 @@ const rootReducer = (
           result
         },
         getCharData: undefined,
+        loading: false,
         selectedRow: {
           charname: action.result.charname,
           leagueId: action.result.leagueId
-        },
-        loading: false
+        }
       }
     case 'FILTER_CHANGED':
       const filter = {
