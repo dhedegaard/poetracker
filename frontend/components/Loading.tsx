@@ -38,8 +38,8 @@ const Loading: React.FunctionComponent<Props> = props => (
 )
 
 const mapStateToProps = (state: poetracker.IState) => ({
-  loading: state.loading,
-  error: state.error
+  error: state.error,
+  loading: state.loading
 })
 
 export default connect(mapStateToProps)(Loading)

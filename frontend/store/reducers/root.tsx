@@ -22,8 +22,8 @@ const initialState: poetracker.IState = {
   filteredDatapoints: [],
   graphFrom: (localStorage.getItem('graph-from') ||
     'forever') as poetracker.GraphFromType,
-  loading: true,
-  leagues: []
+  leagues: [],
+  loading: true
 }
 export { initialState }
 
