@@ -2,8 +2,8 @@
 @addTagHelper *, AuthoringTagHelpers
 
 @using Microsoft.AspNetCore.Hosting
-@using Microsoft.AspNetCore.Hosting.Internal
-@inject IHostingEnvironment env
+@using Microsoft.Extensions.Hosting
+@inject IWebHostEnvironment env
 
 @using Microsoft.Extensions.Caching.Memory
 @inject IMemoryCache cache

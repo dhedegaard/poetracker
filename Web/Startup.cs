@@ -4,21 +4,25 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Web.Hubs;
 
 namespace Web {
     public class Startup {
         private readonly IConfiguration configuration;
-        private readonly IHostingEnvironment env;
+        private readonly IWebHostEnvironment env;
 
-        public Startup(IConfiguration configuration, IHostingEnvironment env) {
+        public Startup(IConfiguration configuration, IWebHostEnvironment env) {
             this.configuration = configuration;
             this.env = env;
         }
 
         public void ConfigureServices(IServiceCollection services) {
             services.AddMvc();
-            services.AddSignalR();
+            services.AddSignalR(options => {
+                options.EnableDetailedErrors = this.env.IsDevelopment();
+                options.MaximumReceiveMessageSize = null;
+            });
             services.AddDbContext<PoeContext>();
             services.AddMemoryCache();
             if (this.env.IsDevelopment()) {
@@ -27,11 +31,10 @@ namespace Web {
             }
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
             if (env.IsDevelopment()) {
                 // app.UseMiniProfiler();
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
             }
 
             app.UseForwardedHeaders(new ForwardedHeadersOptions {
@@ -41,9 +44,11 @@ namespace Web {
                 // Allow serving the .webmanifest file from wwwroot.
                 ServeUnknownFileTypes = true,
             });
-            app.UseMvc();
-            app.UseSignalR(routes =>
-                routes.MapHub<PoeHub>("/data"));
+            app.UseRouting();
+            app.UseEndpoints(endpoints => {
+                endpoints.MapHub<PoeHub>("/data");
+                endpoints.MapRazorPages();
+            });
         }
     }
 }

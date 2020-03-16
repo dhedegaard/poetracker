@@ -7,12 +7,11 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Fetcher {
     class Fetcher {
-        internal readonly static string HubConnection = Environment.GetEnvironmentVariable("FETCHER_HUB_CONNECTION_URL") ?? "https://localhost:62613/data";
+        internal readonly static string HubConnection = Environment.GetEnvironmentVariable("FETCHER_HUB_CONNECTION_URL") ?? "http://localhost:62613/data";
         internal readonly static int SleepInternal = 1_200;
 
         private readonly static ILogger logger = new LoggerFactory()
@@ -23,6 +22,7 @@ namespace Fetcher {
             // Build the connection.
             var connection = new HubConnectionBuilder()
                 .WithUrl(HubConnection)
+                .WithAutomaticReconnect()
                 .Build();
             // Connect to the hub.
             await connection.StartAsync();
