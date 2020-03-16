@@ -55,7 +55,13 @@ namespace Fetcher {
                 .Where(e => e.EndAt == null || e.EndAt >= DateTime.Now)
                 .ToList();
             foreach (var account in context.Accounts) {
-                var windowCharacters = await CharactersApi.GetCharacters(account.AccountName);
+                IList<WindowCharacter> windowCharacters;
+                try {
+                    windowCharacters = await CharactersApi.GetCharacters(account.AccountName);
+                } catch (AccountNotPublicException) {
+                    logger.LogWarning("Account not publicly available: {0}", account.AccountName);
+                    continue;
+                }
                 logger.LogInformation("Fetching new datapoints for account: {0}", account);
                 foreach (var league in leagues) {
                     var characters = await LaddersApi.GetAccountCharacters(league.Id, account.AccountName);
