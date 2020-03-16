@@ -134,9 +134,8 @@ const Filter = (props: IFilterProps) => {
                         value={account.accountName}
                       >
                         {account.accountName}
-                        {account.twitchUsername !== account.accountName && (
-                          <>({account.twitchUsername})</>
-                        )}
+                        {account.twitchUsername !== account.accountName &&
+                          ` (${account.twitchUsername})`}
                       </option>
                     ))}
                   </optgroup>
