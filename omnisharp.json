@@ -1,6 +1,6 @@
 {
   "FormattingOptions": {
-    "IndentationSize": 4,
+    "IndentationSize": 2,
     "NewLineForCatch": false,
     "NewLineForClausesInQuery": false,
     "NewLineForElse": false,
