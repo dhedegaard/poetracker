@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Web.ViewModels;
 
 namespace Web.ViewModels {
     public class InitialPayload {
@@ -21,7 +20,7 @@ namespace Web.ViewModels {
                 .ToListAsync();
 
             var datapoints = await poeContext.Datapoints
-                  .FromSql(@"
+                  .FromSqlRaw(@"
                     SELECT d.*
                     FROM ""Datapoints"" d
                     INNER JOIN (
@@ -35,7 +34,7 @@ namespace Web.ViewModels {
                   .Include(e => e.Account)
                   .ToListAsync();
             var previousDatapoints = await poeContext.Datapoints
-                  .FromSql(@"
+                  .FromSqlRaw(@"
                     SELECT d.*
                     FROM ""Datapoints"" d
                       INNER JOIN (

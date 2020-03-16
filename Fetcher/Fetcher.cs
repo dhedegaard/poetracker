@@ -51,10 +51,10 @@ namespace Fetcher {
         }
 
         static async Task FetchUpdateDatapoints(PoeContext context, HubConnection hubConnection) {
-            var leagues = context.Leagues
+            var leagues = await context.Leagues
                 .Where(e => e.EndAt == null || e.EndAt >= DateTime.Now)
-                .ToList();
-            foreach (var account in context.Accounts) {
+                .ToListAsync();
+            foreach (var account in await context.Accounts.ToListAsync()) {
                 IList<WindowCharacter> windowCharacters;
                 try {
                     windowCharacters = await CharactersApi.GetCharacters(account.AccountName);
