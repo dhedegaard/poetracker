@@ -14,7 +14,7 @@ namespace Fetcher {
         internal readonly static string HubConnection = Environment.GetEnvironmentVariable("FETCHER_HUB_CONNECTION_URL") ?? "http://localhost:62613/data";
         internal readonly static int SleepInternal = 1_200;
 
-        private readonly static ILogger logger = new LoggerFactory()
+        private readonly static ILogger logger = LoggerFactory.Create(builder => builder.AddConsole())
             .CreateLogger<Fetcher>();
 
         static async Task<HubConnection> ConnectToTheHub() {
