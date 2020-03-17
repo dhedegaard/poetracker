@@ -131,7 +131,17 @@ const CharacterGraph = (props: IProps) => {
               },
               tooltips: {
                 callbacks: {
+                  title: item => {
+                    const { xLabel } = (Array.isArray(item)
+                      ? item[0]
+                      : item) as { xLabel?: unknown }
+                    if (typeof xLabel === 'number' && !isNaN(xLabel)) {
+                      return new Date(xLabel).toLocaleString()
+                    }
+                    return xLabel
+                  },
                   label: (item, data) => {
+                    console.log({ item, data })
                     const dataset = data.datasets![item!.datasetIndex!]
                     const datasetLabel = dataset.label || ''
                     const point = dataset.data![item!.index!] as ChartPoint
