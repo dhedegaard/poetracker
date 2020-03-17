@@ -28,6 +28,8 @@ const CharacterGraph = (props: IProps) => {
       <ShowFromSelect />
       <div className="row">
         <div className="col-10 offset-1">
+          {/*
+            // @ts-ignore */}
           <Line
             data={{
               datasets: [
@@ -72,7 +74,7 @@ const CharacterGraph = (props: IProps) => {
                     ticks: {
                       autoSkip: true,
                       source: 'auto'
-                    },
+                    } as any,
                     time: {
                       displayFormats: {
                         minute: 'YYYY-MM-DD HH:MM'
@@ -80,7 +82,7 @@ const CharacterGraph = (props: IProps) => {
                       max: new Date().toISOString(),
                       min: fromDate ? fromDate.toISOString() : undefined,
                       minUnit: 'minute',
-                      unit: 'minute',
+                      unit: 'minute'
                     },
                     type: 'time'
                   }
@@ -97,13 +99,13 @@ const CharacterGraph = (props: IProps) => {
                     },
                     ticks: {
                       beginAtZero: true,
-                      callback: value => {
+                      callback: (value: any) => {
                         if (Number.isInteger(value)) {
                           return value.toLocaleString()
                         }
                       },
                       fontColor: '#17a2b8'
-                    }
+                    } as any
                   },
                   {
                     id: 'rank-axis',
@@ -130,9 +132,9 @@ const CharacterGraph = (props: IProps) => {
               tooltips: {
                 callbacks: {
                   label: (item, data) => {
-                    const dataset = data.datasets![item.datasetIndex!]
+                    const dataset = data.datasets![item!.datasetIndex!]
                     const datasetLabel = dataset.label || ''
-                    const point = dataset.data![item.index!] as ChartPoint
+                    const point = dataset.data![item!.index!] as ChartPoint
                     return `${datasetLabel}: ${point.y!.toLocaleString()}`
                   }
                 }
