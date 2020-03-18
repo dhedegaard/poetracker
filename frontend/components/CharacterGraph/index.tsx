@@ -131,6 +131,13 @@ const CharacterGraph = (props: IProps) => {
               },
               tooltips: {
                 callbacks: {
+                  label: (item, data) => {
+                    console.log({ item, data })
+                    const dataset = data.datasets![item!.datasetIndex!]
+                    const datasetLabel = dataset.label || ''
+                    const point = dataset.data![item!.index!] as ChartPoint
+                    return `${datasetLabel}: ${point.y!.toLocaleString()}`
+                  },
                   title: item => {
                     const { xLabel } = (Array.isArray(item)
                       ? item[0]
@@ -139,13 +146,6 @@ const CharacterGraph = (props: IProps) => {
                       return new Date(xLabel).toLocaleString()
                     }
                     return xLabel
-                  },
-                  label: (item, data) => {
-                    console.log({ item, data })
-                    const dataset = data.datasets![item!.datasetIndex!]
-                    const datasetLabel = dataset.label || ''
-                    const point = dataset.data![item!.index!] as ChartPoint
-                    return `${datasetLabel}: ${point.y!.toLocaleString()}`
                   }
                 }
               }
