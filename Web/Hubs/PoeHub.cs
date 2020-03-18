@@ -2,12 +2,11 @@
 using Core.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Web.ViewModels;
 
@@ -56,9 +55,17 @@ namespace Web.Hubs {
     }
 
     internal void SendInitialPayload() {
-      var initialPayload = InitialPayload.BuildInitialPayload(poeContext).Result;
-      Clients.Caller.SendAsync("InitialPayload", initialPayload);
-      cache.Set("initialPayload", this.jsonHelper.Serialize(initialPayload));
+      while (true) {
+        // Look for an initial payload, from the timed hosted service.
+        var initialPayload = this.cache.Get("initialPayload");
+        // Send an initial payload to the caller, when it's available.
+        if (initialPayload != null) {
+          Clients.Caller.SendAsync("InitialPayload", initialPayload);
+          break;
+        }
+        // Otherwise, wait a bit and try again.
+        Thread.Sleep(100);
+      }
     }
 
     public override Task OnConnectedAsync() {

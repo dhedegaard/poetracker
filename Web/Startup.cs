@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Web.Hubs;
+using Web.Tasks;
 
 namespace Web {
     public class Startup {
@@ -25,6 +26,7 @@ namespace Web {
             });
             services.AddDbContext<PoeContext>();
             services.AddMemoryCache();
+            services.AddHostedService<InitialPayloadTimedHostedService>();
             if (this.env.IsDevelopment()) {
                 services.AddMiniProfiler()
                         .AddEntityFramework();
