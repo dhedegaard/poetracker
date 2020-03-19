@@ -2,6 +2,10 @@
 @{
   /* Go fishing for some cache. */
   var initialPayload = cache.Get("initialPayload");
+  var initialPayloadJSON =  JsonSerializer.Serialize(initialPayload, new JsonSerializerOptions{
+    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+    WriteIndented = true
+  });
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -42,7 +46,7 @@
     <div id="app" />
     <script async type="text/javascript" src="./vendor.js" asp-append-version="true"></script>
     @if (initialPayload != null) {
-      <script defer type="text/javascript">window.InitialPayload=@Html.Raw(initialPayload);</script>
+      <script defer type="text/javascript">window.InitialPayload=@Html.Raw(initialPayloadJSON);</script>
     }
     <script async type="text/javascript" src="./main.js" asp-append-version="true"></script>
   </div>
