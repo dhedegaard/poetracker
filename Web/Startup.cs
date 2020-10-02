@@ -51,6 +51,9 @@ namespace Web {
                 endpoints.MapHub<PoeHub>("/data");
                 endpoints.MapRazorPages();
             });
+
+            // Enable CORS.
+            app.UseCors(builder => builder.WithOrigins("*").AllowAnyHeader().AllowAnyMethod());
         }
     }
 }
