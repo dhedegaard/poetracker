@@ -7,7 +7,7 @@ COPY frontend ./
 RUN npm start
 
 # Build the main packages.
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1.200
+FROM mcr.microsoft.com/dotnet/sdk:5.0.100-rc.2
 LABEL maintainer="dennis@dhedegaard.dk"
 ARG DEBIAN_FRONTEND=noninteractive
 EXPOSE 5123
@@ -18,18 +18,18 @@ WORKDIR /source
 
 # Restore .dotnet core packages.
 WORKDIR /source/Core
-COPY Core/*.csproj .
+COPY backend/Core/*.csproj .
 WORKDIR /source/Web
-COPY Web/*.csproj .
+COPY backend/Web/*.csproj .
 RUN dotnet restore
 WORKDIR /source/Fetcher
-COPY Fetcher/*.csproj .
+COPY backend/Fetcher/*.csproj .
 RUN dotnet restore
 WORKDIR /source
 
 # Copy everything in.
 WORKDIR /source
-COPY . .
+COPY backend/. .
 
 # Build the fetcher.
 WORKDIR /source/Fetcher

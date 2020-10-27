@@ -65,8 +65,8 @@ yarn.lock
 node_modules
 Web/wwwroot/bundle.js
 .vscode
-/Web/yarn-error.log
-/Web/.awcache
+Web/yarn-error.log
+Web/.awcache
 */bin
 */obj
 */node_modules
