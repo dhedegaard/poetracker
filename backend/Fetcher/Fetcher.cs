@@ -11,7 +11,7 @@ using System.Net;
 using System.Threading.Tasks;
 
 namespace Fetcher {
-  class Fetcher {
+  public class Fetcher {
     internal readonly static string HubConnection = Environment.GetEnvironmentVariable("FETCHER_HUB_CONNECTION_URL") ?? "http://localhost:62613/data";
     internal readonly static int SleepInternal = 1_200;
 
@@ -198,6 +198,22 @@ namespace Fetcher {
           }
         }
         await hubConnection.DisposeAsync();
+      }
+    }
+
+    public static async Task Run(PoeContext context) {
+      for (; ; ) {
+        var hubConnection = await ConnectToTheHub();
+        try {
+          FetchNewDataAsync(context, hubConnection).Wait();
+        } catch (AggregateException e) {
+          var realException = e.GetBaseException();
+          if (realException is WebException && ((WebException)realException).Status == WebExceptionStatus.Timeout) {
+            logger.LogWarning("Timeout, retrying...");
+            continue;
+          }
+          throw e;
+        }
       }
     }
   }

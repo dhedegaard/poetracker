@@ -31,6 +31,7 @@ namespace Web {
         services.AddMiniProfiler()
                 .AddEntityFramework();
       }
+      services.AddHostedService<FetcherHostedService>();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
