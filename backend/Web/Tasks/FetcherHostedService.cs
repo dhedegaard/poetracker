@@ -41,7 +41,6 @@ namespace Web.Tasks {
 
     private void Run(object state) {
       if (isRunning) {
-        Console.WriteLine("FETCHER ALREADY RUNNIGN!");
         return;
       }
       Console.WriteLine("RUNNING FETCHER SERVICE!");
