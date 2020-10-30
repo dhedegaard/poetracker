@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Web.Tasks {
   public class FetcherHostedService : IHostedService, IDisposable {
     private Timer timer;
-    private bool isRunning = false;
+    private volatile bool isRunning = false;
     private readonly IServiceScopeFactory serviceScopeFactory;
 
     public FetcherHostedService(IServiceScopeFactory serviceScopeFactory) {
