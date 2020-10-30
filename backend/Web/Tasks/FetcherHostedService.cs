@@ -43,14 +43,19 @@ namespace Web.Tasks {
       if (isRunning) {
         return;
       }
-      Console.WriteLine("RUNNING FETCHER SERVICE!");
       isRunning = true;
-      using (var scope = serviceScopeFactory.CreateScope()) {
-        var context = scope.ServiceProvider.GetService<PoeContext>();
-        Fetcher.Fetcher.Run(context).Wait();
+      try {
+        using (var scope = serviceScopeFactory.CreateScope()) {
+          var context = scope.ServiceProvider.GetService<PoeContext>();
+          Fetcher.Fetcher.Run(context).Wait();
+        }
+      } catch (Exception e) {
+        Console.Error.WriteLine("Error from fetcher:");
+        Console.Error.WriteLine(e.Message);
+        Console.Error.WriteLine(e.StackTrace);
+      } finally {
+        isRunning = false;
       }
-      isRunning = false;
-      Console.WriteLine("DONE RUNNING FETCHER!");
     }
   }
 }
