@@ -1,4 +1,4 @@
-﻿import * as aspnet_SignalR from '@aspnet/signalr'
+﻿import * as aspnet_SignalR from '@microsoft/signalr'
 import React from 'react'
 import {
   ISignalRDispatchToProps,
@@ -42,6 +42,7 @@ export default class SignalR extends React.Component<IProps, {}> {
     // Build the connection.
     this.connection = new aspnet_SignalR.HubConnectionBuilder()
       .withUrl(process.env.NEXT_PUBLIC_HUB_URL)
+      .withAutomaticReconnect()
       .build()
 
     // Add handlers.
