@@ -4,13 +4,16 @@ let initialFilter: poetracker.IFilter = {
   hideStandardLeagues: true,
   hideStreamers: true,
   onlyShowOnline: false,
-  selectedLeague: ''
+  selectedLeague: '',
 }
-const graphFilter = localStorage.getItem('graph-filter')
+
+const localStorage =
+  'localStorage' in globalThis ? globalThis.localStorage : undefined
+const graphFilter = localStorage?.getItem('graph-filter')
 if (graphFilter) {
   initialFilter = {
     ...initialFilter,
-    ...JSON.parse(graphFilter)
+    ...JSON.parse(graphFilter),
   }
 }
 
@@ -20,10 +23,10 @@ const initialState: poetracker.IState = {
   error: '',
   filter: initialFilter,
   filteredDatapoints: [],
-  graphFrom: (localStorage.getItem('graph-from') ||
+  graphFrom: (localStorage?.getItem('graph-from') ||
     'forever') as poetracker.GraphFromType,
   leagues: [],
-  loading: true
+  loading: true,
 }
 export { initialState }
 
@@ -50,24 +53,24 @@ const buildFilteredDatapoints = (
 
   if (filter.selectedLeague) {
     datapoints = datapoints.filter(
-      e => e.datapoint.leagueId === filter.selectedLeague
+      (e) => e.datapoint.leagueId === filter.selectedLeague
     )
   }
   if (filter.hideDead) {
-    datapoints = datapoints.filter(e => !e.datapoint.dead)
+    datapoints = datapoints.filter((e) => !e.datapoint.dead)
   }
   if (filter.onlyShowOnline) {
-    datapoints = datapoints.filter(e => e.datapoint.online)
+    datapoints = datapoints.filter((e) => e.datapoint.online)
   }
   if (filter.hideStreamers) {
-    datapoints = datapoints.filter(e => !e.datapoint.account.twitchUsername)
+    datapoints = datapoints.filter((e) => !e.datapoint.account.twitchUsername)
   }
   if (filter.hideStandardLeagues) {
-    datapoints = datapoints.filter(e => e.datapoint.league.endAt)
+    datapoints = datapoints.filter((e) => e.datapoint.league.endAt)
   }
   if (filter.showOnlyAccount) {
     datapoints = datapoints.filter(
-      e => e.datapoint.accountId === filter.showOnlyAccount
+      (e) => e.datapoint.accountId === filter.showOnlyAccount
     )
   }
   return sortDatapoints(datapoints)
@@ -92,11 +95,11 @@ const rootReducer = (
           state.filter
         ),
         leagues: action.leagues,
-        loading: false
+        loading: false,
       }
     case 'NOTIFY_UPDATE':
       /* Start by filtering old datapoints that just got updated. */
-      let datapoints = state.datapoints.slice().filter(datapoint => {
+      let datapoints = state.datapoints.slice().filter((datapoint) => {
         for (const newDatapoint of action.newDatapoints) {
           if (
             newDatapoint.datapoint.leagueId === datapoint.datapoint.leagueId &&
@@ -125,7 +128,7 @@ const rootReducer = (
             newElem.timestampDate = new Date(newElem.timestamp)
             chardata = {
               ...chardata,
-              result: [...chardata.result, newElem]
+              result: [...chardata.result, newElem],
             }
           }
         }
@@ -136,13 +139,13 @@ const rootReducer = (
         ...state,
         chardata,
         datapoints,
-        filteredDatapoints: buildFilteredDatapoints(datapoints, state.filter)
+        filteredDatapoints: buildFilteredDatapoints(datapoints, state.filter),
       }
     case 'SET_ERROR':
       return {
         ...state,
         error: action.error,
-        loading: false
+        loading: false,
       }
     case 'GET_CHAR_DATA':
       return {
@@ -150,10 +153,10 @@ const rootReducer = (
         chardata: undefined,
         getCharData: action.getData,
         loading: true,
-        selectedRow: undefined
+        selectedRow: undefined,
       }
     case 'RECEIVED_CHAR_DATA':
-      const result = action.result.result.map(e => {
+      const result = action.result.result.map((e) => {
         e.timestampDate = new Date(e.timestamp)
         return e
       })
@@ -161,14 +164,14 @@ const rootReducer = (
         ...state,
         chardata: {
           ...action.result,
-          result
+          result,
         },
         getCharData: undefined,
         loading: false,
         selectedRow: {
           charname: action.result.charname,
-          leagueId: action.result.leagueId
-        }
+          leagueId: action.result.leagueId,
+        },
       }
     case 'FILTER_CHANGED':
       const filter = {
@@ -177,19 +180,19 @@ const rootReducer = (
         hideStreamers: action.hideStreamers,
         onlyShowOnline: action.onlyShowOnly,
         selectedLeague: action.selectedLeague,
-        showOnlyAccount: action.showOnlyAccount
+        showOnlyAccount: action.showOnlyAccount,
       }
-      localStorage.setItem('graph-filter', JSON.stringify(filter))
+      localStorage?.setItem('graph-filter', JSON.stringify(filter))
       return {
         ...state,
         filter,
-        filteredDatapoints: buildFilteredDatapoints(state.datapoints, filter)
+        filteredDatapoints: buildFilteredDatapoints(state.datapoints, filter),
       }
     case 'GRAPH_FROM_CHANGED':
-      localStorage.setItem('graph-from', action.from)
+      localStorage?.setItem('graph-from', action.from)
       return {
         ...state,
-        graphFrom: action.from
+        graphFrom: action.from,
       }
     default:
       if (process.env.NODE_ENV === 'development') {

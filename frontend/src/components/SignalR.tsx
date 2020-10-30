@@ -2,7 +2,7 @@
 import React from 'react'
 import {
   ISignalRDispatchToProps,
-  ISignalRStateToProps
+  ISignalRStateToProps,
 } from '../containers/signalr'
 
 type IProps = ISignalRStateToProps & ISignalRDispatchToProps
@@ -29,7 +29,7 @@ export default class SignalR extends React.Component<IProps, {}> {
       props.receivedCharData({
         charname: getCharData.charname,
         leagueId: getCharData.leagueId,
-        result
+        result,
       })
     }
   }
@@ -38,9 +38,10 @@ export default class SignalR extends React.Component<IProps, {}> {
    * Connects to the SignalR hub and sets up various handlers.
    */
   connectSignalR() {
+    console.log('URL:', process.env.NEXT_PUBLIC_HUB_URL)
     // Build the connection.
     this.connection = new aspnet_SignalR.HubConnectionBuilder()
-      .withUrl('/data')
+      .withUrl(process.env.NEXT_PUBLIC_HUB_URL)
       .build()
 
     // Add handlers.
@@ -55,7 +56,7 @@ export default class SignalR extends React.Component<IProps, {}> {
     })
 
     // Connect and retry on failure, notifying the user.
-    this.connection.start().catch(reason => {
+    this.connection.start().catch((reason) => {
       console.log('Unable to connect because:', reason)
       this.props.onSignalRConnectionClosed()
     })
@@ -80,7 +81,7 @@ export default class SignalR extends React.Component<IProps, {}> {
     leagueId: string,
     charname: string
   ): Promise<poetracker.IGraphData[]> => {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       /* Define a handler, that responds to character data. */
       const handler = (data: poetracker.IGetCharDataResult) => {
         /* If this data is not what we expect, skip it. */
