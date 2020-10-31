@@ -1,4 +1,5 @@
-import * as React from 'react'
+import React from 'react'
+import { Alert, AlertTitle } from '@material-ui/lab'
 
 export interface IErrorProps {
   error: string
@@ -15,8 +16,9 @@ const Error = (props: IErrorProps) => {
 
   return (
     <>
-      <div className="alert alert-danger">
-        <b>Error</b>: {props.error}{' '}
+      <Alert variant="filled" severity="error">
+        <AlertTitle>Error</AlertTitle>
+        {props.error}{' '}
         <a
           onClick={onClick}
           className="text-primary"
@@ -24,7 +26,7 @@ const Error = (props: IErrorProps) => {
         >
           <b>Reload page</b>
         </a>
-      </div>
+      </Alert>
       <hr />
     </>
   )
