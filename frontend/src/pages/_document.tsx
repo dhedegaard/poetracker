@@ -1,16 +1,18 @@
 import Document, { Head, Html, Main, NextScript } from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
+import { ServerStyleSheets } from '@material-ui/core/styles'
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx: any) {
-    const sheet = new ServerStyleSheet()
+    const muiSheets = new ServerStyleSheets()
+    const styledSheet = new ServerStyleSheet()
     const originalRenderPage = ctx.renderPage
 
     try {
       ctx.renderPage = () =>
         originalRenderPage({
           enhanceApp: (App: any) => (props: any) =>
-            sheet.collectStyles(<App {...props} />),
+            styledSheet.collectStyles(muiSheets.collect(<App {...props} />)),
         })
 
       const initialProps = await Document.getInitialProps(ctx)
@@ -19,31 +21,24 @@ export default class MyDocument extends Document {
         styles: (
           <>
             {initialProps.styles}
-            {sheet.getStyleElement()}
+            {styledSheet.getStyleElement()}
+            {muiSheets.getStyleElement()}
           </>
         ),
       }
     } finally {
-      sheet.seal()
+      styledSheet.seal()
     }
   }
 
   render() {
     return (
       <Html lang="en">
+        <Head />
+        {/* TODO: Remove later. */}
         <body className="bg-light">
           <nav className="navbar navbar-dark bg-dark">
             <div className="container">
-              <span className="navbar-brand">
-                <img
-                  src="/favicon-32x32.png"
-                  width="30"
-                  height="30"
-                  alt="Poetracker"
-                  asp-append-version="true"
-                />
-                Poetracker
-              </span>
               <a
                 className="navbar-text text-right"
                 href="https://github.com/dhedegaard/poetracker"
