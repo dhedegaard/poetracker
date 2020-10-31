@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { IActionType } from '../../poetracker'
 import { graphFromChanged } from '../../store/actions'
 
 const Container = styled.div`
@@ -11,7 +10,7 @@ const Container = styled.div`
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>
 
-const ShowFromSelect: React.FunctionComponent<Props> = props => {
+const ShowFromSelect: React.FunctionComponent<Props> = (props) => {
   const onSelectChanged = (evt: React.ChangeEvent<HTMLSelectElement>) => {
     props.fromChanged(evt.currentTarget.value as poetracker.GraphFromType)
   }
@@ -56,14 +55,13 @@ const ShowFromSelect: React.FunctionComponent<Props> = props => {
 }
 
 const mapStateToProps = (state: poetracker.IState) => ({
-  from: state.graphFrom
+  from: state.graphFrom,
 })
-const mapDispatchToProps = (dispatch: (action: IActionType) => void) => ({
+const mapDispatchToProps = (
+  dispatch: (action: poetracker.IActionType) => void
+) => ({
   fromChanged: (from: poetracker.GraphFromType) =>
-    dispatch(graphFromChanged(from))
+    dispatch(graphFromChanged(from)),
 })
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ShowFromSelect)
+export default connect(mapStateToProps, mapDispatchToProps)(ShowFromSelect)

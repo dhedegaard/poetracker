@@ -36,56 +36,57 @@ const CharacterGraph = (props: IProps) => {
                 {
                   backgroundColor: '#17a2b8',
                   borderColor: '#17a2b8',
-                  data: graphData.map(e => ({
+                  data: graphData.map((e) => ({
                     x: e.timestampDate.getTime(),
-                    y: e.experience
+                    y: e.experience,
                   })),
                   fill: false,
                   label: 'Experience',
                   pointRadius: 2,
-                  yAxisID: 'xp-axis'
+                  yAxisID: 'xp-axis',
                 },
                 {
                   backgroundColor: '#4b367c',
                   borderColor: '#4b367c',
-                  data: graphData.map(e => ({
+                  data: graphData.map((e) => ({
                     x: e.timestampDate.getTime(),
-                    y: e.globalRank
+                    y: e.globalRank,
                   })),
                   fill: false,
                   label: 'Global rank',
                   pointRadius: 2,
-                  yAxisID: 'rank-axis'
-                }
+                  yAxisID: 'rank-axis',
+                },
               ],
-              labels: graphData.map(e => e.timestampDate.toLocaleString())
+              labels: graphData.map((e) => e.timestampDate.toLocaleString()),
             }}
             options={{
               animation: {
-                duration: 0
+                duration: 0,
               },
               legend: {
-                display: false
+                display: false,
               },
               scales: {
                 xAxes: [
                   {
+                    // @ts-expect-error: Fix later, maybe?
                     distribution: 'linear',
                     ticks: {
                       autoSkip: true,
-                      source: 'auto'
+                      source: 'auto',
                     } as any,
                     time: {
                       displayFormats: {
-                        minute: 'YYYY-MM-DD HH:MM'
+                        minute: 'YYYY-MM-DD HH:MM',
                       },
                       max: new Date().toISOString(),
                       min: fromDate ? fromDate.toISOString() : undefined,
                       minUnit: 'minute',
-                      unit: 'minute'
+                      unit: 'minute',
                     },
-                    type: 'time'
-                  }
+                    type: 'time',
+                  },
                 ],
                 yAxes: [
                   {
@@ -95,7 +96,7 @@ const CharacterGraph = (props: IProps) => {
                       display: true,
                       fontColor: '#17a2b8',
                       fontStyle: 'bold',
-                      labelString: 'Experience'
+                      labelString: 'Experience',
                     },
                     ticks: {
                       beginAtZero: true,
@@ -104,8 +105,8 @@ const CharacterGraph = (props: IProps) => {
                           return value.toLocaleString()
                         }
                       },
-                      fontColor: '#17a2b8'
-                    } as any
+                      fontColor: '#17a2b8',
+                    } as any,
                   },
                   {
                     id: 'rank-axis',
@@ -114,20 +115,20 @@ const CharacterGraph = (props: IProps) => {
                       display: true,
                       fontColor: '#4b367c',
                       fontStyle: 'bold',
-                      labelString: 'Global rank'
+                      labelString: 'Global rank',
                     },
                     ticks: {
-                      callback: value => {
+                      callback: (value) => {
                         if (Number.isInteger(value)) {
                           return value
                         }
                       },
                       fontColor: '#4b367c',
                       min: 1,
-                      reverse: true
-                    }
-                  }
-                ]
+                      reverse: true,
+                    },
+                  },
+                ],
               },
               tooltips: {
                 callbacks: {
@@ -138,7 +139,7 @@ const CharacterGraph = (props: IProps) => {
                     const point = dataset.data![item!.index!] as ChartPoint
                     return `${datasetLabel}: ${point.y!.toLocaleString()}`
                   },
-                  title: item => {
+                  title: (item) => {
                     const { xLabel } = (Array.isArray(item)
                       ? item[0]
                       : item) as { xLabel?: unknown }
@@ -146,9 +147,9 @@ const CharacterGraph = (props: IProps) => {
                       return new Date(xLabel).toLocaleString()
                     }
                     return xLabel
-                  }
-                }
-              }
+                  },
+                },
+              },
             }}
           />
         </div>
