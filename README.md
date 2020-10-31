@@ -1,9 +1,7 @@
 # Poetracker
 
-[![Build Status](https://travis-ci.org/dhedegaard/poetracker.svg?branch=main)](https://travis-ci.org/dhedegaard/poetracker)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/3d78afbdef7f44669e34d79a2483a9eb)](https://www.codacy.com/app/dhedegaard/poetracker?utm_source=github.com&utm_medium=referral&utm_content=dhedegaard/poetracker&utm_campaign=Badge_Grade)
 [![Build Status](https://dev.azure.com/dhedegaard/personlig/_apis/build/status/dhedegaard.poetracker?branchName=main)](https://dev.azure.com/dhedegaard/personlig/_build/latest?definitionId=2?branchName=main)
-[![Greenkeeper badge](https://badges.greenkeeper.io/dhedegaard/poetracker.svg)](https://greenkeeper.io/)
 [![Node.js CI](https://github.com/dhedegaard/poetracker/workflows/Node.js%20CI/badge.svg)](https://github.com/dhedegaard/poetracker/actions?query=workflow%3A%22Node.js+CI%22)
 [![.NET Core](https://github.com/dhedegaard/poetracker/workflows/.NET%20Core/badge.svg)](https://github.com/dhedegaard/poetracker/actions?query=workflow%3A%22.NET+Core%22)
 
