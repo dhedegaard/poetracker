@@ -1,19 +1,19 @@
-Arguments: 
+Arguments:
   /home/linuxbrew/.linuxbrew/Cellar/node/15.0.1/bin/node /home/linuxbrew/.linuxbrew/Cellar/yarn/1.22.10/libexec/bin/yarn.js add typescript<4.0
 
-PATH: 
+PATH:
   /home/dennis/.deno/bin:/home/dennis/.vscode-server/bin/d2e414d9e4239a252d1ab117bd7067f125afd80a/bin:/home/dennis/.deno/bin:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:/home/dennis/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/mnt/c/Program Files (x86)/VMware/VMware Player/bin/:/mnt/c/Program Files/Oculus/Support/oculus-runtime:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/dotnet/:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/ProgramData/DockerDesktop/version-bin:/mnt/c/Users/denni/.cargo/bin:/mnt/c/Users/denni/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/denni/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/denni/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/denni/.dotnet/tools:/mnt/c/Users/denni/.deno/bin:/mnt/c/Users/denni/AppData/Local/hyper/app-3.0.2/resources/bin:/mnt/c/Users/denni/AppData/local/hyper/app-3.0.2/resources/bin:/mnt/c/Program Files/PostgreSQL/13/bin
 
-Yarn version: 
+Yarn version:
   1.22.10
 
-Node version: 
+Node version:
   15.0.1
 
-Platform: 
+Platform:
   linux x64
 
-Trace: 
+Trace:
   Error: https://registry.yarnpkg.com/typescript%3C4.0: Not found
       at Request.params.callback [as _callback] (/home/linuxbrew/.linuxbrew/Cellar/yarn/1.22.10/libexec/lib/cli.js:66988:18)
       at Request.self.callback (/home/linuxbrew/.linuxbrew/Cellar/yarn/1.22.10/libexec/lib/cli.js:140749:22)
@@ -26,7 +26,7 @@ Trace:
       at endReadableNT (node:internal/streams/readable:1289:12)
       at processTicksAndRejections (node:internal/process/task_queues:80:21)
 
-npm manifest: 
+npm manifest:
   {
     "private": true,
     "scripts": {
@@ -60,8 +60,8 @@ npm manifest:
     }
   }
 
-yarn manifest: 
+yarn manifest:
   No manifest
 
-Lockfile: 
-  
+Lockfile:
+

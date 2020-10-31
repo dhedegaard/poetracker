@@ -4,7 +4,6 @@ on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -12,16 +11,14 @@ jobs:
         node-version: [8.x, 10.x, 12.x]
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm install
-      working-directory: ./frontend
-    - run: npm run tslint
-      working-directory: ./frontend
-    - run: npm start
-      working-directory: ./frontend
-      env:
-        CI: true
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+        working-directory: ./frontend
+      - run: npm start
+        working-directory: ./frontend
+        env:
+          CI: true
