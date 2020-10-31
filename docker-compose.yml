@@ -1,4 +1,4 @@
-version: '3'
+version: "3.2"
 
 services:
   web:
@@ -6,12 +6,4 @@ services:
     ports:
       - "127.0.0.1:5123:5123"
     network_mode: host
-    restart: unless-stopped
-
-  fetcher:
-    build: .
-    network_mode: host
-    command: sh -c "sleep 1 && dotnet Fetcher.dll"
-    depends_on:
-      - web
     restart: unless-stopped
