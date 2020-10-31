@@ -1,4 +1,5 @@
-﻿using Core;
+﻿using System.Linq;
+using Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -40,6 +41,8 @@ namespace Web {
         app.UseDeveloperExceptionPage();
       }
 
+      // Enable CORS.
+      app.UseCors(builder => builder.WithOrigins("http://localhost:3000", "https://poe.culan.dk").AllowAnyHeader().AllowAnyMethod().AllowCredentials());
       app.UseForwardedHeaders(new ForwardedHeadersOptions {
         ForwardedHeaders = ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedHost,
       });
@@ -53,8 +56,6 @@ namespace Web {
         endpoints.MapRazorPages();
       });
 
-      // Enable CORS.
-      app.UseCors(builder => builder.WithOrigins("*").AllowAnyHeader().AllowAnyMethod());
     }
   }
 }
