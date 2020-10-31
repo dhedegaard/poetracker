@@ -1,12 +1,3 @@
-# Build the frontend separately.
-FROM node:10 AS frontend
-WORKDIR /source
-COPY frontend/*.json frontend/webpack.config.js ./
-RUN npm i --silent
-COPY frontend ./
-RUN npm start
-
-# Build the main packages.
 FROM mcr.microsoft.com/dotnet/sdk:5.0.100-rc.2
 LABEL maintainer="dennis@dhedegaard.dk"
 ARG DEBIAN_FRONTEND=noninteractive
@@ -37,7 +28,6 @@ RUN dotnet publish --output /app --configuration Release
 
 # Build the web.
 WORKDIR /source/Web
-COPY --from=frontend /Web/wwwroot/* /source/Web/wwwroot/
 RUN dotnet publish --output /app --configuration Release
 
 # Run the published application.
