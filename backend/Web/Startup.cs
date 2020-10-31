@@ -36,7 +36,6 @@ namespace Web {
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
       if (env.IsDevelopment()) {
-        // app.UseMiniProfiler();
         app.UseDeveloperExceptionPage();
       }
 
@@ -45,14 +44,11 @@ namespace Web {
       app.UseForwardedHeaders(new ForwardedHeadersOptions {
         ForwardedHeaders = ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedHost,
       });
-      app.UseStaticFiles(new StaticFileOptions {
-        // Allow serving the .webmanifest file from wwwroot.
-        ServeUnknownFileTypes = true,
-      });
       app.UseRouting();
+
+      // Handle routes.
       app.UseEndpoints(endpoints => {
         endpoints.MapHub<PoeHub>("/data");
-        endpoints.MapRazorPages();
       });
 
     }
