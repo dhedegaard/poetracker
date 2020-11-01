@@ -55,90 +55,104 @@ const Filter = (props: IFilterProps) => {
 
   return (
     <Paper>
-      <Box p={2} display="flex" justifyContent="space-between">
+      <Box display="flex" justifyContent="space-between" alignItems="center">
         <Box
+          p={2}
           display="flex"
-          alignItems="center"
-          justifyContent="space-between"
+          flexDirection="column"
           height="100%"
-          maxWidth="300px"
+          justifyContent="space-between"
         >
-          <FormLabel htmlFor="id_league_select">League:&nbsp;</FormLabel>
-          <Box minWidth="220px">
-            <LeagueSelectComponent
-              selectedLeague={filter.selectedLeague}
-              leagues={leagues}
-              onLeagueSelect={onChangeSelectedLeague}
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+            width="100%"
+            maxWidth="300px"
+          >
+            <FormLabel htmlFor="id_league_select">League:&nbsp;</FormLabel>
+            <Box minWidth="250px" display="flex" justifyContent="flex-end">
+              <LeagueSelectComponent
+                selectedLeague={filter.selectedLeague}
+                leagues={leagues}
+                onLeagueSelect={onChangeSelectedLeague}
+              />
+            </Box>
+          </Box>
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+            width="100%"
+            maxWidth="300px"
+          >
+            <FormLabel htmlFor="id_filter_account">Account:&nbsp;</FormLabel>
+            <Box minWidth="250px" display="flex" justifyContent="flex-end">
+              <NativeSelect
+                id="id_filter_account"
+                value={filter.showOnlyAccount}
+                onChange={onShowOnlyAccount}
+              >
+                <option value="">-- Show all --</option>
+                {nonTwitchAccounts && nonTwitchAccounts.length && (
+                  <optgroup label="Accounts">
+                    {nonTwitchAccounts.map((account) => (
+                      <option
+                        key={account.accountName}
+                        value={account.accountName}
+                      >
+                        {account.accountName}
+                      </option>
+                    ))}
+                  </optgroup>
+                )}
+                {twitchAccounts && twitchAccounts.length && (
+                  <optgroup label="Streamers">
+                    {twitchAccounts.map((account) => (
+                      <option
+                        key={account.accountName}
+                        value={account.accountName}
+                      >
+                        {account.accountName}
+                        {account.twitchUsername !== account.accountName &&
+                          ` (${account.twitchUsername})`}
+                      </option>
+                    ))}
+                  </optgroup>
+                )}
+              </NativeSelect>
+            </Box>
+          </Box>
+        </Box>
+        <Box display="flex" flexWrap="wrap">
+          <Box width="50%" flexBasis="50%">
+            <FilterCheckbox
+              checked={filter.hideDead}
+              onChange={onChangeHideDead}
+              label="Hide dead"
             />
           </Box>
-        </Box>
-        <Box display="flex" alignItems="center" justifyContent="space-between">
-          <FormLabel htmlFor="id_filter_account">Account:&nbsp;</FormLabel>
-          <Box minWidth="220px">
-            <NativeSelect
-              id="id_filter_account"
-              value={filter.showOnlyAccount}
-              onChange={onShowOnlyAccount}
-            >
-              <option value="">-- Show all --</option>
-              {nonTwitchAccounts && nonTwitchAccounts.length && (
-                <optgroup label="Accounts">
-                  {nonTwitchAccounts.map((account) => (
-                    <option
-                      key={account.accountName}
-                      value={account.accountName}
-                    >
-                      {account.accountName}
-                    </option>
-                  ))}
-                </optgroup>
-              )}
-              {twitchAccounts && twitchAccounts.length && (
-                <optgroup label="Streamers">
-                  {twitchAccounts.map((account) => (
-                    <option
-                      key={account.accountName}
-                      value={account.accountName}
-                    >
-                      {account.accountName}
-                      {account.twitchUsername !== account.accountName &&
-                        ` (${account.twitchUsername})`}
-                    </option>
-                  ))}
-                </optgroup>
-              )}
-            </NativeSelect>
+          <Box width="50%" flexBasis="50%">
+            <FilterCheckbox
+              checked={filter.onlyShowOnline}
+              onChange={onChangeShowOnline}
+              label="Only show online"
+            />
           </Box>
-        </Box>
-      </Box>
-      <Box display="flex" flexWrap="wrap">
-        <Box width="50%" flexBasis="50%">
-          <FilterCheckbox
-            checked={filter.hideDead}
-            onChange={onChangeHideDead}
-            label="Hide dead"
-          />
-        </Box>
-        <Box width="50%" flexBasis="50%">
-          <FilterCheckbox
-            checked={filter.onlyShowOnline}
-            onChange={onChangeShowOnline}
-            label="Only show online"
-          />
-        </Box>
-        <Box width="50%" flexBasis="50%">
-          <FilterCheckbox
-            checked={filter.hideStreamers}
-            onChange={onChangeHideStreamers}
-            label="Hide streamers"
-          />
-        </Box>
-        <Box width="50%" flexBasis="50%">
-          <FilterCheckbox
-            checked={filter.hideStandardLeagues}
-            onChange={onChangeHideStandardLeague}
-            label="Hide standard"
-          />
+          <Box width="50%" flexBasis="50%">
+            <FilterCheckbox
+              checked={filter.hideStreamers}
+              onChange={onChangeHideStreamers}
+              label="Hide streamers"
+            />
+          </Box>
+          <Box width="50%" flexBasis="50%">
+            <FilterCheckbox
+              checked={filter.hideStandardLeagues}
+              onChange={onChangeHideStandardLeague}
+              label="Hide standard"
+            />
+          </Box>
         </Box>
       </Box>
     </Paper>
