@@ -1,3 +1,4 @@
+import { Box, Checkbox, FormLabel } from '@material-ui/core'
 import React from 'react'
 
 interface IProps {
@@ -6,20 +7,18 @@ interface IProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-const FilterCheckbox: React.FunctionComponent<IProps> = props => {
+const FilterCheckbox: React.FunctionComponent<IProps> = (props) => {
   const id = `id_${props.label.toLowerCase().replace(' ', '_')}`
   return (
-    <div className="col-md-3">
-      <input
+    <Box display="flex" alignItems="flex-end" width="50%" flexBasis="50%">
+      <Checkbox
         id={id}
-        type="checkbox"
         checked={props.checked}
+        size="small"
         onChange={props.onChange}
       />
-      <label htmlFor={id}>
-        <small>{props.label}</small>
-      </label>
-    </div>
+      <FormLabel htmlFor={id}>{props.label}</FormLabel>
+    </Box>
   )
 }
 

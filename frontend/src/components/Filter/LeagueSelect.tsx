@@ -1,4 +1,5 @@
-﻿import React from 'react'
+﻿import { NativeSelect } from '@material-ui/core'
+import React from 'react'
 
 interface ILeagueSelectProps {
   selectedLeague: string
@@ -7,16 +8,15 @@ interface ILeagueSelectProps {
 }
 
 const LeagueSelect = (props: ILeagueSelectProps) => {
-  const standardLeagues = props.leagues.filter(e => e.endAt === null)
-  const temporaryLeagues = props.leagues.filter(e => e.endAt !== null)
+  const standardLeagues = props.leagues.filter((e) => e.endAt === null)
+  const temporaryLeagues = props.leagues.filter((e) => e.endAt !== null)
 
   const onChange = (evt: React.ChangeEvent<HTMLSelectElement>) => {
     props.onLeagueSelect(evt.currentTarget.value)
   }
 
   return (
-    <select
-      className="form-control form-control-sm"
+    <NativeSelect
       id="id_league_select"
       value={props.selectedLeague}
       onChange={onChange}
@@ -24,7 +24,7 @@ const LeagueSelect = (props: ILeagueSelectProps) => {
       <option value="">-- Show all --</option>
       {temporaryLeagues && temporaryLeagues.length && (
         <optgroup label="Temporary leagues">
-          {temporaryLeagues.map(league => (
+          {temporaryLeagues.map((league) => (
             <option key={league.id} value={league.id}>
               {league.id}
             </option>
@@ -33,14 +33,14 @@ const LeagueSelect = (props: ILeagueSelectProps) => {
       )}
       {standardLeagues && standardLeagues.length && (
         <optgroup label="Standard leagues">
-          {standardLeagues.map(league => (
+          {standardLeagues.map((league) => (
             <option key={league.id} value={league.id}>
               {league.id}
             </option>
           ))}
         </optgroup>
       )}
-    </select>
+    </NativeSelect>
   )
 }
 export default LeagueSelect
