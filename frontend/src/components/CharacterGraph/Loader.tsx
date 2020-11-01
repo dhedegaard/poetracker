@@ -1,3 +1,4 @@
+import { Alert } from '@material-ui/lab'
 import React from 'react'
 import { createGlobalStyle } from 'styled-components'
 
@@ -10,7 +11,7 @@ const GlobalStyle = createGlobalStyle`
 const Loader: React.FunctionComponent<{}> = () => (
   <>
     <GlobalStyle />
-    <div className="alert alert-info">Loading data, please wait...</div>
+    <Alert severity="info">Loading data, please wait...</Alert>
   </>
 )
 
