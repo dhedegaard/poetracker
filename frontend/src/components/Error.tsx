@@ -19,11 +19,7 @@ const Error = (props: IErrorProps) => {
       <Alert variant="filled" severity="error">
         <AlertTitle>Error</AlertTitle>
         {props.error}{' '}
-        <a
-          onClick={onClick}
-          className="text-primary"
-          href="javascript:void(0);"
-        >
+        <a onClick={onClick} href="javascript:void(0);">
           <b>Reload page</b>
         </a>
       </Alert>

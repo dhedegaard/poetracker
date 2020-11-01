@@ -1,11 +1,7 @@
+import { Box, FormLabel, NativeSelect } from '@material-ui/core'
 import React from 'react'
 import { connect } from 'react-redux'
-import styled from 'styled-components'
 import { graphFromChanged } from '../../store/actions'
-
-const Container = styled.div`
-  padding-bottom: 20px;
-`
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>
@@ -16,17 +12,15 @@ const ShowFromSelect: React.FunctionComponent<Props> = (props) => {
   }
 
   return (
-    <Container className="row">
-      <label
-        htmlFor="id_graph_from"
-        className="form-label col-3 col-sm-2 offset-1 text-muted text-right"
-      >
-        <small>Show from:</small>
-      </label>
-      <div className="col-lg-2 col-4">
-        <select
+    <Box mb={2} display="flex">
+      <Box ml={2}>
+        <FormLabel htmlFor="id_graph_from">
+          <small>Show from:</small>
+        </FormLabel>
+      </Box>
+      <Box ml={2}>
+        <NativeSelect
           id="id_graph_from"
-          className="form-control form-control-sm"
           onChange={onSelectChanged}
           defaultValue={props.from}
         >
@@ -48,9 +42,9 @@ const ShowFromSelect: React.FunctionComponent<Props> = (props) => {
           <option key="1 hour" value="1 hour">
             Last hour
           </option>
-        </select>
-      </div>
-    </Container>
+        </NativeSelect>
+      </Box>
+    </Box>
   )
 }
 
