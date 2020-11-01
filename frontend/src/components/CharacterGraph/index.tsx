@@ -1,3 +1,4 @@
+import { Alert, AlertTitle } from '@material-ui/lab'
 import { ChartPoint } from 'chart.js'
 import React from 'react'
 import { Line } from 'react-chartjs-2'
@@ -16,10 +17,11 @@ const CharacterGraph = (props: IProps) => {
 
   if (!graphData || graphData.length < 2) {
     return (
-      <div className="alert alert-danger">
+      <Alert severity="warning">
+        <AlertTitle>Sorry</AlertTitle>
         Not enough datapoints, sorry. Click on the character row above to hide
         me again.
-      </div>
+      </Alert>
     )
   }
 
