@@ -12,6 +12,12 @@ import styled from 'styled-components'
 import CharacterGraphContainer from '../../containers/character-graph'
 import Badge from '../Badge'
 
+const StyledTableCell = styled(TableCell)`
+  && {
+    padding: 0;
+  }
+`
+
 /** @deprecated TODO: Reimplement me? */
 const TwitchBadge = styled.a`
   &,
@@ -164,9 +170,9 @@ const Row: React.FunctionComponent<IProps> = (props) => {
       </TableRow>
       {(isSelected && (
         <TableRow>
-          <TableCell colSpan={999}>
+          <StyledTableCell colSpan={999}>
             <CharacterGraphContainer />
-          </TableCell>
+          </StyledTableCell>
         </TableRow>
       )) ||
         null}
