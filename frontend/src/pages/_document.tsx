@@ -35,23 +35,8 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head />
-        {/* TODO: Remove later. */}
-        <body className="bg-light">
-          <nav className="navbar navbar-dark bg-dark">
-            <div className="container">
-              <a
-                className="navbar-text text-right"
-                href="https://github.com/dhedegaard/poetracker"
-                target="_blank"
-                rel="noopener"
-              >
-                Github
-              </a>
-            </div>
-          </nav>
-          <div className="container">
-            <Main />
-          </div>
+        <body>
+          <Main />
           <NextScript />
         </body>
       </Html>
