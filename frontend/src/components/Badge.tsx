@@ -33,11 +33,18 @@ const Badge: React.FC<Props> = ({ type, ...props }) => {
 
   const isLink = props.href != null
 
+  const onClickHandler = React.useCallback(
+    (event: React.MouseEvent<HTMLAnchorElement>) => {
+      event.stopPropagation()
+    },
+    []
+  )
+
   if (isLink) {
     const { href, target, rel, ...rest } = props
     return (
       <ThemeProvider theme={theme}>
-        <Link href={href} target={target} rel={rel}>
+        <Link href={href} target={target} rel={rel} onClick={onClickHandler}>
           <Chip size="small" color="primary" {...rest} />
         </Link>
       </ThemeProvider>

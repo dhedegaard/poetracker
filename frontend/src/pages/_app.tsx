@@ -1,6 +1,7 @@
 import React from 'react'
 import Head from 'next/head'
 import type { AppProps } from 'next/app'
+import { CssBaseline } from '@material-ui/core'
 
 const MyApp = ({ Component, pageProps }: AppProps) => (
   <>
@@ -11,12 +12,6 @@ const MyApp = ({ Component, pageProps }: AppProps) => (
         content="width=device-width, initial-scale=1, shrink-to-fit=no"
       />
       <meta name="theme-color" content="#ffffff" />
-      <link
-        rel="stylesheet"
-        href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
-        integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
-        crossOrigin="anonymous"
-      />
       <link
         rel="apple-touch-icon"
         sizes="180x180"
@@ -51,6 +46,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => (
       <meta property="og:description" content="Path of Exile rank tracker" />
       <meta property="og:image" content="/favicon.png" />{' '}
     </Head>
+    <CssBaseline />
     <Component {...pageProps} />
   </>
 )
