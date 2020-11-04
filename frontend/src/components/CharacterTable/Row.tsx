@@ -1,11 +1,4 @@
-import {
-  Box,
-  Chip,
-  Link,
-  TableCell,
-  TableRow,
-  Typography,
-} from '@material-ui/core'
+import { Box, Chip, TableCell, TableRow, Typography } from '@material-ui/core'
 import Image from 'next/image'
 import React from 'react'
 import styled from 'styled-components'
@@ -15,17 +8,6 @@ import Badge from '../Badge'
 const StyledTableCell = styled(TableCell)`
   && {
     padding: 0;
-  }
-`
-
-/** @deprecated TODO: Reimplement me? */
-const TwitchBadge = styled.a`
-  &,
-  &:link,
-  &:visited,
-  &:hover,
-  &:active {
-    background-color: #4b367c !important;
   }
 `
 

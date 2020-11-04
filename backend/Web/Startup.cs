@@ -40,7 +40,7 @@ namespace Web {
       }
 
       // Enable CORS.
-      app.UseCors(builder => builder.WithOrigins("http://localhost:3000", "https://poe.culan.dk").AllowAnyHeader().AllowAnyMethod().AllowCredentials());
+      app.UseCors(builder => builder.WithOrigins("http://localhost:3000", "https://poe.culan.dk", "https://poe-beta.culan.dk").AllowAnyHeader().AllowAnyMethod().AllowCredentials());
       app.UseForwardedHeaders(new ForwardedHeadersOptions {
         ForwardedHeaders = ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedHost,
       });
