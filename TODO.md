@@ -5,7 +5,7 @@
 - Fix checkboxes being checked when the values are false.
 - Alignment of checkbox labels.
 - League/Account dropdown not aligned.
-- Twitch/Profile links not showing cursor, clicks propagate to the rows showing graphs.
+- Twitch/Profile links not showing cursor.
 - Make the badges a bit smaller.
 - The selected color on rows is red, looks a bit weird.
 - Github link and logo should align with the left and right sides.
