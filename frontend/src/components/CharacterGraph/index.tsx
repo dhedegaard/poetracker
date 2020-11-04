@@ -1,3 +1,4 @@
+import { Box, Paper } from '@material-ui/core'
 import { Alert, AlertTitle } from '@material-ui/lab'
 import { ChartPoint } from 'chart.js'
 import React from 'react'
@@ -26,10 +27,10 @@ const CharacterGraph = (props: IProps) => {
   }
 
   return (
-    <>
-      <ShowFromSelect />
-      <div className="row">
-        <div className="col-10 offset-1">
+    <Paper variant="outlined" square>
+      <Box p="16px">
+        <ShowFromSelect />
+        <Box p="16px">
           {/*
             // @ts-ignore */}
           <Line
@@ -144,7 +145,9 @@ const CharacterGraph = (props: IProps) => {
                   title: (item) => {
                     const { xLabel } = (Array.isArray(item)
                       ? item[0]
-                      : item) as { xLabel?: unknown }
+                      : item) as {
+                      xLabel?: unknown
+                    }
                     if (typeof xLabel === 'number' && !isNaN(xLabel)) {
                       return new Date(xLabel).toLocaleString()
                     }
@@ -154,9 +157,9 @@ const CharacterGraph = (props: IProps) => {
               },
             }}
           />
-        </div>
-      </div>
-    </>
+        </Box>
+      </Box>
+    </Paper>
   )
 }
 export default CharacterGraph

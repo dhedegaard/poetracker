@@ -1,9 +1,9 @@
 FROM mcr.microsoft.com/dotnet/sdk:5.0.100-rc.2
 LABEL maintainer="dennis@dhedegaard.dk"
 ARG DEBIAN_FRONTEND=noninteractive
-EXPOSE 5123
-ENV ASPNETCORE_URLS=http://127.0.0.1:5123
-ENV FETCHER_HUB_CONNECTION_URL=http://127.0.0.1:5123/data
+EXPOSE 5000
+ENV ASPNETCORE_URLS=http://127.0.0.1:5000
+ENV FETCHER_HUB_CONNECTION_URL=http://127.0.0.1:5000/data
 
 WORKDIR /source
 

@@ -4,6 +4,6 @@ services:
   web:
     build: .
     ports:
-      - "127.0.0.1:5123:5123"
+      - "127.0.0.1:5000:5000"
     network_mode: host
     restart: unless-stopped
