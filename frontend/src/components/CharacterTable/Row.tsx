@@ -33,7 +33,7 @@ const Row: React.FunctionComponent<IProps> = (props) => {
 
   return (
     <>
-      <TableRow selected={isSelected} onClick={onRowClick}>
+      <TableRow selected={isSelected} onClick={onRowClick} hover>
         <TableCell>
           <Box display="flex" whiteSpace="nowrap">
             <Image
