@@ -101,13 +101,13 @@ const Row: React.FunctionComponent<IProps> = (props) => {
                 </>
               )}
             </Typography>
-            <Box>
+            <Box display="flex">
               {datapoint.datapoint.account.twitchURL && (
                 <>
                   <Badge
                     type="twitch"
                     href={datapoint.datapoint.account.twitchURL}
-                    target="_blank "
+                    target="_blank"
                     rel="nofollow noreferrer"
                     title={`Twitch username: ${datapoint.datapoint.account.twitchUsername}`}
                     label="Twitch"

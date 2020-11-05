@@ -1,6 +1,7 @@
 import { Chip, createMuiTheme, Link, ThemeProvider } from '@material-ui/core'
 import { green, red } from '@material-ui/core/colors'
 import React from 'react'
+import styled, { css } from 'styled-components'
 
 const successTheme = createMuiTheme({ palette: { primary: green } })
 const failureTheme = createMuiTheme({ palette: { primary: red } })
@@ -8,6 +9,27 @@ const twitchTheme = createMuiTheme({ palette: { primary: { 500: '#4b367c' } } })
 const profileTheme = createMuiTheme({
   palette: { primary: { 500: '#17a2b8' } },
 })
+
+const StyledChip = styled(Chip)<{ $isLink: boolean }>`
+  && {
+    display: flex;
+    align-items: center;
+    height: 20px;
+    margin-left: 2px;
+    margin-right: 2px;
+
+    & > span {
+      padding-left: 6px;
+      padding-right: 6px;
+    }
+
+    ${(p) =>
+      p.$isLink &&
+      css`
+        cursor: pointer;
+      `}
+  }
+`
 
 type Props = {
   label: string
@@ -45,7 +67,7 @@ const Badge: React.FC<Props> = ({ type, ...props }) => {
     return (
       <ThemeProvider theme={theme}>
         <Link href={href} target={target} rel={rel} onClick={onClickHandler}>
-          <Chip size="small" color="primary" {...rest} />
+          <StyledChip $isLink size="small" color="primary" {...rest} />
         </Link>
       </ThemeProvider>
     )
@@ -53,7 +75,7 @@ const Badge: React.FC<Props> = ({ type, ...props }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Chip size="small" color="primary" {...props} />
+      <StyledChip $isLink={false} size="small" color="primary" {...props} />
     </ThemeProvider>
   )
 }
