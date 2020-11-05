@@ -10,7 +10,7 @@ interface IProps {
 const FilterCheckbox: React.FunctionComponent<IProps> = (props) => {
   const id = `id_${props.label.toLowerCase().replace(' ', '_')}`
   return (
-    <Box display="flex" alignItems="flex-end" width="50%" flexBasis="50%">
+    <Box display="flex" alignItems="center" width="100%" flexBasis="100%">
       <Checkbox
         id={id}
         checked={props.checked}
