@@ -35,13 +35,14 @@ const Row: React.FunctionComponent<IProps> = (props) => {
     <>
       <TableRow selected={isSelected} onClick={onRowClick} hover>
         <TableCell>
-          <Box display="flex" whiteSpace="nowrap">
+          <Box display="flex" whiteSpace="nowrap" alignItems="center">
             <Image
               src={`/${datapoint.datapoint.online ? 'online' : 'offline'}.png`}
               title={datapoint.datapoint.online ? 'Online' : 'Offline'}
               width="15px"
               height="15px"
-            />{' '}
+            />
+            &nbsp;
             <Typography>
               {datapoint.datapoint.globalRank || '15000+'}
             </Typography>
