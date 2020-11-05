@@ -13,7 +13,7 @@ const graphFilter = localStorage?.getItem('graph-filter')
 if (graphFilter) {
   initialFilter = {
     ...initialFilter,
-    ...JSON.parse(graphFilter),
+    ...(graphFilter != null ? JSON.parse(graphFilter) : {}),
   }
 }
 

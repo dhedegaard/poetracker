@@ -1,4 +1,4 @@
-import { Box, Checkbox, FormLabel } from '@material-ui/core'
+import { Box, Checkbox, FormLabel, Switch } from '@material-ui/core'
 import React from 'react'
 
 interface IProps {
@@ -11,7 +11,7 @@ const FilterCheckbox: React.FunctionComponent<IProps> = (props) => {
   const id = `id_${props.label.toLowerCase().replace(' ', '_')}`
   return (
     <Box display="flex" alignItems="center" width="100%" flexBasis="100%">
-      <Checkbox
+      <Switch
         id={id}
         checked={props.checked}
         size="small"
