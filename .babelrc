@@ -1,16 +1,4 @@
 {
   "presets": ["next/babel"],
-  "plugins": [
-    ["styled-components", { "ssr": true, "displayName": true }],
-    [
-      "babel-plugin-import",
-      {
-        "libraryName": "@material-ui/core",
-        // Use "'libraryDirectory': ''," if your bundler does not support ES modules
-        "libraryDirectory": "esm",
-        "camel2DashComponentName": false
-      },
-      "core"
-    ]
-  ]
+  "plugins": [["styled-components", { "ssr": true }]]
 }
