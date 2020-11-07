@@ -10,7 +10,13 @@ const NavBar: React.FC = () => (
         <Toolbar disableGutters>
           <Box display="flex" justifyContent="space-between" width="100%">
             <Box display="flex">
-              <Image src="/favicon.png" alt="logo" width="30px" height="30px" />
+              <Image
+                src="/favicon.png"
+                alt="logo"
+                width="30px"
+                height="30px"
+                priority
+              />
               <Box ml={1}>
                 <Typography variant="h6">Poetracker</Typography>
               </Box>

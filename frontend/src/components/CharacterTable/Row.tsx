@@ -52,6 +52,7 @@ const Row: React.FunctionComponent<IProps> = (props) => {
               title={datapoint.datapoint.online ? 'Online' : 'Offline'}
               width="15px"
               height="15px"
+              priority
             />
             &nbsp;
             <Typography>
