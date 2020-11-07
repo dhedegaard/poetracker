@@ -8,10 +8,10 @@ const MainContainer: React.FunctionComponent<{}> = () => {
     // Patch in a font and use it everywhere (after it's done loading).
     const link = document.createElement('link')
     link.href =
-      'https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap'
+      'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap'
     link.rel = 'stylesheet'
     link.onload = () => {
-      document.body.style.fontFamily = `"Open Sans", sans-serif`
+      document.body.style.fontFamily = `"Roboto", sans-serif`
     }
     document.head.appendChild(link)
     return () => {
