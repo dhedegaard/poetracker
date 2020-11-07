@@ -68,7 +68,7 @@ const Filter = (props: IFilterProps) => {
             alignItems="center"
             justifyContent="space-between"
             width="100%"
-            maxWidth="300px"
+            maxWidth="350px"
           >
             <FormLabel htmlFor="id_league_select">League:&nbsp;</FormLabel>
             <Box minWidth="250px" display="flex" justifyContent="flex-end">
@@ -84,7 +84,7 @@ const Filter = (props: IFilterProps) => {
             alignItems="center"
             justifyContent="space-between"
             width="100%"
-            maxWidth="300px"
+            maxWidth="350px"
           >
             <FormLabel htmlFor="id_filter_account">Account:&nbsp;</FormLabel>
             <Box minWidth="250px" display="flex" justifyContent="flex-end">
