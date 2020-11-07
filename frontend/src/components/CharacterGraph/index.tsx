@@ -18,11 +18,13 @@ const CharacterGraph = (props: IProps) => {
 
   if (!graphData || graphData.length < 2) {
     return (
-      <Alert severity="warning">
-        <AlertTitle>Sorry</AlertTitle>
-        Not enough datapoints, sorry. Click on the character row above to hide
-        me again.
-      </Alert>
+      <Box width="100%" justifyContent="center" mt={1} mb={1} ml={1}>
+        <Alert severity="warning" variant="outlined">
+          <AlertTitle>Sorry</AlertTitle>
+          Not enough datapoints, sorry. Click on the character row above to hide
+          me again.
+        </Alert>
+      </Box>
     )
   }
 
