@@ -55,7 +55,12 @@ const Filter = (props: IFilterProps) => {
 
   return (
     <Paper>
-      <Box display="flex" justifyContent="space-between" alignItems="center">
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        flexWrap="wrap"
+      >
         <Box
           p={2}
           display="flex"
