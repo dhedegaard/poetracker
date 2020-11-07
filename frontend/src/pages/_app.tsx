@@ -16,27 +16,20 @@ const MyApp = ({ Component, pageProps }: AppProps) => (
         rel="apple-touch-icon"
         sizes="180x180"
         href="/apple-touch-icon.png"
-        asp-append-version="true"
       />
       <link
         rel="icon"
         type="image/png"
         sizes="32x32"
         href="/favicon-32x32.png"
-        asp-append-version="true"
       />
       <link
         rel="icon"
         type="image/png"
         sizes="16x16"
         href="/favicon-16x16.png"
-        asp-append-version="true"
       />
-      <link
-        rel="manifest"
-        href="/manifest.webmanifest"
-        asp-append-version="true"
-      />
+      <link rel="manifest" href="/manifest.webmanifest" />
       <link rel="preconnect" href="https://fonts.gstatic.com" />
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <title>Poetracker</title>
