@@ -23,7 +23,6 @@ const Error = (props: IErrorProps) => {
           <b>Reload page</b>
         </a>
       </Alert>
-      <hr />
     </>
   )
 }

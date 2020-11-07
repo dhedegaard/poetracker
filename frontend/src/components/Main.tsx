@@ -1,4 +1,9 @@
-﻿import { Container, createMuiTheme, ThemeProvider } from '@material-ui/core'
+﻿import {
+  Box,
+  Container,
+  createMuiTheme,
+  ThemeProvider,
+} from '@material-ui/core'
 import deepOrange from '@material-ui/core/colors/deepOrange'
 import deepPurple from '@material-ui/core/colors/deepPurple'
 import React from 'react'
@@ -17,9 +22,12 @@ const Main: React.FC = () => (
     <NavBar />
 
     <Container maxWidth="lg">
-      <ErrorContainer />
-      <FilterContainer />
-      <hr />
+      <Box mb={2}>
+        <ErrorContainer />
+      </Box>
+      <Box mb={2}>
+        <FilterContainer />
+      </Box>
       <CharacterTableContainer />
       <Loading />
     </Container>
