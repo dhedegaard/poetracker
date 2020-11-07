@@ -7,7 +7,6 @@ const MyApp = ({ Component, pageProps }: AppProps) => (
   <>
     <Head>
       <meta charSet="utf-8" />
-      <meta name="description" content="Path of Exile rank tracker" />
       <meta
         name="viewport"
         content="width=device-width, initial-scale=1, shrink-to-fit=no"

@@ -34,7 +34,9 @@ export default class MyDocument extends Document {
   render() {
     return (
       <Html lang="en">
-        <Head />
+        <Head>
+          <meta name="description" content="Path of Exile rank tracker" />
+        </Head>
         <body>
           <Main />
           <NextScript />
