@@ -1,27 +1,23 @@
-import { Chip, createMuiTheme, Link, ThemeProvider } from '@material-ui/core'
+import { Chip, Link } from '@material-ui/core'
 import { green, red } from '@material-ui/core/colors'
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-const successTheme = createMuiTheme({ palette: { primary: green } })
-const failureTheme = createMuiTheme({ palette: { primary: red } })
-const twitchTheme = createMuiTheme({ palette: { primary: { 500: '#4b367c' } } })
-const profileTheme = createMuiTheme({
-  palette: { primary: { 500: '#17a2b8' } },
-})
-
-const StyledChip = styled(Chip)<{ $isLink: boolean }>`
+const StyledChip = styled.span<{ $isLink: boolean; $color: string }>`
   && {
     display: inline-flex;
     align-items: center;
     height: 20px;
     margin-left: 2px;
     margin-right: 2px;
+    background-color: ${(p) => p.$color};
+    font-size: 12px;
+    color: #fff;
 
-    & > span {
-      padding-left: 6px;
-      padding-right: 6px;
-    }
+    text-decoration: none !important;
+
+    border-radius: 10px;
+    padding: 2px 8px;
 
     ${(p) =>
       p.$isLink &&
@@ -37,17 +33,17 @@ type Props = {
 } & React.ComponentProps<typeof Chip> &
   Partial<Pick<React.HTMLProps<HTMLAnchorElement>, 'target' | 'rel' | 'href'>>
 
-const Badge: React.FC<Props> = ({ type, ...props }) => {
-  const theme = React.useMemo(() => {
+const Badge: React.FC<Props> = ({ type, label, ...props }) => {
+  const color = React.useMemo(() => {
     switch (type) {
       case 'success':
-        return successTheme
+        return green[500]
       case 'failure':
-        return failureTheme
+        return red[500]
       case 'twitch':
-        return twitchTheme
+        return '#4b367c'
       case 'profile':
-        return profileTheme
+        return '#17a2b8'
       default:
         throw new Error(`Unmapped type: ${type}`)
     }
@@ -65,30 +61,24 @@ const Badge: React.FC<Props> = ({ type, ...props }) => {
   if (isLink) {
     const { href, target, rel, ...rest } = props
     return (
-      <ThemeProvider theme={theme}>
-        <Link href={href} target={target} rel={rel} onClick={onClickHandler}>
-          <StyledChip
-            $isLink
-            size="small"
-            color="primary"
-            {...rest}
-            as="span"
-          />
-        </Link>
-      </ThemeProvider>
+      <Link
+        href={href}
+        target={target}
+        rel={rel}
+        onClick={onClickHandler}
+        underline="none"
+      >
+        <StyledChip $isLink $color={color} {...rest}>
+          {label}
+        </StyledChip>
+      </Link>
     )
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <StyledChip
-        $isLink={false}
-        size="small"
-        color="primary"
-        {...props}
-        as="span"
-      />
-    </ThemeProvider>
+    <StyledChip $isLink={false} $color={color} {...props}>
+      {label}
+    </StyledChip>
   )
 }
 
