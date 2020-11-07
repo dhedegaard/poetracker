@@ -11,12 +11,7 @@ const FilterCheckbox: React.FunctionComponent<IProps> = (props) => {
   const id = `id_${props.label.toLowerCase().replace(' ', '_')}`
   return (
     <Box display="flex" alignItems="center" width="100%" flexBasis="100%">
-      <Switch
-        id={id}
-        checked={props.checked}
-        size="small"
-        onChange={props.onChange}
-      />
+      <Switch id={id} checked={props.checked} onChange={props.onChange} />
       <FormLabel htmlFor={id}>{props.label}</FormLabel>
     </Box>
   )
