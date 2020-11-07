@@ -138,7 +138,6 @@ const CharacterGraph = (props: IProps) => {
               tooltips: {
                 callbacks: {
                   label: (item, data) => {
-                    console.log({ item, data })
                     const dataset = data.datasets![item!.datasetIndex!]
                     const datasetLabel = dataset.label || ''
                     const point = dataset.data![item!.index!] as ChartPoint
