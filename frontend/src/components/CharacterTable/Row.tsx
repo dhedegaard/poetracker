@@ -15,7 +15,7 @@ import CharacterGraphContainer from '../../containers/character-graph'
 import Badge from '../Badge'
 
 const StyledTableCell = styled(TableCell)`
-  && {
+  &&& {
     padding: 0;
   }
 `
