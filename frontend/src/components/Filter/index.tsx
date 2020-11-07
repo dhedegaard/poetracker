@@ -1,4 +1,4 @@
-import { Box, FormLabel, NativeSelect, Paper } from '@material-ui/core'
+import { Box, FormLabel, NativeSelect, NoSsr, Paper } from '@material-ui/core'
 import React from 'react'
 import FilterCheckbox from './FilterCheckbox'
 import LeagueSelectComponent from './LeagueSelect'
@@ -125,34 +125,36 @@ const Filter = (props: IFilterProps) => {
           </Box>
         </Box>
         <Box display="flex" flexWrap="wrap">
-          <Box width="50%" flexBasis="50%">
-            <FilterCheckbox
-              checked={filter.hideDead}
-              onChange={onChangeHideDead}
-              label="Hide dead"
-            />
-          </Box>
-          <Box width="50%" flexBasis="50%">
-            <FilterCheckbox
-              checked={filter.onlyShowOnline}
-              onChange={onChangeShowOnline}
-              label="Only show online"
-            />
-          </Box>
-          <Box width="50%" flexBasis="50%">
-            <FilterCheckbox
-              checked={filter.hideStreamers}
-              onChange={onChangeHideStreamers}
-              label="Hide streamers"
-            />
-          </Box>
-          <Box width="50%" flexBasis="50%">
-            <FilterCheckbox
-              checked={filter.hideStandardLeagues}
-              onChange={onChangeHideStandardLeague}
-              label="Hide standard"
-            />
-          </Box>
+          <NoSsr>
+            <Box width="50%" flexBasis="50%">
+              <FilterCheckbox
+                checked={filter.hideDead}
+                onChange={onChangeHideDead}
+                label="Hide dead"
+              />
+            </Box>
+            <Box width="50%" flexBasis="50%">
+              <FilterCheckbox
+                checked={filter.onlyShowOnline}
+                onChange={onChangeShowOnline}
+                label="Only show online"
+              />
+            </Box>
+            <Box width="50%" flexBasis="50%">
+              <FilterCheckbox
+                checked={filter.hideStreamers}
+                onChange={onChangeHideStreamers}
+                label="Hide streamers"
+              />
+            </Box>
+            <Box width="50%" flexBasis="50%">
+              <FilterCheckbox
+                checked={filter.hideStandardLeagues}
+                onChange={onChangeHideStandardLeague}
+                label="Hide standard"
+              />
+            </Box>
+          </NoSsr>
         </Box>
       </Box>
     </Paper>
