@@ -1,18 +1,19 @@
 {
-    "name": "Poetracker",
-    "short_name": "Poetracker",
-    "display": "standalone",
-    "background_color": "#FFFFFF",
-    "icons": [
-        {
-            "src": "/android-chrome-192x192.png",
-            "sizes": "192x192",
-            "type": "image/png"
-        },
-        {
-            "src": "/android-chrome-256x256.png",
-            "sizes": "256x256",
-            "type": "image/png"
-        }
-    ]
+  "name": "Poetracker",
+  "short_name": "Poetracker",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#673ab7",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-256x256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    }
+  ]
 }

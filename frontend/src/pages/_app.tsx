@@ -11,7 +11,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => (
         name="viewport"
         content="width=device-width, initial-scale=1, shrink-to-fit=no"
       />
-      <meta name="theme-color" content="#ffffff" />
+      <meta name="theme-color" content="#673ab7" />
       <link
         rel="apple-touch-icon"
         sizes="180x180"
