@@ -1,4 +1,13 @@
-import { Box, Chip, TableCell, TableRow, Typography } from '@material-ui/core'
+import {
+  Box,
+  Chip,
+  createMuiTheme,
+  TableCell,
+  TableRow,
+  ThemeProvider,
+  Typography,
+} from '@material-ui/core'
+import { blue } from '@material-ui/core/colors'
 import Image from 'next/image'
 import React from 'react'
 import styled from 'styled-components'
@@ -10,6 +19,8 @@ const StyledTableCell = styled(TableCell)`
     padding: 0;
   }
 `
+
+const rowTheme = createMuiTheme({ palette: { primary: blue, secondary: blue } })
 
 interface IProps {
   datapoint: poetracker.IDatapointResult
@@ -32,7 +43,7 @@ const Row: React.FunctionComponent<IProps> = (props) => {
   }
 
   return (
-    <>
+    <ThemeProvider theme={rowTheme}>
       <TableRow selected={isSelected} onClick={onRowClick} hover>
         <TableCell>
           <Box display="flex" whiteSpace="nowrap" alignItems="center">
@@ -98,7 +109,7 @@ const Row: React.FunctionComponent<IProps> = (props) => {
               {datapoint.datapoint.dead && (
                 <>
                   {' '}
-                  <Chip size="small" label="Dead" color="secondary" />
+                  <Badge type="failure" label="Dead" />
                 </>
               )}
             </Typography>
@@ -159,7 +170,7 @@ const Row: React.FunctionComponent<IProps> = (props) => {
         </TableRow>
       )) ||
         null}
-    </>
+    </ThemeProvider>
   )
 }
 

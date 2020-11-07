@@ -12,7 +12,7 @@ const profileTheme = createMuiTheme({
 
 const StyledChip = styled(Chip)<{ $isLink: boolean }>`
   && {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     height: 20px;
     margin-left: 2px;
