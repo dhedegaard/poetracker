@@ -38,7 +38,6 @@ export default class SignalR extends React.Component<IProps, {}> {
    * Connects to the SignalR hub and sets up various handlers.
    */
   connectSignalR() {
-    console.log('URL:', process.env.NEXT_PUBLIC_HUB_URL)
     // Build the connection.
     this.connection = new aspnet_SignalR.HubConnectionBuilder()
       .withUrl(process.env.NEXT_PUBLIC_HUB_URL)
