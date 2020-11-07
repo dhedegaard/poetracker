@@ -51,7 +51,7 @@ const Row: React.FunctionComponent<IProps> = (props) => {
               src={`/${datapoint.datapoint.online ? 'online' : 'offline'}.png`}
               title={datapoint.datapoint.online ? 'Online' : 'Offline'}
               width="15px"
-              height="15px"
+              height="13px"
               priority
             />
             &nbsp;
