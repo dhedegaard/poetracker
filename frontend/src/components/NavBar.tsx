@@ -7,7 +7,7 @@ const NavBar: React.FC = () => (
   <Box mb={2}>
     <AppBar color="primary" position="relative">
       <Container maxWidth="lg">
-        <Toolbar>
+        <Toolbar disableGutters>
           <Box display="flex" justifyContent="space-between" width="100%">
             <Box display="flex">
               <Image src="/favicon.png" alt="logo" width="30px" height="30px" />
