@@ -39,11 +39,11 @@ const Badge: React.FC<Props> = ({ type, label, ...props }) => {
       case 'success':
         return green[500]
       case 'failure':
-        return red[500]
+        return red[700]
       case 'twitch':
         return '#4b367c'
       case 'profile':
-        return '#17a2b8'
+        return '#128091'
       default:
         throw new Error(`Unmapped type: ${type}`)
     }
