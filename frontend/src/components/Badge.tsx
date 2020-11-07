@@ -67,7 +67,13 @@ const Badge: React.FC<Props> = ({ type, ...props }) => {
     return (
       <ThemeProvider theme={theme}>
         <Link href={href} target={target} rel={rel} onClick={onClickHandler}>
-          <StyledChip $isLink size="small" color="primary" {...rest} />
+          <StyledChip
+            $isLink
+            size="small"
+            color="primary"
+            {...rest}
+            as="span"
+          />
         </Link>
       </ThemeProvider>
     )
@@ -75,7 +81,13 @@ const Badge: React.FC<Props> = ({ type, ...props }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <StyledChip $isLink={false} size="small" color="primary" {...props} />
+      <StyledChip
+        $isLink={false}
+        size="small"
+        color="primary"
+        {...props}
+        as="span"
+      />
     </ThemeProvider>
   )
 }
