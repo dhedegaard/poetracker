@@ -1,4 +1,4 @@
-import { Box, Checkbox, FormLabel, Switch } from '@material-ui/core'
+import { Box, FormLabel, Switch } from '@material-ui/core'
 import React from 'react'
 
 interface IProps {
