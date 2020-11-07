@@ -16,13 +16,19 @@ export default class MyDocument extends Document {
         })
 
       const initialProps = await Document.getInitialProps(ctx)
+
+      // A simple, naive minification of the Material UI stylesheet.
+      const muiStyles = muiSheets.getStyleElement()
+      muiStyles.props.dangerouslySetInnerHTML.__html = (muiStyles.props
+        .dangerouslySetInnerHTML.__html as string).replace(/\s+/g, ' ')
+
       return {
         ...initialProps,
         styles: (
           <>
             {initialProps.styles}
             {styledSheet.getStyleElement()}
-            {muiSheets.getStyleElement()}
+            {muiStyles}
           </>
         ),
       }
