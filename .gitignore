@@ -68,3 +68,4 @@ Web/frontend/**/*.js
 **/*.csproj.user
 .vscode
 frontend/.next
+yarn-*.log
