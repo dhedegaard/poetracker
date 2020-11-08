@@ -35,7 +35,7 @@ namespace Core.Apis {
             throw new AccountNotPublicException();
           }
         }
-        throw e;
+        throw;
       }
     }
   }
