@@ -194,7 +194,7 @@ namespace Fetcher {
               logger.LogWarning("Timeout, retrying...");
               continue;
             }
-            throw e;
+            throw;
           }
         }
         await hubConnection.DisposeAsync();
@@ -212,7 +212,7 @@ namespace Fetcher {
             logger.LogWarning("Timeout, retrying...");
             continue;
           }
-          throw e;
+          throw;
         }
       }
     }
