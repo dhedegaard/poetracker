@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:5.0.100-rc.2
+FROM mcr.microsoft.com/dotnet/sdk:5.0.100
 LABEL maintainer="dennis@dhedegaard.dk"
 ARG DEBIAN_FRONTEND=noninteractive
 EXPOSE 5000
