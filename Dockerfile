@@ -1,30 +1,23 @@
-FROM mcr.microsoft.com/dotnet/sdk:5.0.100-rc.2
+FROM mcr.microsoft.com/dotnet/sdk:5.0.100
 LABEL maintainer="dennis@dhedegaard.dk"
 ARG DEBIAN_FRONTEND=noninteractive
 EXPOSE 5000
 ENV ASPNETCORE_URLS=http://127.0.0.1:5000
 ENV FETCHER_HUB_CONNECTION_URL=http://127.0.0.1:5000/data
 
-WORKDIR /source
-
 # Restore .dotnet core packages.
-WORKDIR /source/Core
-COPY backend/Core/*.csproj .
-WORKDIR /source/Web
-COPY backend/Web/*.csproj .
-RUN dotnet restore
-WORKDIR /source/Fetcher
-COPY backend/Fetcher/*.csproj .
-RUN dotnet restore
 WORKDIR /source
+COPY backend/Core/*.csproj ./Core/
+COPY backend/Web/*.csproj ./Web/
+COPY backend/Web.Tests/*.csproj ./Web.Tests/
+COPY backend/Fetcher/*.csproj ./Fetcher/
+COPY backend/Poetracker.sln ./
+RUN find .
+RUN dotnet restore
 
 # Copy everything in.
 WORKDIR /source
 COPY backend/. .
-
-# Build the fetcher.
-WORKDIR /source/Fetcher
-RUN dotnet publish --output /app --configuration Release
 
 # Build the web.
 WORKDIR /source/Web
