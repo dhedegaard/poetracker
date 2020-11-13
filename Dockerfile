@@ -12,7 +12,6 @@ COPY backend/Web/*.csproj ./Web/
 COPY backend/Web.Tests/*.csproj ./Web.Tests/
 COPY backend/Fetcher/*.csproj ./Fetcher/
 COPY backend/Poetracker.sln ./
-RUN find .
 RUN dotnet restore
 
 # Copy everything in.
