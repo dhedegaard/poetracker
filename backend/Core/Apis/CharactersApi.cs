@@ -5,15 +5,15 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace Core.Apis {
-  public class WindowCharacter {
-    public string Name { get; set; }
-    public string League { get; set; }
-    public int ClassId { get; set; }
-    public int AscendancyClass { get; set; }
-    public string Class { get; set; }
-    public int Level { get; set; }
-    public long Experience { get; set; }
-    public bool? LastActive { get; set; }
+  public record WindowCharacter {
+    public string Name;
+    public string League;
+    public int ClassId;
+    public int AscendancyClass;
+    public string Class;
+    public int Level;
+    public long Experience;
+    public bool? LastActive;
   }
 
   public class AccountNotPublicException : Exception { }

@@ -3,7 +3,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Core.Models {
-  public class Datapoint {
+  public record Datapoint {
     [Key]
     public int? Id { get; set; }
     [Required]
