@@ -27,3 +27,19 @@ Or the easy way: `$ docker-compose up --build`
 ## How to help
 
 Feel free to send pull requests, feature requests and create issues when you hit bugs :)
+
+## Weird character data on wrong accounts
+
+This happens when the Path of Exile API return some bad data.
+
+The easiest way to fix your data is to delete all the datapoints for charname/account/league that only has a single row. An example of how this can be achieved via psql is:
+
+```sql
+delete from "Datapoints"
+where "Id" in (
+  select min("Id") as "Id"
+  from "Datapoints"
+  group by "Charname", "AccountId", "LeagueId"
+  having count(*) < 2
+)
+```
