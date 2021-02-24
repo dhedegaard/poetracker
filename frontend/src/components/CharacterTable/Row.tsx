@@ -139,7 +139,7 @@ const Row: React.FunctionComponent<IProps> = (props) => {
         </TableCell>
         <TableCell>{datapoint.datapoint.class}</TableCell>
         <TableCell align="right">
-          <Box justifyContent="flex-end" display="flex">
+          <Box justifyContent="flex-end" display="flex" alignItems="center">
             {datapoint.previousDatapoint &&
               datapoint.previousDatapoint.level !==
                 datapoint.datapoint.level && (
