@@ -139,28 +139,32 @@ const Row: React.FunctionComponent<IProps> = (props) => {
         </TableCell>
         <TableCell>{datapoint.datapoint.class}</TableCell>
         <TableCell align="right">
-          {datapoint.previousDatapoint &&
-            datapoint.previousDatapoint.level !== datapoint.datapoint.level && (
-              <Badge
-                type="success"
-                title={
-                  datapoint.previousDatapoint &&
-                  datapoint.previousDatapoint.timestamp
-                    ? `Compared to: ${new Date(
-                        datapoint.previousDatapoint.timestamp
-                      ).toLocaleString()}`
-                    : undefined
-                }
-                label={`+${
-                  datapoint.datapoint.level - datapoint.previousDatapoint.level
-                }`}
-              />
-            )}
-          <Typography
-            title={`XP: ${datapoint.datapoint.experience.toLocaleString()}`}
-          >
-            {datapoint.datapoint.level}
-          </Typography>
+          <Box justifyContent="flex-end">
+            {datapoint.previousDatapoint &&
+              datapoint.previousDatapoint.level !==
+                datapoint.datapoint.level && (
+                <Badge
+                  type="success"
+                  title={
+                    datapoint.previousDatapoint &&
+                    datapoint.previousDatapoint.timestamp
+                      ? `Compared to: ${new Date(
+                          datapoint.previousDatapoint.timestamp
+                        ).toLocaleString()}`
+                      : undefined
+                  }
+                  label={`+${
+                    datapoint.datapoint.level -
+                    datapoint.previousDatapoint.level
+                  }`}
+                />
+              )}
+            <Typography
+              title={`XP: ${datapoint.datapoint.experience.toLocaleString()}`}
+            >
+              {datapoint.datapoint.level}
+            </Typography>
+          </Box>
         </TableCell>
       </TableRow>
       {(isSelected && (
